@@ -1,3 +1,124 @@
 .red {
   color: red;
 }
+// * colour variables
+
+$white: #fff;
+$light-grey: #EBEBEB;
+$medium-grey: #B1B1B1;
+$dark-grey: #4A4A4A;
+$almost-black: #090909;
+$red: #f1092a;
+
+//  * global styles
+
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+
+  // * general base styles
+
+
+
+  font-family: -apple-system, BlinkMacSystemFont, ‘Segoe UI’, Roboto, Oxygen, Ubuntu, Cantarell, ‘Open Sans’, ‘Helvetica Neue’, sans-serif;
+  font-weight: 500;
+  line-height: 1.5;
+  color: $almost-black;
+  font-size: 16px;
+
+  h1, h2, h3, h4 {
+    margin: 3rem 0 1.3rem;
+  }
+
+  h1 {
+    font-size: 2.441rem;
+  }
+
+  h2 {
+    font-size: 1.953rem;
+  }
+
+  h3 {
+    font-size: 1.563rem;
+  }
+
+  h4 {
+    font-size: 1.25rem;
+  }
+
+  p {
+    margin-bottom: 1.25rem;
+  }
+
+
+  input, textarea, select {
+    font: inherit;
+  }
+
+  img, iframe {
+    vertical-align: bottom;
+    max-width: 100%;
+  }
+
+  ol, ul {
+    list-style: none;
+  }
+
+  button {
+    border: 0;
+    background-color: $red;
+    color: $almost-black;
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.2;
+    white-space: nowrap;
+    text-decoration: none;
+    height: 40px;
+    width: 100%;
+    cursor: pointer;
+    margin: 1rem 0;
+    transition: all 0.2s;
+  }
+
+  button:hover {
+    background-color: #f1092cd7;
+    transform: scale(1.02);
+  }
+
+}
+
+// * container styles, for flexbox on components
+
+.center-container {
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+// * form styles
+
+.form-container {
+  width: 90vw;
+  max-width: 500px;
+  padding: 20px;
+  border: solid 1px $light-grey;
+      .input {
+        width: 100%;
+        border: solid 1px $medium-grey;
+        height: 40px;
+        margin: 0.4rem 0 1rem 0;
+        font-size: 0.95rem;
+    }
+
+    .label {
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+}

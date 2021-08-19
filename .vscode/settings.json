@@ -1,0 +1,12 @@
+{
+  "workbench.colorCustomizations": {
+    "statusBar.background": "#2ab172",
+    "titleBar.activeBackground": "#2ab172",
+    "titleBar.inactiveBackground": "#2ab172",
+    "titleBar.inactiveForeground": "#fff",
+    "titleBar.activeForeground": "#fff",
+    "statusBar.foreground": "#fff",
+
+  },
+  "window.title": "Client - FrontEnd"
+}

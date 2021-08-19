@@ -1,0 +1,17 @@
+.red {
+  color: red;
+}
+
+.location-input-columns {
+  display: flex;
+}
+
+.column-left {
+  display: flex;
+  flex-direction: column;
+}
+
+.column-right {
+  display: flex;
+  flex-direction: column;
+}

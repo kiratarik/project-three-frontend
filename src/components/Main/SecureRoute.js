@@ -4,7 +4,7 @@
 // function SecureRoute({ component: Component, ...rest }) {
 //   if (isAuthenticated()) return <Route {...rest} component={Component} />
 //   removeToken()
-//   return <Redirect to="/login" />
+//   return <Redirect to='/login' />
 // }
 // export default SecureRoute
 

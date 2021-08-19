@@ -1,10 +1,55 @@
 function Login() {
 
   return (
-    <>
-      <h1>Login:</h1>
-    </>
-  )
+    <section className="section">
+      <div className="center-container">
+        <div>
+          <h2 className="text-is-centered">Welcome back</h2>
+          <p className="text-is-centered">Sign in below</p>
+        </div>
+        <div className="form-container">
+          <form>
+            <div className="field">
+              <label className="label">Username</label>
+              <div>
+                <input
+                  className="input"
+                  placeholder="Username"
+                  name="userName"
+                />
+              </div>
+            </div>
+            <div className="field">
+              <label className="label">Email</label>
+              <div>
+                <input
+                  className="input"
+                  placeholder="Email Address"
+                  name="email"
+                />
+              </div>
+            </div>
+            <div className="field">
+              <label className="label">Password</label>
+              <div className="control">
+                <input
+                  type="password"
+                  className="input"
+                  placeholder="Password"
+                  name="password"
+                />
+              </div>
+            </div>
+            <div className="field">
+              <button type="submit" 
+                className="button-outline"
+              >Log in</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+  ) 
 }
 
 export default Login

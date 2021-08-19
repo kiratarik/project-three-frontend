@@ -1,5 +1,6 @@
 import React from 'react'
 import ReactMapGL, { Marker, Popup } from 'react-map-gl'
+import axios from 'axios'
 
 
 function ImageSubmit() {
@@ -21,22 +22,30 @@ function ImageSubmit() {
   const [popup, setPopup] = React.useState(null)
   console.log('popup', popup)
 
-  // function handleChange(e) {
-  //   if ( // Check LatLng Limits
-  //     ((e.target.id === 'latitude') && 
-  //     (parseFloat(e.target.value) < -90 || 
-  //     parseFloat(e.target.value) > 90 )) || 
-  //     (e.target.id === 'longitude') && 
-  //     (parseFloat(e.target.value) < -180 || 
-  //     parseFloat(e.target.value) > 180 )) {
-  //     e.target.classList.add('red')
-  //   } else {
-  //     const newInput = { ...inputs, [e.target.id]: e.target.value }
-  //     setInputs(newInput)
-  //     console.log(newInput)
-  //     e.target.classList.remove('red')
-  //   }
-  // }
+  const [regions, setRegions] = React.useState([])
+  
+
+  const url = {
+    front: 'https://api.bigdatacloud.net/data/reverse-geocode-client?localityLanguage=en&latitude=',
+    mid: '&longitude=',
+  }
+  const getLocation = async (latitude, longitude) => {
+    try {
+      const search = url.front + latitude + url.mid + longitude
+      const res = await axios.get(search)
+      const { continent, countryName, locality } = res.data
+      setRegions([continent, countryName, locality].filter(item => {
+        return item
+      }))
+    } catch (err) {
+      console.log(err)
+    }
+  }
+  React.useState(() => {
+    getLocation(inputs.latitude, inputs.longitude)
+  }, [])
+  
+
 
   function handleCaption(e) {
     if (e.target.value.length > 20) {
@@ -44,7 +53,6 @@ function ImageSubmit() {
     } else {
       const newInput = { ...inputs, [e.target.id]: e.target.value }
       setInputs(newInput)
-      console.log(newInput)
       e.target.classList.remove('red')
     }
   }
@@ -52,7 +60,7 @@ function ImageSubmit() {
     if (e.target.value === '') {
       const newInput = { ...inputs, [e.target.id]: 0 }
       setInputs(newInput)
-      console.log(newInput)
+      getLocation(0, inputs.longitude)
       e.target.classList.remove('red')
     } else if (parseFloat(e.target.value) < -90 || 
     parseFloat(e.target.value) > 90 ) {
@@ -60,7 +68,7 @@ function ImageSubmit() {
     } else {
       const newInput = { ...inputs, [e.target.id]: parseFloat(e.target.value) }
       setInputs(newInput)
-      console.log(newInput)
+      getLocation(parseFloat(e.target.value), inputs.longitude)
       e.target.classList.remove('red')
     }
   }
@@ -68,7 +76,7 @@ function ImageSubmit() {
     if (e.target.value === '') {
       const newInput = { ...inputs, [e.target.id]: 0 }
       setInputs(newInput)
-      console.log(newInput)
+      getLocation(inputs.latitude, 0)
       e.target.classList.remove('red')
     } else if (parseFloat(e.target.value) < -180 || 
     parseFloat(e.target.value) > 180 ) {
@@ -76,7 +84,7 @@ function ImageSubmit() {
     } else {
       const newInput = { ...inputs, [e.target.id]: parseFloat(e.target.value) }
       setInputs(newInput)
-      console.log(newInput)
+      getLocation(inputs.latitude, parseFloat(e.target.value))
       e.target.classList.remove('red')
     }
   }
@@ -132,7 +140,7 @@ function ImageSubmit() {
             </div>
           </div>
           <div>
-            
+            {regions && <p>{regions.join(', ')}</p>}
           </div>
         </div>
       </div>

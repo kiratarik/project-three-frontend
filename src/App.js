@@ -18,28 +18,28 @@ function App() {
     <BrowserRouter>
       <Nav />
       <Switch>
-        <Route exact path="/">
+        <Route exact path='/'>
           <Home />
         </Route>
-        <SecureRoute path="/images/new">
+        <SecureRoute path='/images/new'>
           <ImageSubmit />
         </SecureRoute>
-        <SecureRoute path="/images/:imageId/edit">
+        <SecureRoute path='/images/:imageId/edit'>
           <ImageEdit />
         </SecureRoute>
-        <Route path="/images/:imageId">
+        <Route path='/images/:imageId'>
           <ImageShow />
         </Route>
-        <SecureRoute path="/users/:userId/edit">
+        <SecureRoute path='/users/:userId/edit'>
           <UserEdit />
         </SecureRoute>
-        <Route path="/users/:userId">
+        <Route path='/users/:userId'>
           <UserShow />
         </Route>
-        <Route path="/register">
+        <Route path='/register'>
           <Register />
         </Route>
-        <Route path="/login">
+        <Route path='/login'>
           <Login />
         </Route>
       </Switch>

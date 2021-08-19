@@ -10,14 +10,16 @@ function ImageSubmit() {
     { 
       caption: '',
       url: '',
-      latitude: 52,
+      latitude: 0,
+      latString: '',
       longitude: 0,
+      lngString: '',
     })
 
   const [viewport, setViewport] = React.useState({
-    latitude: 51.0,
+    latitude: 0.0,
     longitude: 0.0,
-    zoom: 4,
+    zoom: 1,
   })
   const [popup, setPopup] = React.useState(null)
   console.log('popup', popup)
@@ -58,15 +60,28 @@ function ImageSubmit() {
   }
   function handleLatitude(e) {
     if (e.target.value === '') {
-      const newInput = { ...inputs, [e.target.id]: 0 }
+      const newInput = { ...inputs, [e.target.id]: 0, latString: '' }
       setInputs(newInput)
       getLocation(0, inputs.longitude)
       e.target.classList.remove('red')
+
+    } else if (e.target.value === '-') {
+      const newInput = { ...inputs, [e.target.id]: 0, latString: '-' }
+      setInputs(newInput)
+      getLocation(0, inputs.longitude)
+      e.target.classList.add('red')
+
+    } else if (isNaN(parseFloat(e.target.value)) || String(parseFloat(e.target.value)) !== e.target.value) {
+      e.target.classList.add('red')
+      setInputs({ ...inputs, latString: e.target.value })
+
     } else if (parseFloat(e.target.value) < -90 || 
     parseFloat(e.target.value) > 90 ) {
       e.target.classList.add('red')
+      setInputs({ ...inputs, latString: e.target.value })
+
     } else {
-      const newInput = { ...inputs, [e.target.id]: parseFloat(e.target.value) }
+      const newInput = { ...inputs, [e.target.id]: parseFloat(e.target.value), latString: e.target.value }
       setInputs(newInput)
       getLocation(parseFloat(e.target.value), inputs.longitude)
       e.target.classList.remove('red')
@@ -74,15 +89,28 @@ function ImageSubmit() {
   }
   function handleLongitude(e) {
     if (e.target.value === '') {
-      const newInput = { ...inputs, [e.target.id]: 0 }
+      const newInput = { ...inputs, [e.target.id]: 0, lngString: '' }
       setInputs(newInput)
       getLocation(inputs.latitude, 0)
       e.target.classList.remove('red')
+
+    } else if (e.target.value === '-') {
+      const newInput = { ...inputs, [e.target.id]: 0, lngString: '-' }
+      setInputs(newInput)
+      getLocation(0, inputs.longitude)
+      e.target.classList.add('red')
+
+    } else if (isNaN(parseFloat(e.target.value)) || String(parseFloat(e.target.value)) !== e.target.value) {
+      e.target.classList.add('red')
+      setInputs({ ...inputs, lngString: e.target.value })
+
     } else if (parseFloat(e.target.value) < -180 || 
     parseFloat(e.target.value) > 180 ) {
       e.target.classList.add('red')
+      setInputs({ ...inputs, lngString: e.target.value })
+
     } else {
-      const newInput = { ...inputs, [e.target.id]: parseFloat(e.target.value) }
+      const newInput = { ...inputs, [e.target.id]: parseFloat(e.target.value), lngString: e.target.value }
       setInputs(newInput)
       getLocation(inputs.latitude, parseFloat(e.target.value))
       e.target.classList.remove('red')
@@ -105,8 +133,8 @@ function ImageSubmit() {
         <p>Location:</p>
         <div>
           <div>
-            <input id='latitude' placeholder='Latitude' onChange={handleLatitude} value={inputs.latitude} />
-            <input id='longitude' placeholder='Longitude' onChange={handleLongitude} value={inputs.longitude} />
+            <input id='latitude' placeholder='Latitude' onChange={handleLatitude} value={inputs.latString} />
+            <input id='longitude' placeholder='Longitude' onChange={handleLongitude} value={inputs.lngString} />
           </div>
           <div>
             <div className='map-container'>

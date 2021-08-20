@@ -1,30 +1,37 @@
 import React from 'react'
 import ReactMapGL, { Marker } from 'react-map-gl'
 import axios from 'axios'
+import Select from 'react-select'
 
 
 function ImageSubmit() {
   const user = { username: 'kiratarik' }
-
   const [inputs, setInputs] = React.useState(
     { 
       caption: '',
-      url: '',
       latitude: 0,
-      latString: '',
       longitude: 0,
-      lngString: '',
     })
 
+
+
+  const selectOptions = [
+    { value: 'eggs', label: 'Eggs' },
+    { value: 'bacon', label: 'Bacon' },
+    { value: 'coffee', label: 'Coffee' },
+    { value: 'tea', label: 'Tea' },
+    { value: 'beans', label: 'Beans' },
+    { value: 'toast', label: 'Toast' },
+    { value: 'cereal', label: 'Cereal' }
+  ]
+  
   const [viewport, setViewport] = React.useState({
     latitude: 0.0,
     longitude: 0.0,
     zoom: 1,
   })
-
   const [regions, setRegions] = React.useState([])
   
-
   const url = {
     front: 'https://api.bigdatacloud.net/data/reverse-geocode-client?localityLanguage=en&latitude=',
     mid: '&longitude=',
@@ -48,6 +55,15 @@ function ImageSubmit() {
   }, [])
   
 
+
+  function handleImage(e) {
+    if (e.target.files[0]) {
+      setImagePath(URL.createObjectURL(e.target.files[0]))
+      console.log(e.target.files)
+    }
+  }
+
+  const [typeTags, setTypeTags] = React.useState([])
 
   function handleCaption(e) {
     if (e.target.value.length > 20) {
@@ -73,19 +89,30 @@ function ImageSubmit() {
       e.target.classList.remove('red')
     }
   }
-
   function handleDragEnd(e) {
     console.log(e.lngLat)
     setInputs({ ...inputs, longitude: e.lngLat[0], latitude: e.lngLat[1] })
     document.querySelector('#longitude').value = e.lngLat[0]
     document.querySelector('#latitude').value = e.lngLat[1]
   }
-
   const [imagePath, setImagePath] = React.useState('')
-  function handleImage(e) {
-    if (e.target.files[0]) {
-      setImagePath(URL.createObjectURL(e.target.files[0]))
-      console.log(e.target.files)
+  
+
+  function handleSubmit() {
+    try {
+
+      const output = {
+        ...inputs,
+        url: '',
+        addedBy: '',
+        tags: { 
+          location: regions,
+          type: typeTags,
+          custom: [],
+        },
+      }
+    } catch (err) {
+      console.log(err)
     }
   }
 
@@ -93,16 +120,28 @@ function ImageSubmit() {
     <>
       <h1>Create New Image:</h1>
       <div>
-        <p>Caption:</p>
+        <label>Caption: </label>
         <input id='caption' placeholder='Describe Image' required onChange={handleCaption} />
       </div>
       <div>
-        <p>Image Upload:</p>
+        <label>Image Upload: </label>
         <input type='file' accept='image/png, image/jpeg' required onChange={handleImage} />
         {imagePath && <img src={imagePath} />}
       </div>
+      <div>
+        <label>Type Tags: </label>
+        <Select
+          id='type-tags'
+          options={selectOptions}
+          isMulti
+          onChange={(e) => setTypeTags(e.map(item => item.value))}
+        />
+      </div>
+      <div>
+        <label>Custom Tags: </label>
+      </div>
       <div className='location-input'>
-        <p>Location:</p>
+        <label>Location: </label>
         <div>
           <div>
             <input id='latitude' placeholder='Latitude' required onChange={handleLatLng} />
@@ -134,13 +173,17 @@ function ImageSubmit() {
             </div>
           </div>
           <div>
-            {regions && <p>{regions.join(', ')}</p>}
+            <label>Regions: </label>
+            {regions && <label>{regions.join(', ')}</label>}
           </div>
         </div>
       </div>
       <div>
-        <p>Made By:</p>
-        <p>{user.username}</p>
+        <label>Made By: </label>
+        <label>{user.username}</label>
+      </div>
+      <div>
+        <input type='submit' onClick={handleSubmit} ></input>
       </div>
     </>
   )

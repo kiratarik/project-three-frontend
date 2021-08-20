@@ -63,7 +63,9 @@ function ImageSubmit() {
     const mod = id.length - 7
     const value = e.target.value
     const numValue = parseFloat(value)
-    if (String(numValue) !== value || numValue < -90 * mod || numValue > 90 * mod ) {
+    if (value === '') {
+      e.target.classList.remove('red')
+    } else if (String(numValue) !== value || numValue < -90 * mod || numValue > 90 * mod ) {
       e.target.classList.add('red')
     } else {
       setInputs({ ...inputs, [id]: numValue })
@@ -79,24 +81,32 @@ function ImageSubmit() {
     document.querySelector('#latitude').value = e.lngLat[1]
   }
 
+  const [imagePath, setImagePath] = React.useState('')
+  function handleImage(e) {
+    if (e.target.files[0]) {
+      setImagePath(URL.createObjectURL(e.target.files[0]))
+      console.log(e.target.files)
+    }
+  }
 
   return (
     <>
       <h1>Create New Image:</h1>
       <div>
         <p>Caption:</p>
-        <input id='caption' placeholder='Describe Image' onChange={handleCaption} />
+        <input id='caption' placeholder='Describe Image' required onChange={handleCaption} />
       </div>
       <div>
         <p>Image Upload:</p>
-        <input type='file' />
+        <input type='file' accept='image/png, image/jpeg' required onChange={handleImage} />
+        {imagePath && <img src={imagePath} />}
       </div>
       <div className='location-input'>
         <p>Location:</p>
         <div>
           <div>
-            <input id='latitude' placeholder='Latitude' onChange={handleLatLng} />
-            <input id='longitude' placeholder='Longitude' onChange={handleLatLng} />
+            <input id='latitude' placeholder='Latitude' required onChange={handleLatLng} />
+            <input id='longitude' placeholder='Longitude' required onChange={handleLatLng} />
           </div>
           <div>
             <div className='map-container'>
@@ -113,10 +123,12 @@ function ImageSubmit() {
                   key={inputs.caption}
                   latitude={inputs.latitude}
                   longitude={inputs.longitude}
+                  offsetLeft={-8}
+                  offsetTop={-19}
                   draggable
                   onDragEnd={handleDragEnd}
                 >
-                  <span>🤖</span>
+                  <span>📍</span>
                 </Marker>
               </ReactMapGL>
             </div>

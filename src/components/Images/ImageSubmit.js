@@ -1,5 +1,5 @@
 import React from 'react'
-import ReactMapGL, { Marker, Popup } from 'react-map-gl'
+import ReactMapGL, { Marker } from 'react-map-gl'
 import axios from 'axios'
 
 
@@ -21,8 +21,6 @@ function ImageSubmit() {
     longitude: 0.0,
     zoom: 1,
   })
-  const [popup, setPopup] = React.useState(null)
-  console.log('popup', popup)
 
   const [regions, setRegions] = React.useState([])
   
@@ -31,8 +29,10 @@ function ImageSubmit() {
     front: 'https://api.bigdatacloud.net/data/reverse-geocode-client?localityLanguage=en&latitude=',
     mid: '&longitude=',
   }
-  const getLocation = async (latitude, longitude) => {
+  const getLocation = async ({ latitude, longitude }) => {
     try {
+      if (latitude === '' || latitude === '-') latitude = '0'
+      if (longitude === '' || longitude === '-') longitude = '0'
       const search = url.front + latitude + url.mid + longitude
       const res = await axios.get(search)
       const { continent, countryName, locality } = res.data
@@ -44,7 +44,7 @@ function ImageSubmit() {
     }
   }
   React.useState(() => {
-    getLocation(inputs.latitude, inputs.longitude)
+    getLocation(inputs)
   }, [])
   
 
@@ -58,63 +58,25 @@ function ImageSubmit() {
       e.target.classList.remove('red')
     }
   }
-  function handleLatitude(e) {
-    if (e.target.value === '') {
-      const newInput = { ...inputs, [e.target.id]: 0, latString: '' }
-      setInputs(newInput)
-      getLocation(0, inputs.longitude)
-      e.target.classList.remove('red')
-
-    } else if (e.target.value === '-') {
-      const newInput = { ...inputs, [e.target.id]: 0, latString: '-' }
-      setInputs(newInput)
-      getLocation(0, inputs.longitude)
+  function handleLatLng(e) {
+    const id = e.target.id
+    const mod = id.length - 7
+    const value = e.target.value
+    const numValue = parseFloat(value)
+    if (String(numValue) !== value || numValue < -90 * mod || numValue > 90 * mod ) {
       e.target.classList.add('red')
-
-    } else if (isNaN(parseFloat(e.target.value)) || String(parseFloat(e.target.value)) !== e.target.value) {
-      e.target.classList.add('red')
-      setInputs({ ...inputs, latString: e.target.value })
-
-    } else if (parseFloat(e.target.value) < -90 || 
-    parseFloat(e.target.value) > 90 ) {
-      e.target.classList.add('red')
-      setInputs({ ...inputs, latString: e.target.value })
-
     } else {
-      const newInput = { ...inputs, [e.target.id]: parseFloat(e.target.value), latString: e.target.value }
-      setInputs(newInput)
-      getLocation(parseFloat(e.target.value), inputs.longitude)
+      setInputs({ ...inputs, [id]: numValue })
+      getLocation({ ...inputs, [id]: numValue })
       e.target.classList.remove('red')
     }
   }
-  function handleLongitude(e) {
-    if (e.target.value === '') {
-      const newInput = { ...inputs, [e.target.id]: 0, lngString: '' }
-      setInputs(newInput)
-      getLocation(inputs.latitude, 0)
-      e.target.classList.remove('red')
 
-    } else if (e.target.value === '-') {
-      const newInput = { ...inputs, [e.target.id]: 0, lngString: '-' }
-      setInputs(newInput)
-      getLocation(0, inputs.longitude)
-      e.target.classList.add('red')
-
-    } else if (isNaN(parseFloat(e.target.value)) || String(parseFloat(e.target.value)) !== e.target.value) {
-      e.target.classList.add('red')
-      setInputs({ ...inputs, lngString: e.target.value })
-
-    } else if (parseFloat(e.target.value) < -180 || 
-    parseFloat(e.target.value) > 180 ) {
-      e.target.classList.add('red')
-      setInputs({ ...inputs, lngString: e.target.value })
-
-    } else {
-      const newInput = { ...inputs, [e.target.id]: parseFloat(e.target.value), lngString: e.target.value }
-      setInputs(newInput)
-      getLocation(inputs.latitude, parseFloat(e.target.value))
-      e.target.classList.remove('red')
-    }
+  function handleDragEnd(e) {
+    console.log(e.lngLat)
+    setInputs({ ...inputs, longitude: e.lngLat[0], latitude: e.lngLat[1] })
+    document.querySelector('#longitude').value = e.lngLat[0]
+    document.querySelector('#latitude').value = e.lngLat[1]
   }
 
 
@@ -133,8 +95,8 @@ function ImageSubmit() {
         <p>Location:</p>
         <div>
           <div>
-            <input id='latitude' placeholder='Latitude' onChange={handleLatitude} value={inputs.latString} />
-            <input id='longitude' placeholder='Longitude' onChange={handleLongitude} value={inputs.lngString} />
+            <input id='latitude' placeholder='Latitude' onChange={handleLatLng} />
+            <input id='longitude' placeholder='Longitude' onChange={handleLatLng} />
           </div>
           <div>
             <div className='map-container'>
@@ -146,24 +108,16 @@ function ImageSubmit() {
                 mapStyle='mapbox://styles/mapbox/streets-v11'
                 onViewportChange={(nextViewport) => setViewport(nextViewport)}
                 {...viewport}
-                onClick={() => setPopup(null)}
               >
                 <Marker 
                   key={inputs.caption}
                   latitude={inputs.latitude}
                   longitude={inputs.longitude}
+                  draggable
+                  onDragEnd={handleDragEnd}
                 >
-                  <span onClick={() => setPopup(inputs.name)}>🤖</span>
+                  <span>🤖</span>
                 </Marker>
-                {popup &&
-                  <Popup 
-                    latitude={popup.latitude} 
-                    longitude={popup.longitude}
-                    onClose={() => setPopup(null)}
-                  >
-                    <p>{popup.name}</p>
-                  </Popup>
-                }
               </ReactMapGL>
             </div>
           </div>

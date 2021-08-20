@@ -22,13 +22,13 @@ function ImageSubmit() {
 
 
   const selectOptions = [
-    { value: 'eggs', label: 'Eggs' },
-    { value: 'bacon', label: 'Bacon' },
-    { value: 'coffee', label: 'Coffee' },
-    { value: 'tea', label: 'Tea' },
-    { value: 'beans', label: 'Beans' },
-    { value: 'toast', label: 'Toast' },
-    { value: 'cereal', label: 'Cereal' }
+    { value: 'beach', label: 'Beach' },
+    { value: 'mountain', label: 'Mountain' },
+    { value: 'ocean', label: 'Ocean' },
+    { value: 'lake', label: 'Lake' },
+    { value: 'forest', label: 'Forest' },
+    { value: 'desert', label: 'Desert' },
+    { value: 'meadow', label: 'Meadow' }
   ]
   
   const [viewport, setViewport] = React.useState({
@@ -114,9 +114,9 @@ function ImageSubmit() {
         ...inputs,
         url: imageUrl,
         tags: { 
-          location: regions,
-          type: typeTags,
-          custom: customTags,
+          locations: regions,
+          types: typeTags,
+          customs: customTags,
         },
       }
       console.log(output)

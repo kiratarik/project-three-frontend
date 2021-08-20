@@ -2,10 +2,14 @@ import React from 'react'
 import ReactMapGL, { Marker } from 'react-map-gl'
 import axios from 'axios'
 import Select from 'react-select'
+import CreatableSelect from 'react-select/creatable'
 
 
 function ImageSubmit() {
-  const user = { username: 'kiratarik' }
+  const user = { 
+    id: '123',
+    username: 'kiratarik' ,
+  }
   const [inputs, setInputs] = React.useState(
     { 
       caption: '',
@@ -64,6 +68,7 @@ function ImageSubmit() {
   }
 
   const [typeTags, setTypeTags] = React.useState([])
+  const [customTags, setCustomTags] = React.useState([])
 
   function handleCaption(e) {
     if (e.target.value.length > 20) {
@@ -104,13 +109,13 @@ function ImageSubmit() {
       const output = {
         ...inputs,
         url: '',
-        addedBy: '',
         tags: { 
           location: regions,
           type: typeTags,
-          custom: [],
+          custom: customTags,
         },
       }
+      console.log(output)
     } catch (err) {
       console.log(err)
     }
@@ -139,6 +144,10 @@ function ImageSubmit() {
       </div>
       <div>
         <label>Custom Tags: </label>
+        <CreatableSelect 
+          isMulti
+          onChange={(e) => setCustomTags(e.map(item => item.value))}
+        />
       </div>
       <div className='location-input'>
         <label>Location: </label>

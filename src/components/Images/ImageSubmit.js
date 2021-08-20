@@ -4,6 +4,8 @@ import axios from 'axios'
 import Select from 'react-select'
 import CreatableSelect from 'react-select/creatable'
 
+const uploadUrl = process.env.REACT_APP_CLOUDINARY_URL
+const uploadPreset = process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET
 
 function ImageSubmit() {
   const user = { 
@@ -59,10 +61,12 @@ function ImageSubmit() {
   }, [])
   
 
-
+  const [imagePath, setImagePath] = React.useState('')
+  const [imageFile, setImageFile] = React.useState({})
   function handleImage(e) {
     if (e.target.files[0]) {
       setImagePath(URL.createObjectURL(e.target.files[0]))
+      setImageFile(e.target.files[0])
       console.log(e.target.files)
     }
   }
@@ -99,16 +103,16 @@ function ImageSubmit() {
     setInputs({ ...inputs, longitude: e.lngLat[0], latitude: e.lngLat[1] })
     document.querySelector('#longitude').value = e.lngLat[0]
     document.querySelector('#latitude').value = e.lngLat[1]
+    getLocation({ latitude: e.lngLat[1], longitude: e.lngLat[0] })
   }
-  const [imagePath, setImagePath] = React.useState('')
   
 
   function handleSubmit() {
     try {
-
+      handleUpload()
       const output = {
         ...inputs,
-        url: '',
+        url: imageUrl,
         tags: { 
           location: regions,
           type: typeTags,
@@ -116,6 +120,21 @@ function ImageSubmit() {
         },
       }
       console.log(output)
+    } catch (err) {
+      console.log(err)
+    }
+  }
+  const [isUploading, setIsUploading] = React.useState(false)
+  const [imageUrl, setImageUrl] = React.useState('')
+  const handleUpload = async () => {
+    try {
+      setIsUploading(true)
+      const data = new FormData()
+      data.append('file', imageFile)
+      data.append('upload_preset', uploadPreset)
+      const res = await axios.post(uploadUrl, data)
+      setImageUrl(res.data.url)
+      setIsUploading(false)
     } catch (err) {
       console.log(err)
     }
@@ -193,6 +212,7 @@ function ImageSubmit() {
       </div>
       <div>
         <input type='submit' onClick={handleSubmit} ></input>
+        {isUploading && <p>...Uploading</p>}
       </div>
     </>
   )

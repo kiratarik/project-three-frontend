@@ -17,7 +17,11 @@ function Register() {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    console.log('submitted')
+    try {
+      alert(`Submitting ${JSON.stringify(formData, null, 2)}`) 
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   return (

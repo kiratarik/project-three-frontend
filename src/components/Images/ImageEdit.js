@@ -26,7 +26,7 @@ function ImageEdit() {
   const [images, setImages] = React.useState([
     {
       id: 'test1',
-      caption: 'Image 1',
+      picName: 'Image 1',
       latitude: 51,
       longitude: 1,
       url: 'https://upload.wikimedia.org/wikipedia/commons/2/27/France_manche_vue_dover.JPG',
@@ -39,7 +39,7 @@ function ImageEdit() {
     },
     {
       id: 'test2',
-      caption: 'Image 2',
+      picName: 'Image 2',
       latitude: 54.58,
       longitude: -3.14,
       url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Derwent-water.jpg/1920px-Derwent-water.jpg',
@@ -168,7 +168,7 @@ function ImageEdit() {
             <img src={inputs[0].url} />
           </div>
           <div>
-            <p>Caption: <input id='caption' onChange={handleChange} value={inputs[0].caption} /></p>
+            <p>Name: <input id='picName' onChange={handleChange} value={inputs[0].picName} /></p>
             <p>Latitude: <input id='latitude' onChange={handleLatLng} value={latLng.latitude} /></p>
             <p>Longitude: <input id='longitude' onChange={handleLatLng} value={latLng.longitude} /></p>
             <div className='map-container'>
@@ -182,7 +182,7 @@ function ImageEdit() {
                 {...viewport}
               >
                 <Marker 
-                  key={inputs[0].caption}
+                  key={inputs[0].picName}
                   latitude={inputs[0].latitude}
                   longitude={inputs[0].longitude}
                   offsetLeft={-8}

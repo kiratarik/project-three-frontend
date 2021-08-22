@@ -14,7 +14,7 @@ function ImageSubmit() {
   }
   const [inputs, setInputs] = React.useState(
     { 
-      caption: '',
+      picName: '',
       latitude: 0,
       longitude: 0,
     })
@@ -144,8 +144,8 @@ function ImageSubmit() {
     <>
       <h1>Create New Image:</h1>
       <div>
-        <label>Caption: </label>
-        <input id='caption' placeholder='Describe Image' required onChange={handleCaption} />
+        <label>Name: </label>
+        <input id='picName' placeholder='Describe Image' required onChange={handleCaption} />
       </div>
       <div>
         <label>Image Upload: </label>
@@ -187,7 +187,7 @@ function ImageSubmit() {
                 {...viewport}
               >
                 <Marker 
-                  key={inputs.caption}
+                  key={inputs.picName}
                   latitude={inputs.latitude}
                   longitude={inputs.longitude}
                   offsetLeft={-8}

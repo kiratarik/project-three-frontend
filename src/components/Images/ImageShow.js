@@ -9,7 +9,7 @@ function ImageShow() {
   const images = [
     {
       id: 'test1',
-      caption: 'Image 1',
+      picName: 'Image 1',
       latitude: 51,
       longitude: 1,
       url: 'https://upload.wikimedia.org/wikipedia/commons/2/27/France_manche_vue_dover.JPG',
@@ -22,7 +22,7 @@ function ImageShow() {
     },
     {
       id: 'test2',
-      caption: 'Image 2',
+      picName: 'Image 2',
       latitude: 54.58,
       longitude: -3.14,
       url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Derwent-water.jpg/1920px-Derwent-water.jpg',
@@ -77,7 +77,7 @@ function ImageShow() {
             <img src={inputs[0].url} />
           </div>
           <div>
-            <p>Caption: {inputs[0].caption}</p>
+            <p>Name: {inputs[0].caption}</p>
             <p>Latitude: {inputs[0].latitude}</p>
             <p>Longitude: {inputs[0].longitude}</p>
             <p>Regions: {inputs[0].tags.locations.join(', ')}</p>

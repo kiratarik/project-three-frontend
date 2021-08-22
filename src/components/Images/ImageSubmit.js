@@ -22,13 +22,13 @@ function ImageSubmit() {
 
 
   const selectOptions = [
-    { value: 'beach', label: 'Beach' },
-    { value: 'mountain', label: 'Mountain' },
-    { value: 'ocean', label: 'Ocean' },
-    { value: 'lake', label: 'Lake' },
-    { value: 'forest', label: 'Forest' },
-    { value: 'desert', label: 'Desert' },
-    { value: 'meadow', label: 'Meadow' }
+    { value: 'Beach', label: 'Beach' },
+    { value: 'Mountain', label: 'Mountain' },
+    { value: 'Ocean', label: 'Ocean' },
+    { value: 'Lake', label: 'Lake' },
+    { value: 'Forest', label: 'Forest' },
+    { value: 'Desert', label: 'Desert' },
+    { value: 'Meadow', label: 'Meadow' }
   ]
   
   const [viewport, setViewport] = React.useState({

@@ -10,17 +10,14 @@ function ImageEdit() {
   const [inputs, setInputs] = React.useState([])
   const [madeBy, setMadeBy] = React.useState('')
 
-  const [typeTags, setTypeTags] = React.useState([])
-  const [customTags, setCustomTags] = React.useState([])
-
   const selectOptions = [
-    { value: 'beach', label: 'Beach' },
-    { value: 'mountain', label: 'Mountain' },
-    { value: 'ocean', label: 'Ocean' },
-    { value: 'lake', label: 'Lake' },
-    { value: 'forest', label: 'Forest' },
-    { value: 'desert', label: 'Desert' },
-    { value: 'meadow', label: 'Meadow' }
+    { value: 'Beach', label: 'Beach' },
+    { value: 'Mountain', label: 'Mountain' },
+    { value: 'Ocean', label: 'Ocean' },
+    { value: 'Lake', label: 'Lake' },
+    { value: 'Forest', label: 'Forest' },
+    { value: 'Desert', label: 'Desert' },
+    { value: 'Meadow', label: 'Meadow' }
   ]
 
   const [images, setImages] = React.useState([
@@ -149,13 +146,17 @@ function ImageEdit() {
     getLocation({ latitude: e.lngLat[1], longitude: e.lngLat[0] })
   }
 
-  function handleTags(e) {
-
-  }
-
 
   function handleSubmit() {
-    console.log('submitted')
+    const newImages = images.map(image => {
+      if (image.id === inputs[0].id) {
+        return (inputs[0])
+      } else {
+        return (image)
+      }
+    })
+    setImages(newImages)
+    console.log('submitted', images, newImages)
   }
 
 
@@ -199,12 +200,14 @@ function ImageEdit() {
               id='type-tags'
               options={selectOptions}
               isMulti
-              onChange={(e) => setTypeTags(e.map(item => item.value))}
+              onChange={(e) => setInputs([{  ...inputs[0], tags: { types: e.map(item => item.value) } }])}
+              defaultValue={inputs[0].tags.types.map(item => ({ value: item, label: item }))}
             />
             </p>
             <p>Tags: <CreatableSelect 
               isMulti
-              onChange={(e) => setCustomTags(e.map(item => item.value))}
+              onChange={(e) => setInputs([{  ...inputs[0], tags: { customs: e.map(item => item.value) } }])}
+              defaultValue={inputs[0].tags.customs.map(item => ({ value: item, label: item }))}
             />
             </p>
             <p>Made By: {madeBy}</p>

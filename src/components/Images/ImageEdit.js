@@ -91,7 +91,6 @@ function ImageEdit() {
   }, [])
 
 
-  const [regions, setRegions] = React.useState([])
   const url = {
     front: 'https://api.bigdatacloud.net/data/reverse-geocode-client?localityLanguage=en&latitude=',
     mid: '&longitude=',
@@ -103,9 +102,7 @@ function ImageEdit() {
       const search = url.front + latitude + url.mid + longitude
       const res = await axios.get(search)
       const { continent, countryName, locality } = res.data
-      setRegions([continent, countryName, locality].filter(item => {
-        return item
-      }))
+      setInputs([{ ...inputs[0], tags: { ...inputs[0].tags, locations: [continent, countryName, locality].filter(item => item) } }])
     } catch (err) {
       console.log(err)
     }
@@ -195,18 +192,18 @@ function ImageEdit() {
                 </Marker>
               </ReactMapGL>
             </div>
-            <p>Regions: {regions.join(', ')}</p>
+            <p>Regions: {inputs[0].tags.locations.join(', ')}</p>
             <p>Types: <Select
               id='type-tags'
               options={selectOptions}
               isMulti
-              onChange={(e) => setInputs([{  ...inputs[0], tags: { types: e.map(item => item.value) } }])}
+              onChange={(e) => setInputs([{  ...inputs[0], tags: { ...inputs[0].tags, types: e.map(item => item.value) } }])}
               defaultValue={inputs[0].tags.types.map(item => ({ value: item, label: item }))}
             />
             </p>
             <p>Tags: <CreatableSelect 
               isMulti
-              onChange={(e) => setInputs([{  ...inputs[0], tags: { customs: e.map(item => item.value) } }])}
+              onChange={(e) => setInputs([{  ...inputs[0], tags: { ...inputs[0].tags, customs: e.map(item => item.value) } }])}
               defaultValue={inputs[0].tags.customs.map(item => ({ value: item, label: item }))}
             />
             </p>

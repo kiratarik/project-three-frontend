@@ -7,7 +7,7 @@ import CreatableSelect from 'react-select/creatable'
 const uploadUrl = process.env.REACT_APP_CLOUDINARY_URL
 const uploadPreset = process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET
 
-function ImageSubmit({ arrayImages, setArrayImages }) {
+function ImageSubmit() {
   const user = { 
     id: '123',
     username: 'kiratarik' ,
@@ -120,10 +120,6 @@ function ImageSubmit({ arrayImages, setArrayImages }) {
         },
       }
       console.log(output)
-      const newArray = arrayImages
-      newArray.push({ ...output, id: output.caption + String(Date.now()) })
-      setArrayImages(newArray)
-      console.log(newArray)
     } catch (err) {
       console.log(err)
     }

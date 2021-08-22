@@ -15,7 +15,6 @@ import Login from './components/Users/Login.js'
 
 
 function App() {
-  const [arrayImages, setArrayImages] = React.useState([])
 
   return (
     <BrowserRouter>
@@ -25,13 +24,13 @@ function App() {
           <Home />
         </Route>
         <SecureRoute path='/images/new'>
-          <ImageSubmit arrayImages={arrayImages} setArrayImages={setArrayImages}  />
+          <ImageSubmit />
         </SecureRoute>
         <SecureRoute path='/images/:imageId/edit'>
-          <ImageEdit arrayImages={arrayImages} setArrayImages={setArrayImages} />
+          <ImageEdit />
         </SecureRoute>
         <Route path='/images/:imageId'>
-          <ImageShow arrayImages={arrayImages} />
+          <ImageShow />
         </Route>
         <SecureRoute path='/users/:userId/edit'>
           <UserEdit />

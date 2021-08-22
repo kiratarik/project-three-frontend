@@ -1,4 +1,29 @@
+import React from 'react'
+
 function Login() {
+
+  const [formData, setFormData] = React.useState({
+
+    username: '',
+    email: '',
+    password: '',
+
+  })
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value })
+  }
+
+  console.log(formData)
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    try {
+      alert(`Submitting ${JSON.stringify(formData, null, 2)}`) 
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   return (
     <section className="section">
@@ -8,14 +33,16 @@ function Login() {
           <p className="text-is-centered">Sign in below</p>
         </div>
         <div className="form-container">
-          <form>
+          <form onSubmit={handleSubmit}>
             <div className="field">
               <label className="label">Username</label>
               <div>
                 <input
+                  onChange={handleChange}
                   className="input"
                   placeholder="Username"
                   name="userName"
+                  
                 />
               </div>
             </div>
@@ -23,6 +50,7 @@ function Login() {
               <label className="label">Email</label>
               <div>
                 <input
+                  onChange={handleChange}
                   className="input"
                   placeholder="Email Address"
                   name="email"
@@ -33,6 +61,7 @@ function Login() {
               <label className="label">Password</label>
               <div className="control">
                 <input
+                  onChange={handleChange}
                   type="password"
                   className="input"
                   placeholder="Password"

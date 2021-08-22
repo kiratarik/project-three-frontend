@@ -1,18 +1,43 @@
+import React from 'react'
+
 function Register() {
+
+  const [formData, setFormData] = React.useState({
+    username: '',
+    email: '',
+    password: '',
+    passwordConfirmation: '',
+  })
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value })
+  }
+
+  console.log(formData)
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    try {
+      alert(`Submitting ${JSON.stringify(formData, null, 2)}`) 
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   return (
     <section className="section">
       <div className="center-container">
         <div>
-          <h2>Welcome to pictureREST</h2>
-          <p>Sign up to collect, share and find great photo spots</p>
+          <h2 className="text-is-centered">Welcome to pictureREST</h2>
+          <p className="text-is-centered">Sign up to collect, share and find great photo spots</p>
         </div>
         <div className="form-container">
-          <form>
+          <form onSubmit={handleSubmit}>
             <div className="field">
               <label className="label">Username</label>
               <div>
                 <input
+                  onChange={handleChange}
                   className="input"
                   placeholder="Username"
                   name="userName"
@@ -23,6 +48,7 @@ function Register() {
               <label className="label">Email</label>
               <div>
                 <input
+                  onChange={handleChange}
                   className="input"
                   placeholder="Email Address"
                   name="email"
@@ -33,6 +59,7 @@ function Register() {
               <label className="label">Password</label>
               <div className="control">
                 <input
+                  onChange={handleChange}
                   type="password"
                   className="input"
                   placeholder="Password"
@@ -44,6 +71,7 @@ function Register() {
               <label className="label">Password Confirmation</label>
               <div className="control">
                 <input
+                  onChange={handleChange}
                   type="password"
                   className="input"
                   placeholder="Password"

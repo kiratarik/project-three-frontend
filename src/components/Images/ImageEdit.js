@@ -85,7 +85,7 @@ function ImageEdit() {
         setMadeBy('')
       }
     } else {
-      setInputs({})
+      setInputs([])
       setMadeBy('')
     }
   }, [])
@@ -102,14 +102,11 @@ function ImageEdit() {
       const search = url.front + latitude + url.mid + longitude
       const res = await axios.get(search)
       const { continent, countryName, locality } = res.data
-      setInputs([{ ...inputs[0], tags: { ...inputs[0].tags, locations: [continent, countryName, locality].filter(item => item) } }])
+      setInputs([{ ...inputs[0], latitude: latitude, longitude: longitude, tags: { ...inputs[0].tags, locations: [continent, countryName, locality].filter(item => item) } }])
     } catch (err) {
       console.log(err)
     }
   }
-  React.useState(() => {
-    getLocation(inputs)
-  }, [])
 
 
   function handleChange(e) {
@@ -122,25 +119,25 @@ function ImageEdit() {
     const id = e.target.id
     const mod = id.length - 7
     const value = e.target.value
+    console.log(e.target.value)
     const numValue = parseFloat(value)
+    setLatLng({ ...latLng, [id]: value })
     if (value === '') {
       e.target.classList.remove('red')
     } else if (String(numValue) !== value || numValue < -90 * mod || numValue > 90 * mod ) {
       e.target.classList.add('red')
     } else {
-      setInputs([{ ...inputs[0], [id]: numValue }])
       getLocation({ ...inputs[0], [id]: numValue })
       e.target.classList.remove('red')
     }
-    setLatLng({ ...latLng, [id]: value })
   }
 
   function handleDragEnd(e) {
     console.log(e.lngLat)
-    setInputs({ ...inputs, longitude: e.lngLat[0], latitude: e.lngLat[1] })
-    document.querySelector('#longitude').value = e.lngLat[0]
-    document.querySelector('#latitude').value = e.lngLat[1]
+    setLatLng({ latitude: e.lngLat[1], longitude: e.lngLat[0] })
+    setInputs([{ ...inputs[0], longitude: e.lngLat[0], latitude: e.lngLat[1] }])
     getLocation({ latitude: e.lngLat[1], longitude: e.lngLat[0] })
+    
   }
 
 

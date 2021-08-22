@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom'
 
 function ImageShow() {
   const { imageId } = useParams()
-  const [inputs, setInputs] = React.useState({})
+  const [inputs, setInputs] = React.useState([])
   const [madeBy, setMadeBy] = React.useState('')
   
   const images = [
@@ -19,6 +19,19 @@ function ImageShow() {
         customs: ['The Channel'],
       },
       addedBy: 'userId1',
+    },
+    {
+      id: 'test2',
+      caption: 'Image 2',
+      latitude: 54.58,
+      longitude: -3.14,
+      url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Derwent-water.jpg/1920px-Derwent-water.jpg',
+      tags: { 
+        locations: ['Europe','United Kingdom', 'Derwentwater'],
+        types: ['Lake', 'Mountain'],
+        customs: ['England'],
+      },
+      addedBy: 'userId2',
     }
   ]
 
@@ -26,6 +39,10 @@ function ImageShow() {
     {
       id: 'userId1',
       username: 'Tarik',
+    },
+    {
+      id: 'userId2',
+      username: 'Kirat',
     }
   ]
 

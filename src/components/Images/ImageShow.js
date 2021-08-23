@@ -3,7 +3,6 @@ import axios from 'axios'
 import { useParams } from 'react-router-dom'
 
 function ImageShow() {
-  const baseUrl = '/api'
   const { imageId } = useParams()
   const [inputs, setInputs] = React.useState(null)
   const [madeBy, setMadeBy] = React.useState('')
@@ -11,9 +10,9 @@ function ImageShow() {
   React.useEffect(() => {
     const getData = async () => {
       try {
-        const resImage = await axios.get(`${baseUrl}/images/${imageId}`)
+        const resImage = await axios.get(`/api/images/${imageId}`)
         setInputs(resImage.data)
-        const resUser = await axios.get(`${baseUrl}/users/${resImage.data.addedBy}`)
+        const resUser = await axios.get(`$/api/users/${resImage.data.addedBy}`)
         setMadeBy(resUser.data.userName)
         console.log(resImage.data)
         console.log(resUser.data)

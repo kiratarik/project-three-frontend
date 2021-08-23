@@ -90,7 +90,7 @@ function ImageSubmit() {
     const numValue = parseFloat(value)
     if (value === '') {
       e.target.classList.remove('red')
-    } else if (String(numValue) !== value || numValue < -90 * mod || numValue > 90 * mod ) {
+    } else if (String(numValue) !== value || numValue <= -90 * mod || numValue > 90 * mod ) {
       e.target.classList.add('red')
     } else {
       setInputs({ ...inputs, [id]: numValue })
@@ -99,7 +99,14 @@ function ImageSubmit() {
     }
   }
   function handleDragEnd(e) {
-    console.log(e.lngLat)
+    e.lngLat[0] = e.lngLat[0] % 360
+    if (e.lngLat[0] > 180) {
+      e.lngLat[0] = e.lngLat[0] - 360
+    } else if (e.lngLat[0] <= -180) {
+      e.lngLat[0] = e.lngLat[0] + 360
+    }
+
+    console.log('LngLat', e.lngLat)
     setInputs({ ...inputs, longitude: e.lngLat[0], latitude: e.lngLat[1] })
     document.querySelector('#longitude').value = e.lngLat[0]
     document.querySelector('#latitude').value = e.lngLat[1]

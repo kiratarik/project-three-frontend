@@ -124,7 +124,7 @@ function ImageEdit() {
     setLatLng({ ...latLng, [id]: value })
     if (value === '') {
       e.target.classList.remove('red')
-    } else if (String(numValue) !== value || numValue < -90 * mod || numValue > 90 * mod ) {
+    } else if (String(numValue) !== value || numValue <= -90 * mod || numValue > 90 * mod ) {
       e.target.classList.add('red')
     } else {
       getLocation({ ...inputs[0], [id]: numValue })
@@ -133,7 +133,14 @@ function ImageEdit() {
   }
 
   function handleDragEnd(e) {
-    console.log(e.lngLat)
+    e.lngLat[0] = e.lngLat[0] % 360
+    if (e.lngLat[0] > 180) {
+      e.lngLat[0] = e.lngLat[0] - 360
+    } else if (e.lngLat[0] <= -180) {
+      e.lngLat[0] = e.lngLat[0] + 360
+    }
+
+    console.log('LngLat', e.lngLat)
     setLatLng({ latitude: e.lngLat[1], longitude: e.lngLat[0] })
     setInputs([{ ...inputs[0], longitude: e.lngLat[0], latitude: e.lngLat[1] }])
     getLocation({ latitude: e.lngLat[1], longitude: e.lngLat[0] })

@@ -14,8 +14,9 @@ function ImageShow() {
         const resImage = await axios.get(`${baseUrl}/images/${imageId}`)
         setInputs(resImage.data)
         const resUser = await axios.get(`${baseUrl}/users/${resImage.data.addedBy}`)
-        setMadeBy(resUser.data.username)
+        setMadeBy(resUser.data.userName)
         console.log(resImage.data)
+        console.log(resUser.data)
       } catch (err) {
         console.log(err)
       }

@@ -1,88 +1,45 @@
 import React from 'react'
+import axios from 'axios'
 import { useParams } from 'react-router-dom'
 
 function ImageShow() {
+  const baseUrl = '/api'
   const { imageId } = useParams()
-  const [inputs, setInputs] = React.useState([])
+  const [inputs, setInputs] = React.useState(null)
   const [madeBy, setMadeBy] = React.useState('')
-  
-  const images = [
-    {
-      id: 'test1',
-      picName: 'Image 1',
-      latitude: 51,
-      longitude: 1,
-      url: 'https://upload.wikimedia.org/wikipedia/commons/2/27/France_manche_vue_dover.JPG',
-      tags: { 
-        locations: ['Europe','United Kingdom', 'Strait of Dover'],
-        types: ['Cliff', 'Ocean'],
-        customs: ['The Channel'],
-      },
-      addedBy: 'userId1',
-    },
-    {
-      id: 'test2',
-      picName: 'Image 2',
-      latitude: 54.58,
-      longitude: -3.14,
-      url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Derwent-water.jpg/1920px-Derwent-water.jpg',
-      tags: { 
-        locations: ['Europe','United Kingdom', 'Derwentwater'],
-        types: ['Lake', 'Mountain'],
-        customs: ['England'],
-      },
-      addedBy: 'userId2',
-    }
-  ]
-
-  const users = [
-    {
-      id: 'userId1',
-      username: 'Tarik',
-    },
-    {
-      id: 'userId2',
-      username: 'Kirat',
-    }
-  ]
 
   React.useEffect(() => {
-    const inputsArray = images.filter(item => {
-      return imageId === item.id
-    })
-
-    if (inputsArray.length > 0) {
-      setInputs(inputsArray)
-
-      const userArray = users.filter(item => {
-        return inputsArray[0].addedBy === item.id
-      })
-      if (userArray.length > 0) {
-        setMadeBy(userArray[0].username)
-      } else {
-        setMadeBy('')
+    const getData = async () => {
+      try {
+        const resImage = await axios.get(`${baseUrl}/images/${imageId}`)
+        setInputs(resImage.data)
+        const resUser = await axios.get(`${baseUrl}/users/${resImage.data.addedBy}`)
+        setMadeBy(resUser.data.username)
+        console.log(resImage.data)
+      } catch (err) {
+        console.log(err)
       }
-    } else {
-      setInputs({})
-      setMadeBy('')
     }
-  }, [])
+    getData()
+  }, [imageId])
+  
+
   
   return (
     <>
       <h1>Image Show:</h1>
-      {(inputs.length > 0) ? 
+      {(inputs) ? 
         <div>
           <div>
-            <img src={inputs[0].url} />
+            <img src={inputs.url} />
           </div>
           <div>
-            <p>Name: {inputs[0].caption}</p>
-            <p>Latitude: {inputs[0].latitude}</p>
-            <p>Longitude: {inputs[0].longitude}</p>
-            <p>Regions: {inputs[0].tags.locations.join(', ')}</p>
-            <p>Types: {inputs[0].tags.types.join(', ')}</p>
-            <p>Tags: {inputs[0].tags.customs.join(', ')}</p>
+            <p>Name: {inputs.picName}</p>
+            <p>Latitude: {inputs.latitude}</p>
+            <p>Longitude: {inputs.longitude}</p>
+            <p>Regions: {inputs.tags.locations.join(', ')}</p>
+            <p>Types: {inputs.tags.types.join(', ')}</p>
+            <p>Tags: {inputs.tags.customs.join(', ')}</p>
             <p>Made By: {madeBy}</p>
           </div>
         </div> 

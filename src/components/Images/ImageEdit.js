@@ -133,6 +133,15 @@ function ImageEdit() {
   }
 
   function handleDragEnd(e) {
+    console.log('1', e.lngLat)
+    e.lngLat[0] = e.lngLat[0] % 360
+    console.log('2', e.lngLat)
+    if (e.lngLat[0] > 180) {
+      e.lngLat[0] = e.lngLat[0] - 360
+    } else if (e.lngLat[0] <= -180) {
+      e.lngLat[0] = e.lngLat[0] + 360
+    }
+
     console.log(e.lngLat)
     setLatLng({ latitude: e.lngLat[1], longitude: e.lngLat[0] })
     setInputs([{ ...inputs[0], longitude: e.lngLat[0], latitude: e.lngLat[1] }])

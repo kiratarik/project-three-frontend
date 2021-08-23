@@ -7,9 +7,11 @@ function ImageShow() {
   const { imageId } = useParams()
   const [inputs, setInputs] = React.useState(null)
   const [madeBy, setMadeBy] = React.useState('')
+  const [isLoading, setIsLoading] = React.useState(true)
 
   React.useEffect(() => {
     const getData = async () => {
+      setIsLoading(true)
       try {
         const resImage = await getImage(imageId)
         setInputs(resImage.data)
@@ -20,6 +22,7 @@ function ImageShow() {
       } catch (err) {
         console.log(err)
       }
+      setIsLoading(false)
     }
     getData()
   }, [imageId])
@@ -29,7 +32,7 @@ function ImageShow() {
   return (
     <>
       <h1>Image Show:</h1>
-      {(inputs) ? 
+      {(inputs) && 
         <div>
           <div>
             <img src={inputs.url} />
@@ -44,7 +47,13 @@ function ImageShow() {
             <p>Made By: {madeBy}</p>
           </div>
         </div> 
-        : 
+      }
+      {(isLoading) &&
+        <div>
+          <p>...Loading</p>
+        </div>
+      }
+      { (!inputs) && (!isLoading) &&
         <div>
           <p>Invalid Image ID: Try another Url!</p>
         </div>

@@ -153,6 +153,7 @@ function ImageSubmit() {
   return (
     <>
       <h1>Create New Image:</h1>
+      
       <div>
         <label>Name: </label>
         <input id='picName' placeholder='Describe Image' required onChange={handleCaption} />

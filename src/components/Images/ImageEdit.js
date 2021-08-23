@@ -12,6 +12,7 @@ function ImageEdit() {
   const { imageId } = useParams()
   const [inputs, setInputs] = React.useState(null)
   const [madeBy, setMadeBy] = React.useState('')
+  const [isLoading, setIsLoading] = React.useState(true)
 
   const selectOptions = [
     { value: 'Beach', label: 'Beach' },
@@ -34,6 +35,7 @@ function ImageEdit() {
   React.useEffect(() => {
     const getData = async () => {
       try {
+        setIsLoading(true)
         const resImage = await getImage(imageId)
         setInputs(resImage.data)
         const resUser = await showUser(resImage.data.addedBy)
@@ -45,6 +47,7 @@ function ImageEdit() {
       } catch (err) {
         console.log(err)
       }
+      setIsLoading(false)
     }
     getData()
     
@@ -124,7 +127,7 @@ function ImageEdit() {
   return (
     <>
       <h1>Image Edit:</h1>
-      {(inputs) ? 
+      {(inputs) && 
         <div>
           <div>
             <img src={inputs.url} />
@@ -175,7 +178,13 @@ function ImageEdit() {
           </div>
           <input type='submit' onClick={handleSubmit}></input>
         </div> 
-        : 
+      }
+      {(isLoading) &&
+        <div>
+          <p>...Loading</p>
+        </div>
+      }
+      { (!inputs) && (!isLoading) &&
         <div>
           <p>Invalid Image ID: Try another Url!</p>
         </div>

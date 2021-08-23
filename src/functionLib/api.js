@@ -1,7 +1,7 @@
 import axios from 'axios'
-import getToken from './auth.js'
+import { getToken } from './auth.js'
 
-const baseURL = 'http://localhost:4000'
+const baseURL = '/api'
 
 function getHeaders(){
   const token = getToken()

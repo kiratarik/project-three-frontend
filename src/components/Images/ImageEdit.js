@@ -124,7 +124,7 @@ function ImageEdit() {
     setLatLng({ ...latLng, [id]: value })
     if (value === '') {
       e.target.classList.remove('red')
-    } else if (String(numValue) !== value || numValue < -90 * mod || numValue > 90 * mod ) {
+    } else if (String(numValue) !== value || numValue <= -90 * mod || numValue > 90 * mod ) {
       e.target.classList.add('red')
     } else {
       getLocation({ ...inputs[0], [id]: numValue })

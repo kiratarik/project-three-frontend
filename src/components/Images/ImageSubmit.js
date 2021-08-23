@@ -90,7 +90,7 @@ function ImageSubmit() {
     const numValue = parseFloat(value)
     if (value === '') {
       e.target.classList.remove('red')
-    } else if (String(numValue) !== value || numValue < -90 * mod || numValue > 90 * mod ) {
+    } else if (String(numValue) !== value || numValue <= -90 * mod || numValue > 90 * mod ) {
       e.target.classList.add('red')
     } else {
       setInputs({ ...inputs, [id]: numValue })

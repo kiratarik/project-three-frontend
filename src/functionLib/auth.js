@@ -12,7 +12,7 @@ export function removeToken() {
 
 // gets the token and parses it using the atob encoder function to get the middle string 
 
-function getPayload() {
+export function getPayload() {
   const token = getToken()
   if (!token) return false
   const tokenParts = token.split('.')

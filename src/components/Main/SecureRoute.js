@@ -7,12 +7,16 @@
 //   return <Redirect to='/login' />
 // }
 // export default SecureRoute
-
+import { isAuthenticated, removeToken } from '../../functionLib/auth'
 import React from 'react'
-import { Route } from 'react-router-dom'
+import { Redirect, Route } from 'react-router-dom'
 
 function SecureRoute({ component: Component, ...rest }) {
-  return (<Route {...rest} component={Component} />)
+  if (isAuthenticated){
+    return (<Route {...rest} component={Component} />)
+  }
+  removeToken()
+  return <Redirect to="/login" />
 }
 
 export default SecureRoute

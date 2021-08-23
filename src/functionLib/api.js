@@ -1,7 +1,7 @@
 import axios from 'axios'
-import getToken from './auth.js'
+import { getToken } from './auth.js'
 
-const baseURL = 'http://localhost:4000'
+const baseURL = '/api'
 
 function getHeaders(){
   const token = getToken()
@@ -48,11 +48,11 @@ export function logInUser(){
 }
 
 export function editUser(userId){
-  return axios.put(`${baseURL}/${userId}/edit`, getHeaders())
+  return axios.put(`${baseURL}/users/${userId}/edit`, getHeaders())
 }
 
 export function showUser(userId){
-  return axios.get(`${baseURL}/${userId}`)
+  return axios.get(`${baseURL}/users/${userId}`)
 }
 
 

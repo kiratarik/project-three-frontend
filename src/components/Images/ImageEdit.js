@@ -3,9 +3,12 @@ import ReactMapGL, { Marker } from 'react-map-gl'
 import axios from 'axios'
 import Select from 'react-select'
 import CreatableSelect from 'react-select/creatable'
-import { useParams } from 'react-router-dom'
+import { useParams, useHistory } from 'react-router-dom'
+
+import { getImage, showUser, editImage } from '../../functionLib/api.js'
 
 function ImageEdit() {
+  const history = useHistory()
   const { imageId } = useParams()
   const [inputs, setInputs] = React.useState(null)
   const [madeBy, setMadeBy] = React.useState('')
@@ -31,9 +34,9 @@ function ImageEdit() {
   React.useEffect(() => {
     const getData = async () => {
       try {
-        const resImage = await axios.get(`/api/images/${imageId}`)
+        const resImage = await getImage(imageId)
         setInputs(resImage.data)
-        const resUser = await axios.get(`/api/users/${resImage.data.addedBy}`)
+        const resUser = await showUser(resImage.data.addedBy)
         setMadeBy(resUser.data.userName)
         console.log(resImage.data)
         console.log(resUser.data)
@@ -105,8 +108,16 @@ function ImageEdit() {
   }
 
 
-  function handleSubmit() {
+  async function handleSubmit(e) {
+    e.preventDefault()
+    try {
+      const { data } = await editImage(imageId, inputs)
+      history.push(`/images/${data._id}`)
+    } catch (err) {
+      console.log(err)
+    }
     console.log('submitted')
+    
   }
 
 

@@ -4,6 +4,8 @@ import axios from 'axios'
 import Select from 'react-select'
 import CreatableSelect from 'react-select/creatable'
 
+import { createImage } from '../../functionLib/api.js'
+
 const uploadUrl = process.env.REACT_APP_CLOUDINARY_URL
 const uploadPreset = process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET
 
@@ -126,6 +128,7 @@ function ImageSubmit() {
           customs: customTags,
         },
       }
+      await createImage(output)
       console.log(output)
     } catch (err) {
       console.log(err)

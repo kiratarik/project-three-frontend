@@ -99,16 +99,14 @@ function ImageSubmit() {
     }
   }
   function handleDragEnd(e) {
-    console.log('1', e.lngLat)
     e.lngLat[0] = e.lngLat[0] % 360
-    console.log('2', e.lngLat)
     if (e.lngLat[0] > 180) {
       e.lngLat[0] = e.lngLat[0] - 360
     } else if (e.lngLat[0] <= -180) {
       e.lngLat[0] = e.lngLat[0] + 360
     }
 
-    console.log('3', e.lngLat)
+    console.log('LngLat', e.lngLat)
     setInputs({ ...inputs, longitude: e.lngLat[0], latitude: e.lngLat[1] })
     document.querySelector('#longitude').value = e.lngLat[0]
     document.querySelector('#latitude').value = e.lngLat[1]

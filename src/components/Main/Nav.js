@@ -22,10 +22,11 @@ function Nav() {
 
 
   React.useEffect( () => {
+
     const payload = getPayload() 
     const userId = payload.sub
     setUserId(userId)
-    console.log(userId)
+   
     async function getUserData(){
       try {
         const user = await showUser(userId)
@@ -35,11 +36,13 @@ function Nav() {
         console.log(err)
       }
     }
-    getUserData()
+
+    if (userId){
+      getUserData()
+    } console.log('you are not logged in')
+
   },[tokenAdministered])
 
-  console.log(userData)
-  console.log(userId)
 
   return (
     <nav className="top-nav">

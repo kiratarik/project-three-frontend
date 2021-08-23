@@ -9,19 +9,24 @@ function UserShow() {
   const [ userData, setUserData ] = React.useState() 
   const [imageData, setImageData] = React.useState()
 
+  console.log(userId)
+
+  
+
   React.useEffect(() => {
 
     async function getUserData() {
       try {
         const userData = await showUser(userId)
-        if (!userData) throw new Error() 
+        if (!userData) return console.log('its fucked')
         setUserData(userData.data)
         console.log(userData)
 
         const imageData = await getImages()
         if (!imageData) console.log('there are no images')
-        setImageData(imageData.data)
         console.log(imageData)
+        setImageData(imageData.data)
+        
 
       } catch (err) {
         console.log(err)
@@ -37,8 +42,13 @@ function UserShow() {
           <h1>{`${userData.userName}`}</h1>
           <h2>{`Collections: ${userData.collections.length}`}</h2>  
           <h2>{`Following: ${userData.following.length}`}</h2>
-          <h2>{`Uploads: ${imageData.length}`}</h2>
+          
         </div>
+      }
+      {!imageData ? <h1>loading</h1> :
+        <>
+          <h2>{`Uploads: ${imageData.length}`}</h2>
+        </>
       }
     </>
   )

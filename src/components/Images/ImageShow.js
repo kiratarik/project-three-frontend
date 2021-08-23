@@ -1,24 +1,28 @@
 import React from 'react'
-import axios from 'axios'
 import { useParams } from 'react-router-dom'
+
+import { getImage, showUser } from '../../functionLib/api.js'
 
 function ImageShow() {
   const { imageId } = useParams()
   const [inputs, setInputs] = React.useState(null)
   const [madeBy, setMadeBy] = React.useState('')
+  const [isLoading, setIsLoading] = React.useState(true)
 
   React.useEffect(() => {
     const getData = async () => {
+      setIsLoading(true)
       try {
-        const resImage = await axios.get(`/api/images/${imageId}`)
+        const resImage = await getImage(imageId)
         setInputs(resImage.data)
-        const resUser = await axios.get(`$/api/users/${resImage.data.addedBy}`)
+        const resUser = await showUser(resImage.data.addedBy)
         setMadeBy(resUser.data.userName)
         console.log(resImage.data)
         console.log(resUser.data)
       } catch (err) {
         console.log(err)
       }
+      setIsLoading(false)
     }
     getData()
   }, [imageId])
@@ -28,7 +32,7 @@ function ImageShow() {
   return (
     <>
       <h1>Image Show:</h1>
-      {(inputs) ? 
+      {(inputs) && 
         <div>
           <div>
             <img src={inputs.url} />
@@ -43,7 +47,13 @@ function ImageShow() {
             <p>Made By: {madeBy}</p>
           </div>
         </div> 
-        : 
+      }
+      {(isLoading) &&
+        <div>
+          <p>...Loading</p>
+        </div>
+      }
+      { (!inputs) && (!isLoading) &&
         <div>
           <p>Invalid Image ID: Try another Url!</p>
         </div>

@@ -23,21 +23,23 @@ function Home() {
   }, [])
 
   const handleChange = (e) => {
-    e.map(tag => {
-      setTypeTags(tag.value)
-    })
+    const arrayChoices = e.map(tag => tag.value)
+    setTypeTags(arrayChoices)
   }
 
 
   const filteredImages = () => {
-    return images.filter(image => {
-      if (typeof typeTags === 'object' || 
-          typeof typeTags === 'string' && typeTags === ''){
-        return image
-      } else if (typeof typeTags === 'string'){
-        return Object.values(image.tags.types).includes(typeTags)
-      } 
+    const result = images.filter(image => {
+      if (image.tags && image.tags.types) {
+        const tagMatch = typeTags.filter(tag => {
+          return image.tags.types.join().includes(tag)
+        })
+        return (tagMatch.length === typeTags.length)
+      }
+      return false
     })
+    console.log(result)
+    return result
   }
 
   return (

@@ -39,12 +39,12 @@ export function deleteRating(imageId, ratingId){
 
 // user requests
 
-export function createUser(){
-  return axios.post(`${baseURL}/signUp`)
+export function createUser(formData){
+  return axios.post(`${baseURL}/signUp`, formData)
 }
 
-export function logInUser(){
-  return axios.post(`${baseURL}/signIn`)
+export function logInUser(formData){
+  return axios.post(`${baseURL}/signIn`, formData)
 }
 
 export function editUser(userId){

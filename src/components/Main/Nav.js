@@ -65,7 +65,7 @@ function Nav() {
         ) : (
           <>
             <Link to={`/users/${userId}`}>
-              {`${userData.userName}`}
+              {userData && `${userData.userName}`}
             </Link>
             <Link to="/images/new" className="red-button-small">
               Upload a photo

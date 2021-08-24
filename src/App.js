@@ -11,8 +11,10 @@ import UserEdit from './components/Users/UserEdit.js'
 import UserShow from './components/Users/UserShow.js'
 import Register from './components/Users/Register.js'
 import Login from './components/Users/Login.js'
-
-
+import UserNav from './components/Users/UserNav.js'
+import MyCollections from './components/Users/MyCollections.js'
+import MyPictures from './components/Users/MyPictures.js'
+import MyFollows from './components/Users/MyFollows.js'
 
 function App() {
 
@@ -37,6 +39,18 @@ function App() {
         </SecureRoute>
         <Route path='/users/:userId'>
           <UserShow />
+          <UserNav />
+          <Switch>
+            <Route path='/users/:userId/collections'>
+              <MyCollections />
+            </Route>
+            <Route path='/users/:userId/pictures'>
+              <MyPictures />
+            </Route>
+            <Route path='/users/:userId/follows'>
+              <MyFollows />
+            </Route>
+          </Switch>
         </Route>
         <Route path='/register'>
           <Register />

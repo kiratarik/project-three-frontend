@@ -1,7 +1,8 @@
 
 import React from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, Link } from 'react-router-dom'
 import { showUser, getImages } from '../../functionLib/api'
+import { isAuthenticated, isOwner } from '../../functionLib/auth'
 
 
 function UserShow() {
@@ -9,10 +10,19 @@ function UserShow() {
   const { userId } = useParams()
   const [ userData, setUserData ] = React.useState() 
   const [imageData, setImageData] = React.useState()
- 
+  const [owner, setOwner] = React.useState()
+
   
 
   console.log(userId)
+
+  React.useEffect(() => {
+    const areYouOwner = isOwner(userId)
+    const isAuth = isAuthenticated()
+    if (areYouOwner && isAuth) {
+      setOwner(true)
+    } 
+  },[])
 
   React.useEffect(() => {
 
@@ -36,24 +46,30 @@ function UserShow() {
     getUserData()
   }, [userId])
 
- 
+
   return (
     <>
-      <div>
-        {!userData ? <h1>loading</h1> : 
+      <section className='userShow'>
+        <div className='userCard'>
+          {!userData ? <h1>loading</h1> : 
+            <div>
+              <div className='username'>
+                <h1>{`${userData.userName}`}</h1>
+              </div>
+              <h2>{`Collections: ${userData.collections.length}`}</h2>  
+              <h2>{`Following: ${userData.following.length}`}</h2>
+            </div>
+          }
+          {!imageData ? <h1>loading</h1> :
+            <>
+              <h2>{`Uploads: ${imageData.length}`}</h2>
+            </>
+          }
           <div>
-            <h1>{`${userData.userName}`}</h1>
-            <h2>{`Collections: ${userData.collections.length}`}</h2>  
-            <h2>{`Following: ${userData.following.length}`}</h2>
-            
+            {owner && <div><Link to={`/users/${userId}/edit`}>Edit Profile</Link></div>}
           </div>
-        }
-        {!imageData ? <h1>loading</h1> :
-          <>
-            <h2>{`Uploads: ${imageData.length}`}</h2>
-          </>
-        }
-      </div>
+        </div>
+      </section>  
     </>
   )
 }

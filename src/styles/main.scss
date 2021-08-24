@@ -229,3 +229,45 @@ body {
 .mapboxgl-popup-content {
   padding: 2px;
 }
+
+
+// user page
+
+.userShow {
+  display: flex;
+  justify-content: center;
+
+  .userCard {
+    display: inline;
+    border: 1px solid grey;
+    border-radius: 20px;
+    margin: 40px;
+    padding: 20px;
+
+    .username {
+      display:flex;
+      justify-content: center;
+      background-color:lightgray;
+      border-radius: 20px 20px 0px 0px;
+      width: 122%;
+      margin: -21px;
+      margin-bottom: 20px;
+    }
+
+    .userAvatar{
+      background-color: teal;
+      width: 50px;
+      height: 100px;
+
+    }
+
+  }
+}
+
+.userNav{
+  display: flex;
+  justify-content:space-evenly;
+  width: 100%;
+  background-color: whitesmoke;
+  padding: 20px;
+}

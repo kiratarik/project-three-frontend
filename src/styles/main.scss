@@ -199,9 +199,41 @@ body {
 
 }
 
+<<<<<<< HEAD
 // * text adjustments
 
 .error-text {
   margin: 0;
   font-size: 14px;
+=======
+// Popup 
+
+.popup {
+  background-size: cover;
+  min-height: 100px;
+  width: 100px;
+}
+
+.popup-text {
+  word-wrap: normal;
+  text-align: center;
+  line-height: 100%;
+  font-weight: bold;
+  margin: 0px;
+  padding: 8px;
+  color: black;
+  text-shadow:
+    -1px -1px 0 white,
+    0 -1px 0 white,
+    1px -1px 0 white,
+    1px 0 0 white,
+    1px 1px 0 white,
+    0 1px 0 white,
+    -1px 1px 0 white,
+    -1px 0 0 white;
+}
+
+.mapboxgl-popup-content {
+  padding: 2px;
+>>>>>>> development
 }

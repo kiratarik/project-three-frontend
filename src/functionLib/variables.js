@@ -1,13 +1,31 @@
 // * for global variables 
 
 export const selectOptions = [
-  { value: 'Beach', label: 'Beach' },
-  { value: 'Mountains', label: 'Mountains' },
-  { value: 'Ocean', label: 'Ocean' },
-  { value: 'Lake', label: 'Lake' },
-  { value: 'Forest', label: 'Forest' },
-  { value: 'Desert', label: 'Desert' },
-  { value: 'Meadow', label: 'Meadow' },
-  { value: 'Valley', label: 'Valley' }
+  'Beach',
+  'Mountains',
+  'Ocean',
+  'Lake',
+  'Forest',
+  'Desert',
+  'Meadow',
+  'Valley',
+  'Cliff'
 ]
 
+export const continentOptions = [
+  'Africa',
+  'Asia',
+  'Europe',
+  'North America',
+  'South America',
+  'Antarctica',
+  'Oceania'
+]
+
+export const oceanOptions = [
+  'Arctic Ocean',
+  'Atlantic Ocean',
+  'Indian Ocean',
+  'Pacific Ocean',
+  'Meditaranian Sea'
+]

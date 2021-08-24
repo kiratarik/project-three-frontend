@@ -46,13 +46,19 @@ function Home() {
     filterImages({ ...choices, types: arrayChoices })
   }
   const handleContinentChange = (e) => {
-    const arrayChoice = e.value
+    let arrayChoice = ''
+    if (e) {
+      arrayChoice = e.value
+    }
     setChoices({ ...choices, continent: arrayChoice, country: '' })
     document.querySelector('#location-country-tags').value = ''
     filterImages({ ...choices, continent: arrayChoice, country: '' })
   }
-  const handleCountryChange = (e) => {
-    const arrayChoice = e.value
+  const handleCountryChange = (e) => { 
+    let arrayChoice = ''
+    if (e) {
+      arrayChoice = e.value
+    }
     setChoices({ ...choices, country: arrayChoice })
     filterImages({ ...choices, country: arrayChoice })
   }
@@ -162,6 +168,7 @@ function Home() {
                 })}
                 onChange={handleContinentChange}
                 isClearable
+                value={{ label: choices.continent, value: choices.continent } || ''}
               />
             </div>
             <div className="field">

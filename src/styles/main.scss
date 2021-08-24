@@ -203,3 +203,16 @@ body {
   width: 60px;
   height: 60px;
 }
+
+.popup {
+  background-size: cover;
+  height: 100px;
+  width: 100px;
+}
+
+.popup-text {
+  word-wrap: normal;
+  text-align: center;
+  font-weight: bold;
+  -webkit-text-stroke: 1px white;
+}

@@ -88,9 +88,15 @@ function Home() {
                 longitude={popup.longitude}
                 onClose={() => setPopup(null)}
               >
-                <br />
-                <p>{popup.picName}</p>
-                <img className='mini' src={popup.url} />
+                <div className='popup'
+                  style={{
+                    backgroundImage: `url("${popup.url}")`,
+                  }}
+                >
+                  <br />
+                  <p className='popup-text' >{popup.picName}</p>
+                  {/* <img className='mini' src={popup.url} /> */}
+                </div>
               </Popup>
             }
             

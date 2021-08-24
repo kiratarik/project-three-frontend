@@ -10,10 +10,6 @@ const uploadUrl = process.env.REACT_APP_CLOUDINARY_URL
 const uploadPreset = process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET
 
 function ImageSubmit() {
-  const user = { 
-    id: '123',
-    username: 'kiratarik' ,
-  }
   const [inputs, setInputs] = React.useState(
     { 
       picName: '',
@@ -219,7 +215,7 @@ function ImageSubmit() {
       </div>
       <div>
         <label>Made By: </label>
-        <label>{user.username}</label>
+        <label>{}</label>
       </div>
       <div>
         <input type='submit' onClick={handleSubmit} ></input>

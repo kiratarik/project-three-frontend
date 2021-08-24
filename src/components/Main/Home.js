@@ -87,7 +87,6 @@ function Home() {
                 latitude={popup.latitude} 
                 longitude={popup.longitude}
                 closeButton={false}
-                className={'popup-container'}
                 onClose={() => setPopup(null)}
               >
                 <div className='popup'
@@ -96,7 +95,6 @@ function Home() {
                   }}
                 >
                   <p className='popup-text' >{popup.picName}</p>
-                  {/* <img className='mini' src={popup.url} /> */}
                 </div>
               </Popup>
             }

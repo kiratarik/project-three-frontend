@@ -3,13 +3,20 @@ import Select from 'react-select'
 import ReactMapGL, { Marker, Popup } from 'react-map-gl'
 
 import { getImages } from '../../functionLib/api'
-import { selectOptions } from '../../functionLib/variables'
+import { selectOptions, continentOptions } from '../../functionLib/variables'
 
 function Home() {
 
   const [images, setImages] = React.useState(null)
   // const [typeTags, setTypeTags] = React.useState([])
   const [filteredImages, setFilteredImages] = React.useState(null)
+  const [countryOptions, setCountryOptions] = React.useState([])
+  const [choices, setChoices] = React.useState({
+    types: [],
+    continent: '',
+    country: '',
+    customs: [],
+  })
 
   const [viewport, setViewport] = React.useState({
     latitude: 0.0,
@@ -33,23 +40,59 @@ function Home() {
 
   }, [])
 
-  const handleChange = (e) => {
+  const handleTypeChange = (e) => {
     const arrayChoices = e.map(tag => tag.value)
-    // setTypeTags(arrayChoices)
-    filterImages(arrayChoices)
+    setChoices({ ...choices, types: arrayChoices })
+    filterImages({ ...choices, types: arrayChoices })
+  }
+  const handleContinentChange = (e) => {
+    let arrayChoice = ''
+    if (e) {
+      arrayChoice = e.value
+    }
+    setChoices({ ...choices, continent: arrayChoice, country: '' })
+    document.querySelector('#location-country-tags').value = ''
+    filterImages({ ...choices, continent: arrayChoice, country: '' })
+  }
+  const handleCountryChange = (e) => { 
+    let arrayChoice = ''
+    if (e) {
+      arrayChoice = e.value
+    }
+    setChoices({ ...choices, country: arrayChoice })
+    filterImages({ ...choices, country: arrayChoice })
   }
 
 
-  const filterImages = (choices) => {
+  const filterImages = (chosen) => {
+    console.log(chosen)
+    const countries = []
     const result = images.filter(image => {
-      if (image.tags && image.tags.types) {
-        const tagMatch = choices.filter(tag => {
+      if (image.tags && image.tags) {
+        const typeMatch = chosen.types.filter(tag => {
           return image.tags.types.join().includes(tag)
         })
-        return (tagMatch.length === choices.length)
+        
+        let continentMatch = false
+        if (image.tags.locations[0] === chosen.continent || chosen.continent === '') {
+          countries.push(image.tags.locations[1])
+          continentMatch = true
+        }
+        
+        let countryMatch = false
+        if (image.tags.locations[1] === chosen.country || chosen.country === '') {
+          countryMatch = true
+        }
+        return (
+          typeMatch.length === chosen.types.length &&
+          continentMatch &&
+          countryMatch
+        )
       }
       return false
     })
+    const orderedCountries = [...new Set(countries)]
+    setCountryOptions(orderedCountries)
     console.log(result)
     setFilteredImages(result)
   }
@@ -109,9 +152,35 @@ function Home() {
               <label className="label">Types</label> 
               <Select
                 id='type-tags'
-                options={selectOptions}
-                onChange={handleChange}
+                options={selectOptions.map(option => {
+                  return ({ value: option, label: option })
+                })}
+                onChange={handleTypeChange}
                 isMulti
+              />
+            </div>
+            <div className="field">
+              <label className="label">Continent</label> 
+              <Select
+                id='location-continent-tags'
+                options={continentOptions.map(option => {
+                  return ({ value: option, label: option })
+                })}
+                onChange={handleContinentChange}
+                isClearable
+                value={{ label: choices.continent, value: choices.continent } || ''}
+              />
+            </div>
+            <div className="field">
+              <label className="label">Country</label> 
+              <Select
+                id='location-country-tags'
+                options={countryOptions.map(option => {
+                  return ({ value: option, label: option })
+                })}
+                onChange={handleCountryChange}
+                isClearable
+                value={{ label: choices.country, value: choices.country } || ''}
               />
             </div>
           </form>

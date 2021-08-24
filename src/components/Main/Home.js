@@ -35,7 +35,6 @@ function Home() {
 
   const handleChange = (e) => {
     const arrayChoices = e.map(tag => tag.value)
-    // setTypeTags(arrayChoices)
     filterImages(arrayChoices)
   }
 
@@ -109,7 +108,9 @@ function Home() {
               <label className="label">Types</label> 
               <Select
                 id='type-tags'
-                options={selectOptions}
+                options={selectOptions.map(option => {
+                  return ({ value: option, label: option })
+                })}
                 onChange={handleChange}
                 isMulti
               />

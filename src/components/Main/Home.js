@@ -3,13 +3,19 @@ import Select from 'react-select'
 import ReactMapGL, { Marker, Popup } from 'react-map-gl'
 
 import { getImages } from '../../functionLib/api'
-import { selectOptions } from '../../functionLib/variables'
+import { selectOptions, continentOptions, countryOptions } from '../../functionLib/variables'
 
 function Home() {
 
   const [images, setImages] = React.useState(null)
   // const [typeTags, setTypeTags] = React.useState([])
   const [filteredImages, setFilteredImages] = React.useState(null)
+  const [choices, setChoices] = React.useState({
+    types: [],
+    continents: [],
+    countries: [],
+    customs: [],
+  })
 
   const [viewport, setViewport] = React.useState({
     latitude: 0.0,
@@ -33,19 +39,41 @@ function Home() {
 
   }, [])
 
-  const handleChange = (e) => {
+  const handleTypeChange = (e) => {
     const arrayChoices = e.map(tag => tag.value)
-    filterImages(arrayChoices)
+    setChoices({ ...choices, types: arrayChoices })
+    filterImages({ ...choices, types: arrayChoices })
   }
+  const handleContinentChange = (e) => {
+    const arrayChoices = e.map(tag => tag.value)
+    setChoices({ ...choices, continents: arrayChoices })
+    filterImages({ ...choices, continents: arrayChoices })
+  }
+  // const handleCountryChange = (e) => {
+  //   const arrayChoices = e.map(tag => tag.value)
+  //   setChoices({ ...choices, countries: arrayChoices })
+  //   filterImages({ ...choices, countries: arrayChoices })
+  // }
 
 
-  const filterImages = (choices) => {
+  const filterImages = (chosen) => {
+    console.log(chosen)
     const result = images.filter(image => {
-      if (image.tags && image.tags.types) {
-        const tagMatch = choices.filter(tag => {
+      if (image.tags && image.tags) {
+        const typeMatch = chosen.types.filter(tag => {
           return image.tags.types.join().includes(tag)
         })
-        return (tagMatch.length === choices.length)
+        const continentMatch = chosen.continents.filter(tag => {
+          return image.tags.locations.join().includes(tag)
+        })
+        // const countryMatch = chosen.countries.filter(tag => {
+        //   return image.tags.locations.join().includes(tag)
+        // })
+        return (
+          typeMatch.length === chosen.types.length &&
+          continentMatch.length === chosen.continents.length
+          // countryMatch.length === chosen.countries.length
+        )
       }
       return false
     })
@@ -111,7 +139,18 @@ function Home() {
                 options={selectOptions.map(option => {
                   return ({ value: option, label: option })
                 })}
-                onChange={handleChange}
+                onChange={handleTypeChange}
+                isMulti
+              />
+            </div>
+            <div className="field">
+              <label className="label">Continents</label> 
+              <Select
+                id='location-continent-tags'
+                options={continentOptions.map(option => {
+                  return ({ value: option, label: option })
+                })}
+                onChange={handleContinentChange}
                 isMulti
               />
             </div>

@@ -1,5 +1,6 @@
 import React from 'react'
 import Select from 'react-select'
+import CreatableSelect from 'react-select/creatable'
 import ReactMapGL, { Marker, Popup } from 'react-map-gl'
 
 import { getImages } from '../../functionLib/api'
@@ -52,6 +53,11 @@ function Home() {
     setChoices({ ...choices, types: arrayChoices })
     filterImages({ ...choices, types: arrayChoices })
   }
+  const handleCustomChange = (e) => {
+    const arrayChoices = e.map(tag => tag.value)
+    setChoices({ ...choices, customs: arrayChoices })
+    filterImages({ ...choices, customs: arrayChoices })
+  }
   const handleContinentChange = (e) => {
     let arrayChoice = ''
     if (e) {
@@ -79,6 +85,9 @@ function Home() {
         const typeMatch = chosen.types.filter(tag => {
           return image.tags.types.join().includes(tag)
         })
+        const customMatch = chosen.customs.filter(tag => {
+          return image.tags.customs.join().includes(tag)
+        })
         
         let continentMatch = false
         if (image.tags.locations[0] === chosen.continent || chosen.continent === '') {
@@ -92,8 +101,8 @@ function Home() {
         }
         return (
           typeMatch.length === chosen.types.length &&
-          continentMatch &&
-          countryMatch
+          customMatch.length === chosen.customs.length &&
+          continentMatch && countryMatch
         )
       }
       return false
@@ -162,6 +171,14 @@ function Home() {
                   return ({ value: option, label: option })
                 })}
                 onChange={handleTypeChange}
+                isMulti
+              />
+            </div>
+            <div className="field">
+              <label className="label">Custom</label> 
+              <CreatableSelect 
+                id='custom-tags'
+                onChange={handleCustomChange}
                 isMulti
               />
             </div>

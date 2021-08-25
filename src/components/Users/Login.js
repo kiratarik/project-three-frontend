@@ -1,14 +1,17 @@
 import React from 'react'
+import { logInUser } from '../../functionLib/api.js'
+import { setToken } from '../../functionLib/auth.js'
+import { useHistory } from 'react-router'
 
 function Login() {
-
+  const history = useHistory()
   const [formData, setFormData] = React.useState({
 
-    username: '',
     email: '',
     password: '',
 
   })
+
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
@@ -18,12 +21,20 @@ function Login() {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    try {
-      alert(`Submitting ${JSON.stringify(formData, null, 2)}`) 
-    } catch (error) {
-      console.log(error)
+    async function submit(){
+      try {
+        const result = await logInUser(formData)
+        console.log(result.data)
+        setToken(result.data.token)
+        history.push('/')
+      } catch (error) {
+        console.log(error)
+      }
     }
+    submit()
   }
+
+
 
   return (
     <section className="section">
@@ -34,18 +45,6 @@ function Login() {
         </div>
         <div className="form-container">
           <form onSubmit={handleSubmit}>
-            <div className="field">
-              <label className="label">Username</label>
-              <div>
-                <input
-                  onChange={handleChange}
-                  className="input"
-                  placeholder="Username"
-                  name="userName"
-                  
-                />
-              </div>
-            </div>
             <div className="field">
               <label className="label">Email</label>
               <div>

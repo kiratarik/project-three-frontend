@@ -5,10 +5,10 @@ import { showUser } from '../../functionLib/api'
 
 
 function Nav() {
-
   const [userData, setUserData] = React.useState()
   const [userId, setUserId] = React.useState()
   const [tokenAdministered, setTokenValid] = React.useState(false)
+  
 
   const  isAuth = isAuthenticated()
 
@@ -17,7 +17,6 @@ function Nav() {
     const token = getToken()
     if (!token) return console.log('you are not logged in')
     setTokenValid(token)
-
   }, [])
 
 

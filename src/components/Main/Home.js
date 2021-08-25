@@ -40,6 +40,13 @@ function Home() {
 
   }, [])
 
+  // Loads country options when images first set
+  React.useEffect(() => {
+    if (images) {
+      filterImages(choices)
+    }
+  }, [images])
+
   const handleTypeChange = (e) => {
     const arrayChoices = e.map(tag => tag.value)
     setChoices({ ...choices, types: arrayChoices })
@@ -167,6 +174,7 @@ function Home() {
                 })}
                 onChange={handleContinentChange}
                 isClearable
+                isSearchable
                 value={{ label: choices.continent, value: choices.continent } || ''}
               />
             </div>
@@ -179,6 +187,7 @@ function Home() {
                 })}
                 onChange={handleCountryChange}
                 isClearable
+                isSearchable
                 value={{ label: choices.country, value: choices.country } || ''}
               />
             </div>

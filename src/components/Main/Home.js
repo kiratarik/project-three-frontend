@@ -100,13 +100,12 @@ function Home() {
   return (
     <>
       <section className="section">
-        <div className='map-container'>
+        <div className="map-container">
           <ReactMapGL
             mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_ACCESS_TOKEN}
-            height='50vw'
-            // width='Calc(100vw - 20px)'
-            width='80vw'
-            mapStyle='mapbox://styles/mapbox/streets-v11'
+            height="100%"
+            width="100%"
+            mapStyle='mapbox://styles/hollylouisarose/cksrc0zi20n2o17q8f17hifcw'
             onViewportChange={(nextViewport) => setViewport(nextViewport)}
             {...viewport}
           >
@@ -147,7 +146,7 @@ function Home() {
       </section>
       <section className="section">
         <div className="filters-container">
-          <form>
+          <form className="filters-form">
             <div className="field">
               <label className="label">Types</label> 
               <Select

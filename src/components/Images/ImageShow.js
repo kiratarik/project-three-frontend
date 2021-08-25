@@ -1,13 +1,15 @@
 import React from 'react'
 import { useParams } from 'react-router-dom'
 
-import { getImage, showUser } from '../../functionLib/api.js'
+import { getImage, showUser, editUser } from '../../functionLib/api.js'
+import { isAuthenticated } from '../../functionLib/auth.js'
 
 function ImageShow() {
   const { imageId } = useParams()
   const [inputs, setInputs] = React.useState(null)
-  const [madeBy, setMadeBy] = React.useState('')
   const [isLoading, setIsLoading] = React.useState(true)
+  const [isFavorite, setIsFavorite] = React.useState(false)
+  const [user, setUser] = React.useState({})
 
   React.useEffect(() => {
     const getData = async () => {
@@ -16,7 +18,14 @@ function ImageShow() {
         const resImage = await getImage(imageId)
         setInputs(resImage.data)
         const resUser = await showUser(resImage.data.addedBy)
-        setMadeBy(resUser.data.userName)
+        setUser(resUser.data)
+        if (resUser.data.myCollections.length > 0) {
+          const favorites = resUser.data.myCollections[0].collectionsArray
+          const filteredFavs = favorites.filter(image => {
+            return (image._id === imageId)
+          })
+          setIsFavorite(filteredFavs.length > 0)
+        }
         console.log(resImage.data)
         console.log(resUser.data)
       } catch (err) {
@@ -27,11 +36,49 @@ function ImageShow() {
     getData()
   }, [imageId])
   
-
+  async function handleFavorite() {
+    try {
+      const newUser = { ...user }
+      if (user.myCollections.length === 0) {
+        newUser.myCollections.push({ collectionName: 'Favorites', collectionArray: [] })
+      }
+      console.log(newUser)
+      newUser.myCollections[0].collectionArray.push(imageId)
+      await editUser(newUser)
+      setIsFavorite(true)
+    } catch (err) {
+      console.log(err)
+    }
+  }
+  async function handleUnfavorite() {
+    try {
+      const newUser = { ...user }
+      if (user.myCollections.length === 0) {
+        newUser.myCollections.push({ collectionName: 'Favorites', collectionArray: [] })
+      }
+      newUser.myCollections[0].collectionsArray = newUser.myCollections[0].collectionsArray.filter(image => {
+        return (image._id !== imageId)
+      })
+      await editUser(newUser)
+      setIsFavorite(false)
+    } catch (err) {
+      console.log(err)
+    }
+  }
   
   return (
     <>
       <h1>Image Show:</h1>
+      {(isAuthenticated) && (!isFavorite) &&
+        <div>
+          <button onClick={handleFavorite} >Favorite</button>
+        </div>
+      }
+      {(isAuthenticated) && (isFavorite) &&
+        <div>
+          <button onClick={handleUnfavorite} >Unfavorite</button>
+        </div>
+      }
       {(inputs) && 
         <div>
           <div>
@@ -44,7 +91,7 @@ function ImageShow() {
             <p>Regions: {inputs.tags.locations.join(', ')}</p>
             <p>Types: {inputs.tags.types.join(', ')}</p>
             <p>Tags: {inputs.tags.customs.join(', ')}</p>
-            <p>Made By: {madeBy}</p>
+            <p>Made By: {user.username}</p>
           </div>
         </div> 
       }

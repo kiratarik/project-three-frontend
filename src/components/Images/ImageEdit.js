@@ -39,7 +39,7 @@ function ImageEdit() {
         const resImage = await getImage(imageId)
         setInputs(resImage.data)
         const resUser = await showUser(resImage.data.addedBy)
-        setMadeBy(resUser.data.userName)
+        setMadeBy(resUser.data.username)
         console.log(resImage.data)
         console.log(resUser.data)
         setLatLng({ latitude: resImage.data.latitude, longitude: resImage.data.longitude })

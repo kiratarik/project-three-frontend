@@ -180,6 +180,15 @@ body {
 
 }
 
+.filters-form {
+  display: flex;
+  justify-content: center;
+  .field {
+    width: 30vw;
+    margin: 10px;
+  }
+}
+
 // * card styles
 
 .card-container {
@@ -235,6 +244,7 @@ body {
 .mapboxgl-popup-content {
   padding: 2px;
 }
+
 
 
 // user page

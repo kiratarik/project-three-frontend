@@ -1,4 +1,5 @@
 import React from 'react'
+import { useHistory } from 'react-router-dom'
 import { createUser } from '../../functionLib/api'
 
 const initialState = {
@@ -11,6 +12,7 @@ const initialState = {
 function Register() {
   const [formData, setFormData] = React.useState(initialState)
   const [formErrors, setFormErrors] = React.useState(initialState)
+  const history = useHistory()
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
@@ -21,6 +23,7 @@ function Register() {
     e.preventDefault()
     try {
       await createUser(formData)
+      history.push('/login')
     } catch (err) {
       err.response.data.username = 'Oops! Username required'
       err.response.data.email = 'Oops! Email required'

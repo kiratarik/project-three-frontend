@@ -5,6 +5,7 @@ import ReactMapGL, { Marker, Popup } from 'react-map-gl'
 
 import { getImages } from '../../functionLib/api'
 import { selectOptions, continentOptions } from '../../functionLib/variables'
+import ImageCard from '../Images/ImageCard'
 
 function Home() {
 
@@ -213,11 +214,12 @@ function Home() {
         <div className="card-container">
           {filteredImages && filteredImages.map(image => {
             return (
-              <div 
-                key={image._id}
-                className="card">
-                <img src={image.url} />
-              </div>
+              <>
+                <ImageCard
+                  image={image}
+                  key={image._id}
+                />
+              </>
             ) 
           })}
         </div>

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { getPayload, getToken } from '../../functionLib/auth'
+import { getPayload, getToken, isAuthenticated, removeToken } from '../../functionLib/auth'
 import { showUser } from '../../functionLib/api'
 
 
@@ -8,19 +8,19 @@ function Nav(props) {
   const [userData, setUserData] = React.useState()
   const [userId, setUserId] = React.useState()
   const [tokenAdministered, setTokenValid] = React.useState(false)
-  const [ isAuth, setIsAuth ] = React.useState(false)
+
 
   console.log(props.auth)
-  React.useEffect(() => {
-    if (props.auth === true) {
-      setIsAuth(true)
-    } else {
-      setIsAuth(false)
-    }
-  },[])
+  // React.useEffect(() => {
+  //   if (props.auth === true) {
+  //     setIsAuth(true)
+  //   } else {
+  //     setIsAuth(false)
+  //   }
+  // },[])
+  const isLoggedIn = isAuthenticated()
 
-  console.log(isAuth)
- 
+  console.log(isLoggedIn)
 
   React.useEffect( () => {
 
@@ -52,6 +52,10 @@ function Nav(props) {
 
   },[tokenAdministered])
 
+  function handleLogOut() {
+    removeToken()
+    window.location.reload()
+  }
 
   return (
     <nav className="top-nav">
@@ -62,7 +66,7 @@ function Nav(props) {
       </div>
 
       <div className="nav-links">
-        {!isAuth ? (
+        {!isLoggedIn ? (
           <>
             <Link to="/login">
               Login
@@ -79,6 +83,10 @@ function Nav(props) {
             <Link to="/images/new" className="red-button-small">
               Upload a photo
             </Link>
+            <button
+              className="button-outline"
+              onClick={handleLogOut}
+            >Log Out</button>
           </>
         ) }
         

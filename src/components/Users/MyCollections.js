@@ -14,7 +14,7 @@ function MyCollections() {
       try {
         const result = await showUser(userId)
         if (!result) console.log('there be errors here')
-        setCollections(result.data.collections)
+        setCollections(result.data.myCollections)
         
       } catch (err) {
         console.log(err)

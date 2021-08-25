@@ -78,7 +78,7 @@ function Nav(props) {
         ) : (
           <>
             <Link to={`/users/${userId}`}>
-              {userData && `${userData.userName}`}
+              {userData && `${userData.username}`}
             </Link>
             <Link to="/images/new" className="red-button-small">
               Upload a photo

@@ -24,11 +24,8 @@ function ImageShow() {
         const currentUser = await showUser(getPayload().sub)
         setUser(currentUser.data)
         if (currentUser.data.myCollections.length > 0) {
-          const favorites = currentUser.data.myCollections[0].collectionsArray
-          const filteredFavs = favorites.filter(image => {
-            return (image._id === imageId)
-          })
-          setIsFavorite(filteredFavs.length > 0)
+          const favorites = currentUser.data.myCollections[0].collectionArray
+          setIsFavorite(favorites.join(',').includes(imageId))
         }
         console.log(resImage.data)
         console.log(resUser.data)
@@ -60,12 +57,14 @@ function ImageShow() {
   async function handleUnfavorite() {
     try {
       const newUser = { ...user }
+      
       if (user.myCollections.length === 0) {
         newUser.myCollections.push({ collectionName: 'Favorites', collectionArray: [] })
-      }
-      newUser.myCollections[0].collectionsArray = newUser.myCollections[0].collectionsArray.filter(image => {
-        return (image._id !== imageId)
+      } 
+      const newCollections = newUser.myCollections[0].collectionArray.filter(image => {
+        return (image !== imageId)
       })
+      newUser.myCollections[0].collectionArray = newCollections
       await editUser(newUser)
       setIsFavorite(false)
     } catch (err) {

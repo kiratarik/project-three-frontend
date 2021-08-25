@@ -44,7 +44,8 @@ function Register() {
             <div className="field">
               <label className="label">Username</label>
               <div>
-                {formErrors.username && (<p className="error-text">{formErrors.username}</p>)}
+                {formErrors.username && (<p className="error-text 
+                text-is-centered">{formErrors.username}</p>)}
                 <input
                   onChange={handleChange}
                   className="input"
@@ -57,7 +58,8 @@ function Register() {
             <div className="field">
               <label className="label">Email</label>
               <div>
-                {formErrors.email && (<p className="error-text">{formErrors.email}</p>)}
+                {formErrors.email && (<p className="error-text 
+                text-is-centered">{formErrors.email}</p>)}
                 <input
                   onChange={handleChange}
                   className="input"
@@ -70,7 +72,8 @@ function Register() {
             <div className="field">
               <label className="label">Password</label>
               <div className="control">
-                {formErrors.password && (<p className="error-text">{formErrors.password}</p>)}
+                {formErrors.password && (<p className="error-text 
+                text-is-centered">{formErrors.password}</p>)}
                 <input
                   onChange={handleChange}
                   type="password"
@@ -84,7 +87,8 @@ function Register() {
             <div className="field">
               <label className="label">Password Confirmation</label>
               <div className="control">
-                {formErrors.passwordConfirmation && (<p className="error-text">{formErrors.passwordConfirmation}</p>)}
+                {formErrors.passwordConfirmation && (<p className="error-text 
+                text-is-centered">{formErrors.passwordConfirmation}</p>)}
                 <input
                   onChange={handleChange}
                   type="password"

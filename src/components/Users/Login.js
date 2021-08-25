@@ -6,11 +6,10 @@ import { useHistory } from 'react-router'
 function Login() {
   const history = useHistory()
   const [formData, setFormData] = React.useState({
-
     email: '',
     password: '',
-
   })
+  const [isError, setIsError] = React.useState(false)
 
 
   const handleChange = (e) => {
@@ -27,14 +26,12 @@ function Login() {
         console.log(result.data)
         setToken(result.data.token)
         history.push('/')
-      } catch (error) {
-        console.log(error)
+      } catch (err) {
+        setIsError(true)
       }
     }
     submit()
   }
-
-
 
   return (
     <section className="section">
@@ -45,6 +42,7 @@ function Login() {
         </div>
         <div className="form-container">
           <form onSubmit={handleSubmit}>
+            {isError && <p className="error-text text-is-centered">Username or Password incorrect</p>}
             <div className="field">
               <label className="label">Email</label>
               <div>

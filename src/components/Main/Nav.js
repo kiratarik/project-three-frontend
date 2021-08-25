@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import { getPayload, getToken, isAuthenticated, removeToken } from '../../functionLib/auth'
 import { showUser } from '../../functionLib/api'
 
@@ -8,7 +8,8 @@ function Nav(props) {
   const [userData, setUserData] = React.useState()
   const [userId, setUserId] = React.useState()
   const [tokenAdministered, setTokenValid] = React.useState(false)
-
+  const [reload, setReload] = React.useState(false)
+  const history = useHistory()
 
   console.log(props.auth)
   // React.useEffect(() => {
@@ -54,7 +55,12 @@ function Nav(props) {
 
   function handleLogOut() {
     removeToken()
-    window.location.reload()
+    history.push('/')
+    if (reload === false){
+      setReload(true)
+    } else {
+      setReload(false)
+    }
   }
 
   return (

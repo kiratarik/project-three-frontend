@@ -1,5 +1,5 @@
 import React from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, useHistory } from 'react-router-dom'
 import { showUser } from '../../functionLib/api'
 import { editUser } from '../../functionLib/api'
 
@@ -13,6 +13,7 @@ function UserEdit() {
   const { userId } = useParams()
   const [userData, setUserData] = React.useState(initialState)
   const [errors, setErrors] = React.useState(initialState)
+  const history = useHistory()
 
   React.useEffect(() => {
 
@@ -29,14 +30,12 @@ function UserEdit() {
 
   }, [userId])
 
-  console.log(errors)
-
-
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
       await editUser(userData)
+      history.push(`/users/${userId}`)
     } catch (err) {
       err.response.data.username = 'Oops! Username required'
       err.response.data.email = 'Oops! Email required'
@@ -44,7 +43,8 @@ function UserEdit() {
     }
   }
 
-  console.log('errors', errors)
+
+
 
   const handleChange = (e) => {
     setUserData({ ...userData, [e.target.name]: e.target.value })
@@ -62,7 +62,7 @@ function UserEdit() {
             <div className="field">
               <label className="label">Username</label>
               <div>
-                {errors.username && 
+                { errors.username && 
                 (<p className="error-text">{errors.username}</p>)}
                 <input
                   onChange={handleChange}
@@ -76,7 +76,7 @@ function UserEdit() {
             <div className="field">
               <label className="label">Email</label>
               <div>
-                {errors.email && 
+                { errors.email && 
                 (<p className="error-text">{errors.email}</p>)}
                 <input
                   onChange={handleChange}

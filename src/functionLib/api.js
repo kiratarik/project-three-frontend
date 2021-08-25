@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { getToken } from './auth.js'
+import { getToken, getPayload } from './auth.js'
 
 const baseURL = '/api'
 
@@ -47,7 +47,8 @@ export function logInUser(formData){
   return axios.post(`${baseURL}/signIn`, formData)
 }
 
-export function editUser(userId){
+export function editUser(){
+  const userId = getPayload()
   return axios.put(`${baseURL}/users/${userId}/edit`, getHeaders())
 }
 

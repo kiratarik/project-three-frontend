@@ -27,7 +27,12 @@ function MyCollections() {
 
   return (
     <>
-      <CollectionCard />
+      {(collections) && (collections.length > 0) &&
+        collections.map((collection, index) => {
+          return (<CollectionCard key={index} collection={collection} />)
+        })
+      }
+      
     </>
   )
 }

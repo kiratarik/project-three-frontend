@@ -47,8 +47,8 @@ export function logInUser(formData){
   return axios.post(`${baseURL}/signIn`, formData)
 }
 
-export function editUser(userId){
-  return axios.put(`${baseURL}/users/${userId}/edit`, getHeaders())
+export function editUser(userData) {
+  return axios.put(`${baseURL}/users/${userData._id}/edit`, userData, getHeaders())
 }
 
 export function showUser(userId){

@@ -6,7 +6,8 @@ function ImageCard({ image }){
     <Link to={`images/${image._id}`}>
       <div 
         key={image._id}
-        className="card">
+        className="card" 
+      >
         <img src={image.url} />
       </div>
     </Link> 

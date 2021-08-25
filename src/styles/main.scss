@@ -30,7 +30,7 @@ body {
   line-height: 1.5;
   color: $almost-black;
   font-size: 16px;
-
+  max-width: 1400px;
   margin: 0 auto;
   padding: 0;
 
@@ -117,7 +117,7 @@ body {
     width: 100%;
     justify-content: space-between;
     align-items: center;
-    border: solid 1px $light-grey;
+    border-bottom: solid 1px $light-grey;
     
     h3 {
       padding-left: 1rem;
@@ -246,7 +246,6 @@ body {
 }
 
 
-
 // user page
 
 .userShow {
@@ -287,3 +286,9 @@ body {
   background-color: whitesmoke;
   padding: 20px;
 }
+
+.map-container {
+  height: 400px;
+}
+
+

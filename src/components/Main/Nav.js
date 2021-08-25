@@ -1,16 +1,26 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { isAuthenticated, getPayload, getToken } from '../../functionLib/auth'
+import { getPayload, getToken } from '../../functionLib/auth'
 import { showUser } from '../../functionLib/api'
 
 
-function Nav() {
+function Nav(props) {
   const [userData, setUserData] = React.useState()
   const [userId, setUserId] = React.useState()
   const [tokenAdministered, setTokenValid] = React.useState(false)
-  
+  const [ isAuth, setIsAuth ] = React.useState(false)
 
-  const  isAuth = isAuthenticated()
+  console.log(props.auth)
+  React.useEffect(() => {
+    if (props.auth === true) {
+      setIsAuth(true)
+    } else {
+      setIsAuth(false)
+    }
+  },[])
+
+  console.log(isAuth)
+ 
 
   React.useEffect( () => {
 

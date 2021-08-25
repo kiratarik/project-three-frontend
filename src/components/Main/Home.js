@@ -1,5 +1,6 @@
 import React from 'react'
 import Select from 'react-select'
+import CreatableSelect from 'react-select/creatable'
 import ReactMapGL, { Marker, Popup } from 'react-map-gl'
 
 import { getImages } from '../../functionLib/api'
@@ -41,10 +42,22 @@ function Home() {
 
   }, [])
 
+  // Loads country options when images first set
+  React.useEffect(() => {
+    if (images) {
+      filterImages(choices)
+    }
+  }, [images])
+
   const handleTypeChange = (e) => {
     const arrayChoices = e.map(tag => tag.value)
     setChoices({ ...choices, types: arrayChoices })
     filterImages({ ...choices, types: arrayChoices })
+  }
+  const handleCustomChange = (e) => {
+    const arrayChoices = e.map(tag => tag.value)
+    setChoices({ ...choices, customs: arrayChoices })
+    filterImages({ ...choices, customs: arrayChoices })
   }
   const handleContinentChange = (e) => {
     let arrayChoice = ''
@@ -73,6 +86,9 @@ function Home() {
         const typeMatch = chosen.types.filter(tag => {
           return image.tags.types.join().includes(tag)
         })
+        const customMatch = chosen.customs.filter(tag => {
+          return image.tags.customs.join().includes(tag)
+        })
         
         let continentMatch = false
         if (image.tags.locations[0] === chosen.continent || chosen.continent === '') {
@@ -86,8 +102,8 @@ function Home() {
         }
         return (
           typeMatch.length === chosen.types.length &&
-          continentMatch &&
-          countryMatch
+          customMatch.length === chosen.customs.length &&
+          continentMatch && countryMatch
         )
       }
       return false
@@ -160,6 +176,14 @@ function Home() {
               />
             </div>
             <div className="field">
+              <label className="label">Custom</label> 
+              <CreatableSelect 
+                id='custom-tags'
+                onChange={handleCustomChange}
+                isMulti
+              />
+            </div>
+            <div className="field">
               <label className="label">Continent</label> 
               <Select
                 id='location-continent-tags'
@@ -168,6 +192,7 @@ function Home() {
                 })}
                 onChange={handleContinentChange}
                 isClearable
+                isSearchable
                 value={{ label: choices.continent, value: choices.continent } || ''}
               />
             </div>
@@ -180,6 +205,7 @@ function Home() {
                 })}
                 onChange={handleCountryChange}
                 isClearable
+                isSearchable
                 value={{ label: choices.country, value: choices.country } || ''}
               />
             </div>

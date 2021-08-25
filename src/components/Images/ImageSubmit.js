@@ -124,8 +124,8 @@ function ImageSubmit() {
           customs: customTags,
         },
       }
-      await createImage(output)
       console.log(output)
+      await createImage(output)
     } catch (err) {
       console.log(err)
     }
@@ -140,6 +140,7 @@ function ImageSubmit() {
       data.append('upload_preset', uploadPreset)
       const res = await axios.post(uploadUrl, data)
       setImageUrl(res.data.url)
+
       setIsUploading(false)
     } catch (err) {
       console.log(err)

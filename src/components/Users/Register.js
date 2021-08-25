@@ -1,4 +1,5 @@
 import React from 'react'
+import { useHistory } from 'react-router-dom'
 import { createUser } from '../../functionLib/api'
 
 const initialState = {
@@ -11,6 +12,7 @@ const initialState = {
 function Register() {
   const [formData, setFormData] = React.useState(initialState)
   const [formErrors, setFormErrors] = React.useState(initialState)
+  const history = useHistory()
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
@@ -21,6 +23,7 @@ function Register() {
     e.preventDefault()
     try {
       await createUser(formData)
+      history.push('/login')
     } catch (err) {
       err.response.data.username = 'Oops! Username required'
       err.response.data.email = 'Oops! Email required'
@@ -44,8 +47,7 @@ function Register() {
             <div className="field">
               <label className="label">Username</label>
               <div>
-                {formErrors.username && (<p className="error-text 
-                text-is-centered">{formErrors.username}</p>)}
+                {formErrors.username && (<p className="error-text">{formErrors.username}</p>)}
                 <input
                   onChange={handleChange}
                   className="input"
@@ -58,8 +60,7 @@ function Register() {
             <div className="field">
               <label className="label">Email</label>
               <div>
-                {formErrors.email && (<p className="error-text 
-                text-is-centered">{formErrors.email}</p>)}
+                {formErrors.email && (<p className="error-text">{formErrors.email}</p>)}
                 <input
                   onChange={handleChange}
                   className="input"
@@ -72,8 +73,7 @@ function Register() {
             <div className="field">
               <label className="label">Password</label>
               <div className="control">
-                {formErrors.password && (<p className="error-text 
-                text-is-centered">{formErrors.password}</p>)}
+                {formErrors.password && (<p className="error-text">{formErrors.password}</p>)}
                 <input
                   onChange={handleChange}
                   type="password"
@@ -87,8 +87,7 @@ function Register() {
             <div className="field">
               <label className="label">Password Confirmation</label>
               <div className="control">
-                {formErrors.passwordConfirmation && (<p className="error-text 
-                text-is-centered">{formErrors.passwordConfirmation}</p>)}
+                {formErrors.passwordConfirmation && (<p className="error-text">{formErrors.passwordConfirmation}</p>)}
                 <input
                   onChange={handleChange}
                   type="password"

@@ -54,10 +54,10 @@ function UserShow() {
           {!userData ? <h1>loading</h1> : 
             <div>
               <div className='username'>
-                <h1>{`${userData.userName}`}</h1>
+                <h1>{`${userData.username}`}</h1>
               </div>
-              <h2>{`Collections: ${userData.collections.length}`}</h2>  
-              <h2>{`Following: ${userData.following.length}`}</h2>
+              <h2>{`Collections: ${userData.myCollections.length}`}</h2>  
+              <h2>{`Following: ${userData.myFollowing.length}`}</h2>
             </div>
           }
           {!imageData ? <h1>loading</h1> :

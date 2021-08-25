@@ -104,7 +104,7 @@ function Home() {
           <ReactMapGL
             mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_ACCESS_TOKEN}
             height="100%"
-            width="100%"
+            width="100vw"
             mapStyle='mapbox://styles/hollylouisarose/cksrc0zi20n2o17q8f17hifcw'
             onViewportChange={(nextViewport) => setViewport(nextViewport)}
             {...viewport}

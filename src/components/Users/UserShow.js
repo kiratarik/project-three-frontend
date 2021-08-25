@@ -10,6 +10,7 @@ function UserShow() {
   const { userId } = useParams()
   const [ userData, setUserData ] = React.useState() 
   const [imageData, setImageData] = React.useState()
+  const [filteredData, setFilteredData] = React.useState()
   const [owner, setOwner] = React.useState()
 
   
@@ -25,7 +26,7 @@ function UserShow() {
   },[])
 
   React.useEffect(() => {
-
+    
     async function getUserData() {
       try {
         const userData = await showUser(userId)
@@ -35,16 +36,31 @@ function UserShow() {
 
         const imageData = await getImages()
         if (!imageData) console.log('there are no images')
-        console.log(imageData)
         setImageData(imageData.data)
+        console.log(imageData.data)
         
-
       } catch (err) {
         console.log(err)
       }
     }
     getUserData()
   }, [userId])
+
+  React.useEffect(() => {
+    
+    function filterData() {
+      const filteredImages = imageData.filter(image => {
+        return image.addedBy === userId
+      })
+      console.log(filteredImages)
+      setFilteredData(filteredImages)
+      console.log(filteredData)
+    }
+    
+    if (imageData) filterData()
+
+  },[imageData])
+
 
 
   return (
@@ -60,9 +76,9 @@ function UserShow() {
               <h2>{`Following: ${userData.myFollowing.length}`}</h2>
             </div>
           }
-          {!imageData ? <h1>loading</h1> :
+          {!filteredData ? <h1>loading</h1> :
             <>
-              <h2>{`Uploads: ${imageData.length}`}</h2>
+              <h2>{`Uploads: ${filteredData.length}`}</h2>
             </>
           }
           <div>

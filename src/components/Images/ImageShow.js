@@ -2,13 +2,14 @@ import React from 'react'
 import { useParams } from 'react-router-dom'
 
 import { getImage, showUser, editUser } from '../../functionLib/api.js'
-import { isAuthenticated } from '../../functionLib/auth.js'
+import { isAuthenticated, getPayload } from '../../functionLib/auth.js'
 
 function ImageShow() {
   const { imageId } = useParams()
   const [inputs, setInputs] = React.useState(null)
   const [isLoading, setIsLoading] = React.useState(true)
   const [isFavorite, setIsFavorite] = React.useState(false)
+  const [madeBy, setMadeBy] = React.useState('')
   const [user, setUser] = React.useState({})
 
   React.useEffect(() => {
@@ -18,9 +19,12 @@ function ImageShow() {
         const resImage = await getImage(imageId)
         setInputs(resImage.data)
         const resUser = await showUser(resImage.data.addedBy)
-        setUser(resUser.data)
-        if (resUser.data.myCollections.length > 0) {
-          const favorites = resUser.data.myCollections[0].collectionsArray
+        setMadeBy(resUser.data.username)
+
+        const currentUser = await showUser(getPayload().sub)
+        setUser(currentUser.data)
+        if (currentUser.data.myCollections.length > 0) {
+          const favorites = currentUser.data.myCollections[0].collectionsArray
           const filteredFavs = favorites.filter(image => {
             return (image._id === imageId)
           })
@@ -28,6 +32,7 @@ function ImageShow() {
         }
         console.log(resImage.data)
         console.log(resUser.data)
+        console.log(currentUser.data)
       } catch (err) {
         console.log(err)
       }
@@ -36,15 +41,17 @@ function ImageShow() {
     getData()
   }, [imageId])
   
-  async function handleFavorite() {
+  async function handleFavorite(e) {
+    e.preventDefault()
     try {
       const newUser = { ...user }
       if (user.myCollections.length === 0) {
         newUser.myCollections.push({ collectionName: 'Favorites', collectionArray: [] })
       }
-      console.log(newUser)
       newUser.myCollections[0].collectionArray.push(imageId)
-      await editUser(newUser)
+      console.log(newUser)
+      const edit = await editUser(newUser)
+      console.log(edit)
       setIsFavorite(true)
     } catch (err) {
       console.log(err)
@@ -91,7 +98,7 @@ function ImageShow() {
             <p>Regions: {inputs.tags.locations.join(', ')}</p>
             <p>Types: {inputs.tags.types.join(', ')}</p>
             <p>Tags: {inputs.tags.customs.join(', ')}</p>
-            <p>Made By: {user.username}</p>
+            <p>Made By: {madeBy}</p>
           </div>
         </div> 
       }

@@ -31,8 +31,7 @@ function ImageEdit() {
         setInputs(resImage.data)
         const resUser = await showUser(resImage.data.addedBy)
         setMadeBy(resUser.data.username)
-        console.log(resImage.data)
-        console.log(resUser.data)
+        
         setLatLng({ latitude: resImage.data.latitude, longitude: resImage.data.longitude })
         setViewport({ ...viewport, latitude: parseFloat(resImage.data.latitude), longitude: parseFloat(resImage.data.longitude) })
       } catch (err) {

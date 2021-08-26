@@ -1,10 +1,12 @@
 import React from 'react'
 import { useParams } from 'react-router'
+import { useHistory } from 'react-router-dom'
 import { showUser } from '../../functionLib/api.js'
 
 function MyFollows() {
   const { userId } = useParams()
   const [follows, setFollows] = React.useState([])
+  const history = useHistory()
 
 
   React.useEffect(() => { 
@@ -14,15 +16,6 @@ function MyFollows() {
         const result = await showUser(userId)
         if (!result) console.log('there be errors here')
         console.log(result.data.myFollowing !== undefined, result.data.myFollowing)
-        // if (result.data.myFollowing !== undefined) {
-        //   const followingArray = await result.data.myFollowing.map(async (id) => {
-        //     console.log(id)
-        //     const user = await showUser(id)
-        //     console.log(user.data)
-        //     return (user.data)
-        //   })
-        //   setFollows(followingArray)
-        // }
         if ((result.data) && (result.data.myFollowing)) {
           const followings = []
           await result.data.myFollowing.forEach(async (userId, index)=> {
@@ -44,9 +37,9 @@ function MyFollows() {
     getCollections()
   },[])
 
-  React.useEffect(() => {
-    console.log('follows', follows)
-  },[follows])
+  function handleFollow(e) {
+    history.push(`/users/${e.target.id}`)
+  }
 
   return (
     <>
@@ -54,8 +47,8 @@ function MyFollows() {
       {(follows.length > 0) &&
         follows.map(user => {
           return (
-            <div key={user._id} >
-              <p>{user.username}</p>
+            <div key={user._id} onClick={handleFollow} >
+              <p id={user._id} >{user.username}</p>
             </div>
           )
           

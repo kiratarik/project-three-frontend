@@ -13,13 +13,10 @@ function ImageShow() {
   const [madeBy, setMadeBy] = React.useState('')
   const [user, setUser] = React.useState({})
   const [following, setFollowing] = React.useState()
-<<<<<<< HEAD
-=======
 
   const [viewport, setViewport] = React.useState({
     zoom: 5,
   })
->>>>>>> development
 
   const isAuth = isAuthenticated()
   const [isYou, setIsYou] = React.useState(false)

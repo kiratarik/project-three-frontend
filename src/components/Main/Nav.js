@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link, useHistory } from 'react-router-dom'
+import { Link, useHistory, useLocation } from 'react-router-dom'
 import { getPayload, getToken, isAuthenticated, removeToken } from '../../functionLib/auth'
 import { showUser } from '../../functionLib/api'
 
@@ -10,17 +10,18 @@ function Nav() {
   const [tokenAdministered, setTokenValid] = React.useState(false)
   const [reload, setReload] = React.useState(false)
   const history = useHistory()
+  const location = useLocation()
+  const [isLoggedIn, setIsLoggedIn] = React.useState(null)
 
-  
-  const isLoggedIn = isAuthenticated()
- 
-  console.log(isLoggedIn)
+  React.useEffect(() => {
 
-  React.useEffect( () => {
     const token = getToken()
     if (!token) return console.log('you are not logged in')
     setTokenValid(token)
-  }, [isLoggedIn])
+
+    setIsLoggedIn(isAuthenticated())
+    console.log(isLoggedIn)
+  }, [location])
 
 
   React.useEffect( () => {
@@ -28,7 +29,7 @@ function Nav() {
     const payload = getPayload() 
     const userId = payload.sub
     setUserId(userId)
-   
+  
     async function getUserData(){
       try {
         const user = await showUser(userId)
@@ -48,7 +49,8 @@ function Nav() {
   function handleLogOut() {
     removeToken()
     history.push('/')
-    if (reload === false){
+    setIsLoggedIn(false)
+    if (reload === false) {
       setReload(true)
     } else {
       setReload(false)

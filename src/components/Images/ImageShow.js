@@ -11,6 +11,7 @@ function ImageShow() {
   const [isFavorite, setIsFavorite] = React.useState(false)
   const [madeBy, setMadeBy] = React.useState('')
   const [user, setUser] = React.useState({})
+  const [following, setFollowing] = React.useState()
 
   React.useEffect(() => {
     const getData = async () => {
@@ -71,6 +72,76 @@ function ImageShow() {
       console.log(err)
     }
   }
+
+
+  React.useEffect(() => {
+    const userId = getPayload().sub
+    async function compareUser(){
+      try {
+        const user = await showUser(userId)
+        const userData = user.data
+        const userToEdit = { ...userData }
+        console.log(userToEdit.myFollowing)
+        console.log(inputs.addedBy)
+        if (userToEdit.myFollowing.includes(`${inputs.addedBy}`)){
+          setFollowing(true)
+        } else {
+          setFollowing(false)
+        }
+      } catch (err) {
+        console.log(err)
+      }
+    }
+    compareUser()  
+  },[user])
+
+  async function handleFollow(){
+    const userId = getPayload().sub
+    try {
+      const user = await showUser(userId)
+      const userData = user.data
+      const userToEdit = { ...userData } 
+      console.log(inputs)
+      userToEdit.myFollowing.push(inputs.addedBy)
+      const editInput = userToEdit.myFollowing
+      const editBody = {
+        _id: userId,
+        myFollows: editInput,  
+      }
+      const response = await editUser(editBody)
+      setFollowing(false)
+      console.log(response)
+      
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  async function handleUnFollow(){
+    console.log('unfollow')
+    const userId = getPayload().sub
+
+    try { 
+      const user = await showUser(userId)
+      const userData = user.data
+      const userToEdit = { ...userData } 
+      const filteredArray = userToEdit.myFollowing.filter(follow => {
+        return follow !== inputs.addedBy
+      })
+      const editBody = {
+        _id: userId,
+        myFollows: filteredArray,  
+      }
+      const response = await editUser(editBody)
+      console.log(response)
+      setFollowing(false)
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+
+
   
   return (
     <>
@@ -98,6 +169,15 @@ function ImageShow() {
             <p>Types: {inputs.tags.types.join(', ')}</p>
             <p>Tags: {inputs.tags.customs.join(', ')}</p>
             <p>Made By: {madeBy}</p>
+            {following === false ? (
+              <button className='button-outline' onClick={handleFollow}>
+                {`follow ${madeBy}`}
+              </button>
+            ) : (
+              <button className='button-outline' onClick={handleUnFollow}>
+                {`Un-follow ${madeBy}`}
+              </button>
+            )}    
           </div>
         </div> 
       }

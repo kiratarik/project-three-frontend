@@ -39,7 +39,7 @@ function Nav(props) {
     const payload = getPayload() 
     const userId = payload.sub
     setUserId(userId)
-   
+  
     async function getUserData(){
       try {
         const user = await showUser(userId)
@@ -59,6 +59,7 @@ function Nav(props) {
   function handleLogOut() {
     removeToken()
     history.push('/')
+    setIsLoggedIn(false)
     if (reload === false){
       setReload(true)
     } else {

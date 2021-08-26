@@ -10,6 +10,7 @@ function Nav(props) {
   const [tokenAdministered, setTokenValid] = React.useState(false)
   const [reload, setReload] = React.useState(false)
   const history = useHistory()
+  const [isLoggedIn, setIsLoggedIn] = React.useState(null)
 
   console.log(props.auth)
   // React.useEffect(() => {
@@ -19,17 +20,17 @@ function Nav(props) {
   //     setIsAuth(false)
   //   }
   // },[])
-  const isLoggedIn = isAuthenticated()
 
-  console.log(isLoggedIn)
+  
 
-  React.useEffect( () => {
+  React.useEffect(() => {
 
     const token = getToken()
     if (!token) return console.log('you are not logged in')
     setTokenValid(token)
 
-    
+    setIsLoggedIn(isAuthenticated())
+    console.log(isLoggedIn)
   }, [])
 
 

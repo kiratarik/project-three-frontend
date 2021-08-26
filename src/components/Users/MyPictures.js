@@ -14,8 +14,6 @@ function MyPictures() {
     async function getImageData(){
       try {
         const images = await getImages()
-        if (!images) console.log('there are no images')
-        console.log(images.data)
         filterImages(images.data)
       } catch (err) {
         console.log(err)
@@ -23,7 +21,7 @@ function MyPictures() {
       }
     }
     getImageData()
-  } ,[])
+  }, [])
   
 
 

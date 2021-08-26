@@ -35,7 +35,7 @@ function MyFollows() {
       }
     }
     getCollections()
-  },[])
+  }, [userId])
 
   function handleFollow(e) {
     history.push(`/users/${e.target.id}`)

@@ -1,6 +1,5 @@
 import React from 'react'
-import { useParams } from 'react-router-dom'
-
+import { useParams, Link } from 'react-router-dom'
 import { getImage, showUser, editUser } from '../../functionLib/api.js'
 import { isAuthenticated, getPayload } from '../../functionLib/auth.js'
 import ReactMapGL, { Marker } from 'react-map-gl'
@@ -164,7 +163,7 @@ function ImageShow() {
             <p><strong>Regions</strong> {inputs.tags.locations.join(', ')}</p>
             <p><strong>Types</strong> {inputs.tags.types.join(', ')}</p>
             <p><strong>Tags</strong> {inputs.tags.customs.join(', ')}</p>
-            <p><strong>Made By</strong> {madeBy}</p>
+            <p><strong>Made By</strong> <Link  to={`/users/${inputs.addedBy}`}> <a className='userPageLink' href=''>{madeBy}</a></Link> </p>
             <div className='followButton'>
               { isAuth && 
                 <>

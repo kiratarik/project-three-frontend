@@ -292,19 +292,25 @@ body {
 
   .userCard {
     display: inline;
-    border: 1px solid grey;
-    border-radius: 20px;
     margin: 40px;
     padding: 20px;
 
     .username {
       display:flex;
-      justify-content: center;
-      background-color:lightgray;
-      border-radius: 20px 20px 0px 0px;
-      width: 122%;
-      margin: -21px;
-      margin-bottom: 20px;
+      justify-content: left;
+
+      h1{
+        margin: 0px;
+      }
+    }
+
+    .userInfo{
+      display: flex;
+      flex-direction: row wrap;
+        h2{
+          margin-right: 20px;
+          font-size: 20px;
+        }
     }
 
     .userAvatar {

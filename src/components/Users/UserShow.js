@@ -94,7 +94,7 @@ function UserShow() {
     }
     compareUser()
     setCanFollow(userId !== currentUser)  
-  },[currentUser])
+  },[location])
 
   async function handleFollow(){
     try {
@@ -151,14 +151,14 @@ function UserShow() {
               <div className='username'>
                 <h1>{`${userData.username}`}</h1>
               </div>
-              <h2>{`Collections: ${userData.myCollections.length}`}</h2>  
-              <h2>{`Following: ${userData.myFollowing.length}`}</h2>
+              <div className="userInfo">
+                <h2><strong>Collections</strong> {userData.myCollections.length}</h2>  
+                <h2><strong>Following</strong> {userData.myFollowing.length}</h2>
+                {!filteredData ? <h1>loading</h1> :
+                  <h2><strong>Uploads</strong> {filteredData.length}</h2>
+                }
+              </div>
             </div>
-          }
-          {!filteredData ? <h1>loading</h1> :
-            <>
-              <h2>{`Uploads: ${filteredData.length}`}</h2>
-            </>
           }
           <div>
             {owner && <div><Link to={`/users/${userId}/edit`}>Edit Profile</Link></div>}

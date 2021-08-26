@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom'
 
 import { getImage, showUser, editUser } from '../../functionLib/api.js'
 import { isAuthenticated, getPayload } from '../../functionLib/auth.js'
-import ReactMapGL from 'react-map-gl'
+import ReactMapGL, { Marker } from 'react-map-gl'
 
 function ImageShow() {
   const { imageId } = useParams()
@@ -199,6 +199,15 @@ function ImageShow() {
                 width="100%"
                 mapStyle='mapbox://styles/hollylouisarose/cksrc0zi20n2o17q8f17hifcw'
               >
+                {inputs &&
+                    <Marker
+                      key={inputs._id}
+                      latitude={inputs.latitude}
+                      longitude={inputs.longitude}
+                    >
+                      <span>📍</span>
+                    </Marker>
+                }
               </ReactMapGL>
             </div>
           </div>

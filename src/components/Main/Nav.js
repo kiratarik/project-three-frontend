@@ -1,27 +1,17 @@
 import React from 'react'
-import { Link, useHistory } from 'react-router-dom'
+import { Link, useHistory, useLocation } from 'react-router-dom'
 import { getPayload, getToken, isAuthenticated, removeToken } from '../../functionLib/auth'
 import { showUser } from '../../functionLib/api'
 
 
-function Nav(props) {
+function Nav() {
   const [userData, setUserData] = React.useState()
   const [userId, setUserId] = React.useState()
   const [tokenAdministered, setTokenValid] = React.useState(false)
   const [reload, setReload] = React.useState(false)
   const history = useHistory()
+  const location = useLocation()
   const [isLoggedIn, setIsLoggedIn] = React.useState(null)
-
-  console.log(props.auth)
-  // React.useEffect(() => {
-  //   if (props.auth === true) {
-  //     setIsAuth(true)
-  //   } else {
-  //     setIsAuth(false)
-  //   }
-  // },[])
-
-  
 
   React.useEffect(() => {
 
@@ -31,7 +21,7 @@ function Nav(props) {
 
     setIsLoggedIn(isAuthenticated())
     console.log(isLoggedIn)
-  }, [])
+  }, [location])
 
 
   React.useEffect( () => {
@@ -60,7 +50,7 @@ function Nav(props) {
     removeToken()
     history.push('/')
     setIsLoggedIn(false)
-    if (reload === false){
+    if (reload === false) {
       setReload(true)
     } else {
       setReload(false)

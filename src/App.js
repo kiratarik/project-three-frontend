@@ -15,29 +15,12 @@ import UserNav from './components/Users/UserNav.js'
 import MyCollections from './components/Users/MyCollections.js'
 import MyPictures from './components/Users/MyPictures.js'
 import MyFollows from './components/Users/MyFollows.js'
-import { getPayload, isAuthenticated, isOwner } from './functionLib/auth.js'
 
 function App() {
-  const  userId = getPayload().sub
-  const [isAuth, setIsAuth] = React.useState(false)
-
-  console.log(userId)
-
-  React.useState(() => {
-    if  (isAuthenticated() && isOwner(userId)){
-      setIsAuth(true)
-    } else {
-      setIsAuth(false)
-    }
-  },[])
-
-
-
-  console.log(isAuth)
 
   return (
     <BrowserRouter>
-      <Nav auth={isAuth}/>
+      <Nav />
       <Switch>
         <Route exact path='/'>
           <Home />

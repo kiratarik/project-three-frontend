@@ -13,9 +13,10 @@ function ImageShow() {
   const [madeBy, setMadeBy] = React.useState('')
   const [user, setUser] = React.useState({})
   const [following, setFollowing] = React.useState()
-  // const [viewPort, setViewport] = React.useState(
 
-  // )
+  const [viewport, setViewport] = React.useState({
+    zoom: 5,
+  })
 
   const isAuth = isAuthenticated()
   const [isYou, setIsYou] = React.useState(false)
@@ -199,6 +200,10 @@ function ImageShow() {
                 height="100%"
                 width="100%"
                 mapStyle='mapbox://styles/hollylouisarose/cksrc0zi20n2o17q8f17hifcw'
+                onViewportChange={(nextViewport) => setViewport(nextViewport)}
+                {...viewport}
+                latitude={inputs.latitude}
+                longitude={inputs.longitude}
                 pitch={0}
                 bearing={0}
               >

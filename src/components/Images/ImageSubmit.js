@@ -191,6 +191,8 @@ function ImageSubmit() {
                 mapStyle='mapbox://styles/mapbox/streets-v11'
                 onViewportChange={(nextViewport) => setViewport(nextViewport)}
                 {...viewport}
+                pitch={0}
+                bearing={0}
               >
                 <Marker 
                   key={inputs.picName}

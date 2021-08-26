@@ -125,6 +125,8 @@ function Home() {
             mapStyle='mapbox://styles/hollylouisarose/cksrc0zi20n2o17q8f17hifcw'
             onViewportChange={(nextViewport) => setViewport(nextViewport)}
             {...viewport}
+            pitch={0}
+            bearing={0}
           >
             {filteredImages && 
               filteredImages.map(image => {

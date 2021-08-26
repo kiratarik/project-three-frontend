@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom'
 
 import { getImage, showUser, editUser } from '../../functionLib/api.js'
 import { isAuthenticated, getPayload } from '../../functionLib/auth.js'
+import ReactMapGL from 'react-map-gl'
 
 function ImageShow() {
   const { imageId } = useParams()
@@ -12,6 +13,9 @@ function ImageShow() {
   const [madeBy, setMadeBy] = React.useState('')
   const [user, setUser] = React.useState({})
   const [following, setFollowing] = React.useState()
+  // const [viewPort, setViewport] = React.useState(
+
+  // )
 
   const isAuth = isAuthenticated()
 
@@ -148,44 +152,55 @@ function ImageShow() {
   return (
     <>
       
-      {(isAuth) && (!isFavorite) &&
-        <div>
-          <button onClick={handleFavorite} >Favorite</button>
-        </div>
-      }
-      {(isAuth) && (isFavorite) &&
-        <div>
-          <button onClick={handleUnfavorite} >Unfavorite</button>
-        </div>
-      }
       {(inputs) && 
         <div className='imageDataContainer'>
           <div className='imageWrapper'>
             <img src={inputs.url} />
           </div>
           <div className='imageData'>
-            <p>Name: {inputs.picName}</p>
-            <p>Latitude: {inputs.latitude}</p>
-            <p>Longitude: {inputs.longitude}</p>
-            <p>Regions: {inputs.tags.locations.join(', ')}</p>
-            <p>Types: {inputs.tags.types.join(', ')}</p>
-            <p>Tags: {inputs.tags.customs.join(', ')}</p>
-            <p>Made By: {madeBy}</p>
+            <p><strong>{inputs.picName}</strong></p>
+            <p><strong>Latitude</strong> {inputs.latitude}</p>
+            <p><strong>Longitude</strong> {inputs.longitude}</p>
+            <p><strong>Regions</strong> {inputs.tags.locations.join(', ')}</p>
+            <p><strong>Types</strong> {inputs.tags.types.join(', ')}</p>
+            <p><strong>Tags</strong> {inputs.tags.customs.join(', ')}</p>
+            <p><strong>Made By</strong> {madeBy}</p>
             <div className='followButton'>
               { isAuth && 
                 <>
                   {!following ? (
-                    <button className='button-outline' onClick={handleFollow}>
+                    <button className='button-outline follow' onClick={handleFollow}>
                       {`follow ${madeBy}`}
                     </button>
                   ) : (
-                    <button className='button-outline' onClick={handleUnFollow}>
+                    <button className='button-outline follow' onClick={handleUnFollow}>
                       {`Un-follow ${madeBy}`}
                     </button>
                   )}
                 </>
               }
-            </div>      
+            </div>
+            <div className='favouriteButton'>
+              {(isAuth) && (!isFavorite) &&
+                <div>
+                  <button onClick={handleFavorite} className='button-outline favourite'>Favorite</button>
+                </div>
+              }
+              {(isAuth) && (isFavorite) &&
+                <div>
+                  <button onClick={handleUnfavorite} className='button-outline favourite'>Unfavorite</button>
+                </div>
+              }
+            </div>   
+            <div className='mapBox-container'>
+              <ReactMapGL
+                mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_ACCESS_TOKEN}
+                height="100%"
+                width="100%"
+                mapStyle='mapbox://styles/hollylouisarose/cksrc0zi20n2o17q8f17hifcw'
+              >
+              </ReactMapGL>
+            </div>
           </div>
         </div> 
       }

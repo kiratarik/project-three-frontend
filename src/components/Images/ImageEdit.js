@@ -6,6 +6,7 @@ import CreatableSelect from 'react-select/creatable'
 import { useParams, useHistory } from 'react-router-dom'
 
 import { getImage, showUser, editImage } from '../../functionLib/api.js'
+import { selectOptions } from '../../functionLib/variables'
 
 function ImageEdit() {
   const history = useHistory()
@@ -13,16 +14,6 @@ function ImageEdit() {
   const [inputs, setInputs] = React.useState(null)
   const [madeBy, setMadeBy] = React.useState('')
   const [isLoading, setIsLoading] = React.useState(true)
-
-  const selectOptions = [
-    { value: 'Beach', label: 'Beach' },
-    { value: 'Mountain', label: 'Mountain' },
-    { value: 'Ocean', label: 'Ocean' },
-    { value: 'Lake', label: 'Lake' },
-    { value: 'Forest', label: 'Forest' },
-    { value: 'Desert', label: 'Desert' },
-    { value: 'Meadow', label: 'Meadow' }
-  ]
 
 
   const [viewport, setViewport] = React.useState({
@@ -162,7 +153,9 @@ function ImageEdit() {
             <p>Regions: {inputs.tags.locations.join(', ')}</p>
             <p>Types: <Select
               id='type-tags'
-              options={selectOptions}
+              options={selectOptions.map(option => {
+                return ({ value: option, label: option })
+              })}
               isMulti
               onChange={(e) => setInputs({  ...inputs, tags: { ...inputs.tags, types: e.map(item => item.value) } })}
               defaultValue={inputs.tags.types.map(item => ({ value: item, label: item }))}

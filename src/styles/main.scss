@@ -92,6 +92,7 @@ body {
   button {
     border: 0;
     background-color: $red;
+    border-radius: 5px;
     color: $almost-black;
     font-size: 1rem;
     font-weight: 500;
@@ -153,7 +154,7 @@ body {
 
 }
 
-// * container styles, for flexbox on components
+// * container styles
 
 .center-container {
   display:flex;
@@ -251,7 +252,7 @@ body {
   margin: 0;
   font-size: 14px;
 }
-// Popup 
+// * Popup 
 
 .popup {
   background-size: cover;
@@ -283,7 +284,7 @@ body {
 }
 
 
-// user page
+// * User
 
 .userShow {
   display: flex;
@@ -306,7 +307,7 @@ body {
       margin-bottom: 20px;
     }
 
-    .userAvatar{
+    .userAvatar {
       background-color: teal;
       width: 50px;
       height: 100px;
@@ -316,7 +317,7 @@ body {
   }
 }
 
-.userNav{
+.userNav {
   display: flex;
   justify-content:space-evenly;
   width: 100%;
@@ -329,58 +330,57 @@ body {
 }
 
 
+// * Image show
 
-// image show css
-
-.imageDataContainer{
+.imageDataContainer {
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
   justify-content: center;
 
-  .imageWrapper{
+  .imageWrapper {
     max-width: 500px;
     margin: 20px;
     min-width: 300px;
 
-    img{
+    img {
       object-fit: contain;
       height: 100%;
       width: 100%;
     }
   }
 
-  .imageData{
+  .imageData {
     margin-top: 20px;
     margin-left: 20px;
     max-width: 500px;
     max-height: 700px;
 
-    p{
+    p {
       margin: 10px
     }
-    .followButton{
+    .followButton {
       width: 250px;
       margin: 0px;
 
-      .follow{
+      .follow {
         border-radius: 5px;
         margin: 3px 0px;
-        color: white;
+        color: $almost-black;
       }
     }
-    .favouriteButton{
+    .favouriteButton {
       width: 250px;
       margin: 0px;
       
       
-      .favourite{
+      .favourite {
         border-radius: 5px;
         margin: 3px 0px;
-        color: white;
+        color: $almost-black;
       }
     }
-    .mapBox-container{
+    .mapBox-container {
       margin-top: 15px;
       margin-bottom: 15px;
       width: 350px;

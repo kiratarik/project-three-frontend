@@ -109,7 +109,7 @@ function ImageShow() {
         myFollows: editInput,  
       }
       const response = await editUser(editBody)
-      setFollowing(false)
+      setFollowing(true)
       console.log(response)
       
     } catch (err) {

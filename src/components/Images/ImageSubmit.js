@@ -183,12 +183,11 @@ function ImageSubmit() {
             <input id='longitude' placeholder='Longitude' required onChange={handleLatLng} />
           </div>
           <div>
-            <div className='map-container'>
+            <div className="map-container image-submit">
               <ReactMapGL
                 mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_ACCESS_TOKEN}
-                height='50vw'
-                // width='Calc(100vw - 20px)'
-                width='60vw'
+                height="80%"
+                width="50%"
                 mapStyle='mapbox://styles/mapbox/streets-v11'
                 onViewportChange={(nextViewport) => setViewport(nextViewport)}
                 {...viewport}

@@ -39,7 +39,7 @@ function UserEdit() {
     } catch (err) {
       err.response.data.username = 'Oops! Username required'
       err.response.data.email = 'Oops! Email required'
-      setErrors(err.response.data)
+      console.log(err.response.data)
     }
   }
 

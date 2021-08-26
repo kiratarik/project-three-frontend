@@ -4,12 +4,14 @@ import axios from 'axios'
 import Select from 'react-select'
 import CreatableSelect from 'react-select/creatable'
 
-import { createImage } from '../../functionLib/api.js'
+import { createImage, showUser } from '../../functionLib/api.js'
+import { getPayload } from '../../functionLib/auth.js'
 
 const uploadUrl = process.env.REACT_APP_CLOUDINARY_URL
 const uploadPreset = process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET
 
 function ImageSubmit() {
+  const [madeBy, setMadeBy] = React.useState('')
   const [inputs, setInputs] = React.useState(
     { 
       picName: '',
@@ -54,8 +56,11 @@ function ImageSubmit() {
       console.log(err)
     }
   }
-  React.useState(() => {
+  React.useState(async () => {
     getLocation(inputs)
+    const payload = await getPayload()
+    const user = await showUser(payload.sub)
+    setMadeBy(user.data.username)
   }, [])
   
 
@@ -216,7 +221,7 @@ function ImageSubmit() {
       </div>
       <div>
         <label>Made By: </label>
-        <label>{}</label>
+        <label>{madeBy}</label>
       </div>
       <div>
         <input type='submit' onClick={handleSubmit} ></input>

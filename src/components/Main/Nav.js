@@ -14,13 +14,10 @@ function Nav() {
   const [isLoggedIn, setIsLoggedIn] = React.useState(null)
 
   React.useEffect(() => {
-
     const token = getToken()
-    if (!token) return console.log('you are not logged in')
     setTokenValid(token)
 
     setIsLoggedIn(isAuthenticated())
-    console.log(isLoggedIn)
   }, [location])
 
 
@@ -42,7 +39,7 @@ function Nav() {
 
     if (userId){
       getUserData()
-    } console.log('you are not logged in')
+    }
 
   },[tokenAdministered])
 
@@ -77,16 +74,17 @@ function Nav() {
           </>
         ) : (
           <>
-            <Link to={`/users/${userId}`}>
+            <Link to={`/users/${userId}/pictures`}>
               {userData && `${userData.username}`}
             </Link>
             <Link to="/images/new">
+              <button>
               Upload a photo
+              </button>
             </Link>
-            <button
-              className="button-small"
+            <a
               onClick={handleLogOut}
-            >Log Out</button>
+            >Log Out</a>
           </>
         ) }
         

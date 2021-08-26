@@ -3,8 +3,6 @@ import { getImages } from '../../functionLib/api.js'
 import { useParams } from 'react-router'
 import { Link } from 'react-router-dom'
 
-
-
 function MyPictures() {
   const { userId } = useParams()
   const [filteredImages, setFilteredImages] = React.useState()
@@ -14,26 +12,21 @@ function MyPictures() {
     async function getImageData(){
       try {
         const images = await getImages()
-        if (!images) console.log('there are no images')
-        console.log(images.data)
         filterImages(images.data)
       } catch (err) {
         console.log(err)
-
       }
     }
     getImageData()
-  } ,[])
+  }, [])
   
 
 
   const filterImages = (images) => {
-    console.log('here are the images')
     const result = images.filter(image => {
       return image.addedBy === userId
     })
     setFilteredImages(result)
-    console.log(filteredImages)
   }
 
 

@@ -16,7 +16,7 @@ function ImageCard({ image }){
       <div className="overlay">
         <h5>{image.picName}</h5>
       </div>
-      <img src={image.url} /> 
+      <img src={image.url} loading="lazy"/> 
     </div>
     
   )

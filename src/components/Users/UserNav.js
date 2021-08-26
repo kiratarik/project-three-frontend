@@ -1,7 +1,5 @@
 import { Link, useParams } from 'react-router-dom'
 
-
-
 function UserNav(){
   const { userId } = useParams()
 

@@ -13,6 +13,13 @@ function ImageShow() {
   const [madeBy, setMadeBy] = React.useState('')
   const [user, setUser] = React.useState({})
   const [following, setFollowing] = React.useState()
+<<<<<<< HEAD
+=======
+
+  const [viewport, setViewport] = React.useState({
+    zoom: 5,
+  })
+>>>>>>> development
 
   const isAuth = isAuthenticated()
   const [isYou, setIsYou] = React.useState(false)
@@ -34,9 +41,6 @@ function ImageShow() {
           const favorites = currentUser.data.myCollections[0].collectionArray
           setIsFavorite(favorites.join(',').includes(imageId))
         }
-        console.log(resImage.data)
-        console.log(resUser.data)
-        console.log(currentUser.data)
       } catch (err) {
         console.log(err)
       }
@@ -53,9 +57,7 @@ function ImageShow() {
         newUser.myCollections.push({ collectionName: 'Favorites', collectionArray: [] })
       }
       newUser.myCollections[0].collectionArray.push(imageId)
-      console.log(newUser)
-      const edit = await editUser(newUser)
-      console.log(edit)
+      await editUser(newUser)
       setIsFavorite(true)
     } catch (err) {
       console.log(err)
@@ -87,8 +89,6 @@ function ImageShow() {
         const user = await showUser(userId)
         const userData = user.data
         const userToEdit = { ...userData }
-        console.log(userToEdit.myFollowing)
-        console.log(inputs.addedBy)
         if (userToEdit.myFollowing.includes(`${inputs.addedBy}`)){
           setFollowing(true)
         } else {
@@ -107,16 +107,14 @@ function ImageShow() {
       const user = await showUser(userId)
       const userData = user.data
       const userToEdit = { ...userData } 
-      console.log(inputs)
       userToEdit.myFollowing.push(inputs.addedBy)
       const editInput = userToEdit.myFollowing
       const editBody = {
         _id: userId,
         myFollows: editInput,  
       }
-      const response = await editUser(editBody)
+      await editUser(editBody)
       setFollowing(true)
-      console.log(response)
       
     } catch (err) {
       console.log(err)
@@ -124,7 +122,6 @@ function ImageShow() {
   }
 
   async function handleUnFollow(){
-    console.log('unfollow')
     const userId = getPayload().sub
 
     try { 
@@ -138,8 +135,7 @@ function ImageShow() {
         _id: userId,
         myFollows: filteredArray,  
       }
-      const response = await editUser(editBody)
-      console.log(response)
+      await editUser(editBody)
       setFollowing(false)
     } catch (err) {
       console.log(err)
@@ -207,6 +203,10 @@ function ImageShow() {
                 height="100%"
                 width="100%"
                 mapStyle='mapbox://styles/hollylouisarose/cksrc0zi20n2o17q8f17hifcw'
+                onViewportChange={(nextViewport) => setViewport(nextViewport)}
+                {...viewport}
+                latitude={inputs.latitude}
+                longitude={inputs.longitude}
                 pitch={0}
                 bearing={0}
               >

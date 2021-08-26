@@ -64,7 +64,6 @@ function ImageEdit() {
 
   function handleChange(e) {
     setInputs({ ...inputs, [e.target.id]: e.target.value })
-    console.log({ ...inputs, [e.target.id]: e.target.value })
   }
 
   const [latLng, setLatLng] = React.useState({})
@@ -72,7 +71,6 @@ function ImageEdit() {
     const id = e.target.id
     const mod = id.length - 7
     const value = e.target.value
-    console.log(e.target.value)
     const numValue = parseFloat(value)
     setLatLng({ ...latLng, [id]: value })
     if (value === '') {
@@ -93,7 +91,6 @@ function ImageEdit() {
       e.lngLat[0] = e.lngLat[0] + 360
     }
 
-    console.log('LngLat', e.lngLat)
     setLatLng({ latitude: e.lngLat[1], longitude: e.lngLat[0] })
     setInputs({ ...inputs, longitude: e.lngLat[0], latitude: e.lngLat[1] })
     getLocation({ latitude: e.lngLat[1], longitude: e.lngLat[0] })
@@ -109,7 +106,6 @@ function ImageEdit() {
     } catch (err) {
       console.log(err)
     }
-    console.log('submitted')
     
   }
 

@@ -19,8 +19,6 @@ function UserShow() {
   const location = useLocation()
   
 
-  console.log(userId)
-
   React.useEffect(() => {
     const areYouOwner = isOwner(userId)
     const isAuth = isAuthenticated()
@@ -36,14 +34,10 @@ function UserShow() {
     async function getUserData() {
       try {
         const userData = await showUser(userId)
-        if (!userData) return console.log('its fucked')
         setUserData(userData.data)
-        console.log(userData)
 
         const imageData = await getImages()
-        if (!imageData) console.log('there are no images')
         setImageData(imageData.data)
-        console.log(imageData.data)
         
       } catch (err) {
         console.log(err)
@@ -58,9 +52,7 @@ function UserShow() {
       const filteredImages = imageData.filter(image => {
         return image.addedBy === userId
       })
-      console.log(filteredImages)
       setFilteredData(filteredImages)
-      console.log(filteredData)
     }
     
     if (imageData) filterData()
@@ -81,8 +73,6 @@ function UserShow() {
         const user = await showUser(currentUser)
         const userData = user.data
         const userToEdit = { ...userData }
-        console.log(userToEdit.myFollowing)
-        // console.log(inputs.addedBy)
         if (userToEdit.myFollowing.includes(`${userId}`)){
           setFollowing(true)
         } else {
@@ -101,24 +91,20 @@ function UserShow() {
       const user = await showUser(currentUser)
       const userData = user.data
       const userToEdit = { ...userData } 
-      // console.log(inputs)
       userToEdit.myFollowing.push(userId)
       const editInput = userToEdit.myFollowing
       const editBody = {
         _id: currentUser,
         myFollows: editInput,  
       }
-      const response = await editUser(editBody)
-      setFollowing(true)
-      console.log(response)
-      
+      await editUser(editBody)
+      setFollowing(true)      
     } catch (err) {
       console.log(err)
     }
   }
 
   async function handleUnFollow(){
-    console.log('unfollow')
     try { 
       const user = await showUser(currentUser)
       const userData = user.data
@@ -130,8 +116,7 @@ function UserShow() {
         _id: currentUser,
         myFollows: filteredArray,  
       }
-      const response = await editUser(editBody)
-      console.log(response)
+      editUser(editBody)
       setFollowing(false)
     } catch (err) {
       console.log(err)

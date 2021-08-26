@@ -3,6 +3,7 @@ import ReactMapGL, { Marker } from 'react-map-gl'
 import axios from 'axios'
 import Select from 'react-select'
 import CreatableSelect from 'react-select/creatable'
+import { useHistory } from 'react-router-dom'
 
 import { createImage, showUser } from '../../functionLib/api.js'
 import { getPayload } from '../../functionLib/auth.js'
@@ -12,7 +13,8 @@ const uploadUrl = process.env.REACT_APP_CLOUDINARY_URL
 const uploadPreset = process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET
 
 function ImageSubmit() {
-  const [madeBy, setMadeBy] = React.useState('')
+  const history = useHistory()
+  const [madeBy, setMadeBy] = React.useState(null)
   const [inputs, setInputs] = React.useState(
     { 
       picName: '',
@@ -49,7 +51,7 @@ function ImageSubmit() {
     getLocation(inputs)
     const payload = await getPayload()
     const user = await showUser(payload.sub)
-    setMadeBy(user.data.username)
+    setMadeBy(user.data)
   }, [])
   
 
@@ -108,10 +110,11 @@ function ImageSubmit() {
 
   async function handleSubmit() {
     try {
-      await handleUpload()
+      const imageUrl = await handleUpload()
       const output = {
         ...inputs,
         url: imageUrl,
+        addedBy: madeBy,
         tags: { 
           locations: regions,
           types: typeTags,
@@ -120,12 +123,12 @@ function ImageSubmit() {
       }
       console.log(output)
       await createImage(output)
+      history.push(`/users/${madeBy._id}/pictures`)
     } catch (err) {
       console.log(err)
     }
   }
   const [isUploading, setIsUploading] = React.useState(false)
-  const [imageUrl, setImageUrl] = React.useState('')
   const handleUpload = async () => {
     try {
       setIsUploading(true)
@@ -133,9 +136,9 @@ function ImageSubmit() {
       data.append('file', imageFile)
       data.append('upload_preset', uploadPreset)
       const res = await axios.post(uploadUrl, data)
-      setImageUrl(res.data.url)
 
       setIsUploading(false)
+      return (res.data.url)
     } catch (err) {
       console.log(err)
     }
@@ -210,10 +213,11 @@ function ImageSubmit() {
           </div>
         </div>
       </div>
+      {(madeBy) &&
       <div>
         <label>Made By: </label>
-        <label>{madeBy}</label>
-      </div>
+        <label>{madeBy.username}</label>
+      </div>}
       <div>
         <input type='submit' onClick={handleSubmit} ></input>
         {isUploading && <p>...Uploading</p>}

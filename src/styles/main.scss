@@ -162,6 +162,14 @@ body {
   align-items: center;
 }
 
+.map-container {
+  height: 400px;
+}
+
+.map-container.image-submit {
+  height: 350px;
+}
+
 // * form styles
 
 .form-container {
@@ -324,11 +332,6 @@ body {
   background-color: whitesmoke;
   padding: 20px;
 }
-
-.map-container {
-  height: 400px;
-}
-
 
 // * Image show
 

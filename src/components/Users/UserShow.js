@@ -12,7 +12,6 @@ function UserShow() {
   const [imageData, setImageData] = React.useState()
   const [filteredData, setFilteredData] = React.useState()
   const [owner, setOwner] = React.useState()
-
   
 
   console.log(userId)
@@ -22,7 +21,9 @@ function UserShow() {
     const isAuth = isAuthenticated()
     if (areYouOwner && isAuth) {
       setOwner(true)
-    } 
+    } else {
+      setOwner(false)
+    }
   },[userId])
 
   React.useEffect(() => {

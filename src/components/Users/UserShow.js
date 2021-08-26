@@ -23,7 +23,7 @@ function UserShow() {
     if (areYouOwner && isAuth) {
       setOwner(true)
     } 
-  },[])
+  },[userId])
 
   React.useEffect(() => {
     

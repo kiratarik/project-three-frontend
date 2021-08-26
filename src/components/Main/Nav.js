@@ -28,6 +28,8 @@ function Nav(props) {
     const token = getToken()
     if (!token) return console.log('you are not logged in')
     setTokenValid(token)
+
+    
   }, [])
 
 

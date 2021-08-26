@@ -6,6 +6,7 @@ import CreatableSelect from 'react-select/creatable'
 
 import { createImage, showUser } from '../../functionLib/api.js'
 import { getPayload } from '../../functionLib/auth.js'
+import { selectOptions } from '../../functionLib/variables'
 
 const uploadUrl = process.env.REACT_APP_CLOUDINARY_URL
 const uploadPreset = process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET
@@ -18,18 +19,6 @@ function ImageSubmit() {
       latitude: 0,
       longitude: 0,
     })
-
-
-
-  const selectOptions = [
-    { value: 'Beach', label: 'Beach' },
-    { value: 'Mountain', label: 'Mountain' },
-    { value: 'Ocean', label: 'Ocean' },
-    { value: 'Lake', label: 'Lake' },
-    { value: 'Forest', label: 'Forest' },
-    { value: 'Desert', label: 'Desert' },
-    { value: 'Meadow', label: 'Meadow' }
-  ]
   
   const [viewport, setViewport] = React.useState({
     latitude: 0.0,
@@ -169,7 +158,9 @@ function ImageSubmit() {
         <label>Type Tags: </label>
         <Select
           id='type-tags'
-          options={selectOptions}
+          options={selectOptions.map(option => {
+            return ({ value: option, label: option })
+          })}
           isMulti
           onChange={(e) => setTypeTags(e.map(item => item.value))}
         />

@@ -1,8 +1,59 @@
+import React from 'react'
+import { useParams } from 'react-router'
+import { useHistory } from 'react-router-dom'
+import { showUser } from '../../functionLib/api.js'
+
 function MyFollows() {
+  const { userId } = useParams()
+  const [follows, setFollows] = React.useState([])
+  const history = useHistory()
+
+
+  React.useEffect(() => { 
+
+    async function getCollections(){
+      try {
+        const result = await showUser(userId)
+        if (!result) console.log('there be errors here')
+        console.log(result.data.myFollowing !== undefined, result.data.myFollowing)
+        if ((result.data) && (result.data.myFollowing)) {
+          const followings = []
+          await result.data.myFollowing.forEach(async (userId, index)=> {
+            const resUser = await showUser(userId)
+            followings.push({ ...resUser.data })
+            if (result.data.myFollowing.length === index + 1) {
+              setFollows(followings)
+              console.log('followings', followings)
+            }
+            
+          })
+        }
+        console.log('follows', result.data, follows)
+        
+      } catch (err) {
+        console.log(err)
+      }
+    }
+    getCollections()
+  },[])
+
+  function handleFollow(e) {
+    history.push(`/users/${e.target.id}`)
+  }
 
   return (
     <>
-      <h3>these are my follows</h3>
+      <p>Follows:</p>
+      {(follows.length > 0) &&
+        follows.map(user => {
+          return (
+            <div key={user._id} onClick={handleFollow} >
+              <p id={user._id} >{user.username}</p>
+            </div>
+          )
+          
+        })
+      }
     </>
   )
 }

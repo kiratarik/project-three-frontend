@@ -7,14 +7,17 @@ function ImageCard({ image }){
   }
 
   return (
+  
     <div 
       key={image._id}
       className="card" 
       onClick={handleClick}
     >
-      <img src={image.url} />
+      <div className="overlay">
+        <h5>{image.picName}</h5>
+      </div>
+      <img src={image.url} /> 
     </div>
-
     
   )
 

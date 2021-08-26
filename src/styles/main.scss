@@ -198,15 +198,50 @@ body {
 }
 
 .card {
+  position: relative;
   width: 400px;
   max-width: 100vw;
   margin: 10px;
   img {
+    position: relative;
+    border-radius: 20px;
+    transition: all 0.2s ease;
+    height: 600px;
+  }
+
+  h5 {
+    position: absolute;
+    z-index: 3;
+    height: 600px;
+    width: 400px;
+    display: block;
+    opacity: 0;
+    padding: 16px;
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+  }
+
+  h5:hover {
+    opacity: 1;
+  }
+  
+  .overlay {
+    position: absolute;
+    z-index: 2;
+    background: rgba(255, 255, 255, 0);
+    height: 600px;
+    width: 400px;
+    max-width: 100vw;
     border-radius: 20px;
     transition: all 0.2s ease;
   }
 
+  .overlay:hover {
+    background: rgba(255, 255, 255, 0.469);
+  }
 }
+
+
 
 // * text adjustments
 

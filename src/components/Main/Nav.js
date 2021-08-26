@@ -75,7 +75,7 @@ function Nav() {
           </>
         ) : (
           <>
-            <Link to={`/users/${userId}`}>
+            <Link to={`/users/${userId}/pictures`}>
               {userData && `${userData.username}`}
             </Link>
             <Link to="/images/new">

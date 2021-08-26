@@ -40,7 +40,7 @@ function CollectionCard({ collection }) {
       {(inputs.length > 0) &&
         inputs.map((image) => {
           return ( 
-            <div className="card-container" key={image._id}>
+            <div key={image._id}>
               <ImageCard
                 image={image}
               />

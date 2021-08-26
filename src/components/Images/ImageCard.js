@@ -8,7 +8,11 @@ function ImageCard({ image }){
         key={image._id}
         className="card" 
       >
+        <div className="overlay">
+          <h5>{image.picName}</h5>
+        </div>
         <img src={image.url} />
+        
       </div>
     </Link> 
     

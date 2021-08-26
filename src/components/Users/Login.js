@@ -26,7 +26,6 @@ function Login() {
         console.log(result.data)
         setToken(result.data.token)
         history.push('/')
-        window.location.reload()
       } catch (err) {
         setIsError(true)
       }

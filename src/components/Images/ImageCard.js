@@ -1,20 +1,23 @@
-import { Link } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 
 function ImageCard({ image }){
-  
+  const history = useHistory()
+  function handleClick() {
+    history.push(`/images/${image._id}`)
+  }
+
   return (
-    <Link to={`images/${image._id}`}>
-      <div 
-        key={image._id}
-        className="card" 
-      >
-        <div className="overlay">
-          <h5>{image.picName}</h5>
-        </div>
-        <img src={image.url} />
-        
+  
+    <div 
+      key={image._id}
+      className="card" 
+      onClick={handleClick}
+    >
+      <div className="overlay">
+        <h5>{image.picName}</h5>
       </div>
-    </Link> 
+      <img src={image.url} /> 
+    </div>
     
   )
 

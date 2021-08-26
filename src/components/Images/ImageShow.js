@@ -13,6 +13,8 @@ function ImageShow() {
   const [user, setUser] = React.useState({})
   const [following, setFollowing] = React.useState()
 
+  const isAuth = isAuthenticated()
+
   React.useEffect(() => {
     const getData = async () => {
       setIsLoading(true)
@@ -145,23 +147,23 @@ function ImageShow() {
   
   return (
     <>
-      <h1>Image Show:</h1>
-      {(isAuthenticated) && (!isFavorite) &&
+      
+      {(isAuth) && (!isFavorite) &&
         <div>
           <button onClick={handleFavorite} >Favorite</button>
         </div>
       }
-      {(isAuthenticated) && (isFavorite) &&
+      {(isAuth) && (isFavorite) &&
         <div>
           <button onClick={handleUnfavorite} >Unfavorite</button>
         </div>
       }
       {(inputs) && 
-        <div>
-          <div>
+        <div className='imageDataContainer'>
+          <div className='imageWrapper'>
             <img src={inputs.url} />
           </div>
-          <div>
+          <div className='imageData'>
             <p>Name: {inputs.picName}</p>
             <p>Latitude: {inputs.latitude}</p>
             <p>Longitude: {inputs.longitude}</p>
@@ -169,15 +171,21 @@ function ImageShow() {
             <p>Types: {inputs.tags.types.join(', ')}</p>
             <p>Tags: {inputs.tags.customs.join(', ')}</p>
             <p>Made By: {madeBy}</p>
-            {following === false ? (
-              <button className='button-outline' onClick={handleFollow}>
-                {`follow ${madeBy}`}
-              </button>
-            ) : (
-              <button className='button-outline' onClick={handleUnFollow}>
-                {`Un-follow ${madeBy}`}
-              </button>
-            )}    
+            <div className='followButton'>
+              { isAuth && 
+                <>
+                  {!following ? (
+                    <button className='button-outline' onClick={handleFollow}>
+                      {`follow ${madeBy}`}
+                    </button>
+                  ) : (
+                    <button className='button-outline' onClick={handleUnFollow}>
+                      {`Un-follow ${madeBy}`}
+                    </button>
+                  )}
+                </>
+              }
+            </div>      
           </div>
         </div> 
       }

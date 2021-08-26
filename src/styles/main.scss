@@ -292,3 +292,26 @@ body {
 }
 
 
+
+// image show css
+
+.imageDataContainer{
+  display: flex;
+  flex-direction: row wrap;
+  justify-content: center;
+
+  .imageWrapper{
+    height: 600px;
+    margin: 20px;
+
+    img{
+      max-height: 100%;
+      max-width: 100%;
+    }
+  }
+
+  .imageData{
+    margin: 20px
+  }
+}
+

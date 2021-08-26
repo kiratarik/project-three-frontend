@@ -16,14 +16,7 @@ import MyCollections from './components/Users/MyCollections.js'
 import MyPictures from './components/Users/MyPictures.js'
 import MyFollows from './components/Users/MyFollows.js'
 
-<<<<<<< HEAD
-
 function App() {
-  
-
-=======
-function App() {
->>>>>>> development
 
   return (
     <BrowserRouter>

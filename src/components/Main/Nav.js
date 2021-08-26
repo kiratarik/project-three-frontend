@@ -14,13 +14,11 @@ function Nav() {
   const [isLoggedIn, setIsLoggedIn] = React.useState(null)
 
   React.useEffect(() => {
-
     const token = getToken()
     if (!token) return console.log('you are not logged in')
     setTokenValid(token)
 
     setIsLoggedIn(isAuthenticated())
-    console.log(isLoggedIn)
   }, [location])
 
 

@@ -21,7 +21,7 @@ function MyCollections() {
       }
     }
     getCollections()
-  },[])
+  }, [userId])
 
   console.log(collections)
 

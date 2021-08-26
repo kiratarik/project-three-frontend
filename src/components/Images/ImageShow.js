@@ -102,7 +102,7 @@ function ImageShow() {
       }
     }
     compareUser()  
-  },[user])
+  })
 
   async function handleFollow(){
     const userId = getPayload().sub

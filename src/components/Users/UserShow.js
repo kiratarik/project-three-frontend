@@ -65,7 +65,7 @@ function UserShow() {
     
     if (imageData) filterData()
 
-  },[imageData])
+  }, [imageData])
 
 
 
@@ -73,7 +73,7 @@ function UserShow() {
 
   React.useEffect(() => {
     setCanFollow(userId !== currentUser)
-  }, [location])
+  }, [location, userId, currentUser])
 
   React.useEffect(() => {
     async function compareUser(){
@@ -94,7 +94,7 @@ function UserShow() {
     }
     compareUser()
     setCanFollow(userId !== currentUser)  
-  },[currentUser])
+  }, [currentUser])
 
   async function handleFollow(){
     try {

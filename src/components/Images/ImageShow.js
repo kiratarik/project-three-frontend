@@ -1,11 +1,12 @@
 import React from 'react'
-import { useParams, Link } from 'react-router-dom'
+import { useParams, Link, useHistory } from 'react-router-dom'
 import { getImage, showUser, editUser } from '../../functionLib/api.js'
-import { isAuthenticated, getPayload } from '../../functionLib/auth.js'
+import { isAuthenticated, getPayload, isOwner } from '../../functionLib/auth.js'
 import ReactMapGL, { Marker } from 'react-map-gl'
 
 function ImageShow() {
   const { imageId } = useParams()
+  const history = useHistory()
   const [inputs, setInputs] = React.useState(null)
   const [isLoading, setIsLoading] = React.useState(true)
   const [isFavorite, setIsFavorite] = React.useState(false)
@@ -17,6 +18,7 @@ function ImageShow() {
   // )
 
   const isAuth = isAuthenticated()
+  const [isYou, setIsYou] = React.useState(false)
 
   React.useEffect(() => {
     const getData = async () => {
@@ -26,6 +28,8 @@ function ImageShow() {
         setInputs(resImage.data)
         const resUser = await showUser(resImage.data.addedBy)
         setMadeBy(resUser.data.username)
+        const isMe = await isOwner(resUser.data._id)
+        setIsYou(isMe)
 
         const currentUser = await showUser(getPayload().sub)
         setUser(currentUser.data)
@@ -145,7 +149,9 @@ function ImageShow() {
     }
   }
 
-
+  function handleEdit() {
+    history.push(`/images/${imageId}/edit`)
+  }
 
   
   return (
@@ -165,7 +171,7 @@ function ImageShow() {
             <p><strong>Tags</strong> {inputs.tags.customs.join(', ')}</p>
             <p><strong>Made By</strong> <Link  to={`/users/${inputs.addedBy}`}> <a className='userPageLink' href=''>{madeBy}</a></Link> </p>
             <div className='followButton'>
-              { isAuth && 
+              { isAuth && !isYou &&
                 <>
                   {!following ? (
                     <button className='button-outline follow' onClick={handleFollow}>
@@ -176,6 +182,13 @@ function ImageShow() {
                       {`Un-follow ${madeBy}`}
                     </button>
                   )}
+                </>
+              }
+              { isAuth && isYou &&
+                <>
+                  <button className='button-outline follow' onClick={handleEdit}>
+                    Edit
+                  </button>
                 </>
               }
             </div>

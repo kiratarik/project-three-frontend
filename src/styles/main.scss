@@ -329,3 +329,64 @@ body {
 }
 
 
+
+// image show css
+
+.imageDataContainer{
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: center;
+
+  .imageWrapper{
+    max-width: 500px;
+    margin: 20px;
+    min-width: 300px;
+
+    img{
+      object-fit: contain;
+      height: 100%;
+      width: 100%;
+    }
+  }
+
+  .imageData{
+    margin-top: 20px;
+    margin-left: 20px;
+    max-width: 500px;
+    max-height: 700px;
+
+    p{
+      margin: 10px
+    }
+    .followButton{
+      width: 250px;
+      margin: 0px;
+
+      .follow{
+        border-radius: 5px;
+        margin: 3px 0px;
+        color: white;
+      }
+    }
+    .favouriteButton{
+      width: 250px;
+      margin: 0px;
+      
+      
+      .favourite{
+        border-radius: 5px;
+        margin: 3px 0px;
+        color: white;
+      }
+    }
+    .mapBox-container{
+      margin-top: 15px;
+      margin-bottom: 15px;
+      width: 350px;
+      height: 350px;
+      
+    }
+  }
+}
+

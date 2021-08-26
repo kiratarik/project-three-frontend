@@ -61,7 +61,6 @@ function ImageSubmit() {
     if (e.target.files[0]) {
       setImagePath(URL.createObjectURL(e.target.files[0]))
       setImageFile(e.target.files[0])
-      console.log(e.target.files)
     }
   }
 
@@ -79,7 +78,7 @@ function ImageSubmit() {
   }
   function handleLatLng(e) {
     const id = e.target.id
-    const mod = id.length - 7
+    const mod = id.length - 7 // differentiating between longitude and latitude based on length of id name
     const value = e.target.value
     const numValue = parseFloat(value)
     if (value === '') {
@@ -100,7 +99,6 @@ function ImageSubmit() {
       e.lngLat[0] = e.lngLat[0] + 360
     }
 
-    console.log('LngLat', e.lngLat)
     setInputs({ ...inputs, longitude: e.lngLat[0], latitude: e.lngLat[1] })
     document.querySelector('#longitude').value = e.lngLat[0]
     document.querySelector('#latitude').value = e.lngLat[1]
@@ -121,7 +119,6 @@ function ImageSubmit() {
           customs: customTags,
         },
       }
-      console.log(output)
       await createImage(output)
       history.push(`/users/${madeBy._id}/pictures`)
     } catch (err) {

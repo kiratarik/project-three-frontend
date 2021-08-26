@@ -8,14 +8,11 @@ function MyFollows() {
   const [follows, setFollows] = React.useState([])
   const history = useHistory()
 
-
   React.useEffect(() => { 
 
     async function getCollections(){
       try {
         const result = await showUser(userId)
-        if (!result) console.log('there be errors here')
-        console.log(result.data.myFollowing !== undefined, result.data.myFollowing)
         if ((result.data) && (result.data.myFollowing)) {
           const followings = []
           await result.data.myFollowing.forEach(async (userId, index)=> {
@@ -23,12 +20,10 @@ function MyFollows() {
             followings.push({ ...resUser.data })
             if (result.data.myFollowing.length === index + 1) {
               setFollows(followings)
-              console.log('followings', followings)
             }
             
           })
         }
-        console.log('follows', result.data, follows)
         
       } catch (err) {
         console.log(err)

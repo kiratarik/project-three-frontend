@@ -16,14 +16,11 @@ function Login() {
     setFormData({ ...formData, [e.target.name]: e.target.value })
   }
 
-  console.log(formData)
-
   const handleSubmit = (e) => {
     e.preventDefault()
     async function submit(){
       try {
         const result = await logInUser(formData)
-        console.log(result.data)
         setToken(result.data.token)
         history.push('/')
       } catch (err) {

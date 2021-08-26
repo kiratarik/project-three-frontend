@@ -9,7 +9,6 @@ function CollectionCard({ collection }) {
   
   React.useEffect(() => {
     const getData = async () => {
-      console.log('getData')
       setIsLoading(true)
       try {
         if ((collection) && (collection.collectionArray.length > 0)) {

@@ -79,7 +79,6 @@ function Home() {
 
 
   const filterImages = (chosen) => {
-    console.log(chosen)
     const countries = []
     const result = images.filter(image => {
       if (image.tags && image.tags) {
@@ -110,7 +109,6 @@ function Home() {
     })
     const orderedCountries = [...new Set(countries)]
     setCountryOptions(orderedCountries)
-    console.log(result)
     setFilteredImages(result)
   }
 

@@ -15,7 +15,6 @@ function Nav() {
 
   React.useEffect(() => {
     const token = getToken()
-    if (!token) return console.log('you are not logged in')
     setTokenValid(token)
 
     setIsLoggedIn(isAuthenticated())
@@ -40,7 +39,7 @@ function Nav() {
 
     if (userId){
       getUserData()
-    } console.log('you are not logged in')
+    }
 
   },[tokenAdministered])
 

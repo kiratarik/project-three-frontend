@@ -80,11 +80,11 @@ function Nav() {
             <Link to={`/users/${userId}`}>
               {userData && `${userData.username}`}
             </Link>
-            <Link to="/images/new" className="red-button-small">
+            <Link to="/images/new">
               Upload a photo
             </Link>
             <button
-              className="button-outline"
+              className="button-small"
               onClick={handleLogOut}
             >Log Out</button>
           </>

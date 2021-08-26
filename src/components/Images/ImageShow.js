@@ -198,6 +198,8 @@ function ImageShow() {
                 height="100%"
                 width="100%"
                 mapStyle='mapbox://styles/hollylouisarose/cksrc0zi20n2o17q8f17hifcw'
+                pitch={0}
+                bearing={0}
               >
                 {inputs &&
                     <Marker

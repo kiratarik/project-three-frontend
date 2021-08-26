@@ -81,12 +81,13 @@ function Nav() {
               {userData && `${userData.username}`}
             </Link>
             <Link to="/images/new">
+              <button>
               Upload a photo
+              </button>
             </Link>
-            <button
-              className="button-small"
+            <a
               onClick={handleLogOut}
-            >Log Out</button>
+            >Log Out</a>
           </>
         ) }
         

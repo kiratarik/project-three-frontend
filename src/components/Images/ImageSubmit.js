@@ -146,83 +146,102 @@ function ImageSubmit() {
 
   return (
     <>
-      <h1>Create New Image:</h1>
-      
-      <div>
-        <label>Name: </label>
-        <input id='picName' placeholder='Describe Image' required onChange={handleCaption} />
-      </div>
-      <div>
-        <label>Image Upload: </label>
-        <input type='file' accept='image/png, image/jpeg' required onChange={handleImage} />
-        {imagePath && <img src={imagePath} />}
-      </div>
-      <div>
-        <label>Type Tags: </label>
-        <Select
-          id='type-tags'
-          options={selectOptions.map(option => {
-            return ({ value: option, label: option })
-          })}
-          isMulti
-          onChange={(e) => setTypeTags(e.map(item => item.value))}
-        />
-      </div>
-      <div>
-        <label>Custom Tags: </label>
-        <CreatableSelect 
-          isMulti
-          onChange={(e) => setCustomTags(e.map(item => item.value))}
-        />
-      </div>
-      <div className='location-input'>
-        <label>Location: </label>
-        <div>
-          <div>
-            <input id='latitude' placeholder='Latitude' required onChange={handleLatLng} />
-            <input id='longitude' placeholder='Longitude' required onChange={handleLatLng} />
-          </div>
-          <div>
-            <div className="map-container image-submit">
-              <ReactMapGL
-                mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_ACCESS_TOKEN}
-                height="80%"
-                width="50%"
-                mapStyle='mapbox://styles/mapbox/streets-v11'
-                onViewportChange={(nextViewport) => setViewport(nextViewport)}
-                {...viewport}
-                pitch={0}
-                bearing={0}
-              >
-                <Marker 
-                  key={inputs.picName}
-                  latitude={inputs.latitude}
-                  longitude={inputs.longitude}
-                  offsetLeft={-8}
-                  offsetTop={-19}
-                  draggable
-                  onDragEnd={handleDragEnd}
-                >
-                  <span>📍</span>
-                </Marker>
-              </ReactMapGL>
+      <section className="image-submit-container">
+        <div className="center-container">
+          <form className="form-container">
+            <div>
+              <label className="label">Name: </label>
+              <input id='picName' 
+                placeholder='Describe Image' 
+                required onChange={handleCaption}
+                className="input" />
             </div>
-          </div>
-          <div>
-            <label>Regions: </label>
-            {regions && <label>{regions.join(', ')}</label>}
-          </div>
-        </div>
-      </div>
-      {(madeBy) &&
+            <div>
+              <label>Image Upload:</label>
+              <input  
+                type='file' 
+                accept='image/png, image/jpeg'
+                className="file-upload" 
+                required onChange={handleImage} />
+              {imagePath && <img src={imagePath} />}
+            </div>
+            <div>
+              <label>Type Tags: </label>
+              <Select
+                id='type-tags'
+                options={selectOptions.map(option => {
+                  return ({ value: option, label: option })
+                })}
+                isMulti
+                onChange={(e) => setTypeTags(e.map(item => item.value))}
+              />
+            </div>
+            <div>
+              <label>Custom Tags: </label>
+              <CreatableSelect 
+                isMulti
+                onChange={(e) => setCustomTags(e.map(item => item.value))}
+              />
+            </div>
+            <div className='location-input'>
+              <label>Location: </label>
+              <div>
+                <div>
+                  <input 
+                    id='latitude' 
+                    placeholder='Latitude' 
+                    required onChange={handleLatLng} 
+                    className="input"/>
+                  <input 
+                    id='longitude' 
+                    placeholder='Longitude' 
+                    required onChange={handleLatLng} 
+                    className="input"/>
+                </div>
+                <div>
+                  <figure className="map-container image-submit">
+                    <ReactMapGL
+                      mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_ACCESS_TOKEN}
+                      height="90%"
+                      width="90%"
+                      mapStyle='mapbox://styles/mapbox/streets-v11'
+                      onViewportChange={(nextViewport) => setViewport(nextViewport)}
+                      {...viewport}
+                      pitch={0}
+                      bearing={0}
+                    >
+                      <Marker 
+                        key={inputs.picName}
+                        latitude={inputs.latitude}
+                        longitude={inputs.longitude}
+                        offsetLeft={-8}
+                        offsetTop={-19}
+                        draggable
+                        onDragEnd={handleDragEnd}
+                      >
+                        <span>📍</span>
+                      </Marker>
+                    </ReactMapGL>
+                  </figure>
+                </div>
+                <div>
+                  <label>Regions: </label>
+                  {regions && <label>{regions.join(', ')}</label>}
+                </div>
+              </div>
+            </div>
+            {(madeBy) &&
       <div>
         <label>Made By: </label>
         <label>{madeBy.username}</label>
       </div>}
-      <div>
-        <input type='submit' onClick={handleSubmit} ></input>
-        {isUploading && <p>...Uploading</p>}
-      </div>
+            <div>
+              <button type="submit" className="button" onClick={handleSubmit}>Upload</button>
+              {isUploading && <p>...Uploading</p>}
+            </div>
+          </form>
+        </div>
+      </section>
     </>
   )
 }

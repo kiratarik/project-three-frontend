@@ -5,12 +5,10 @@ import ReactMapGL, { Marker, Popup } from 'react-map-gl'
 
 import { getImages } from '../../functionLib/api'
 import { selectOptions, continentOptions } from '../../functionLib/variables'
-import ImageCard from '../Images/ImageCard'
+import ImageCard from '../images/ImageCard'
 
 function Home() {
-
   const [images, setImages] = React.useState(null)
-  // const [typeTags, setTypeTags] = React.useState([])
   const [filteredImages, setFilteredImages] = React.useState(null)
   const [countryOptions, setCountryOptions] = React.useState([])
   const [choices, setChoices] = React.useState({
@@ -29,7 +27,6 @@ function Home() {
 
   React.useEffect(() => {
     const getData = async () => {
-
       try {
         const response = await getImages()
         setImages(response.data)
@@ -39,7 +36,6 @@ function Home() {
       }
     }
     getData()
-
   }, [])
 
   // Loads country options when images first set
@@ -77,7 +73,6 @@ function Home() {
     filterImages({ ...choices, country: arrayChoice })
   }
 
-
   const filterImages = (chosen) => {
     const countries = []
     const result = images.filter(image => {
@@ -88,13 +83,11 @@ function Home() {
         const customMatch = chosen.customs.filter(tag => {
           return image.tags.customs.join().includes(tag)
         })
-        
         let continentMatch = false
         if (image.tags.locations[0] === chosen.continent || chosen.continent === '') {
           countries.push(image.tags.locations[1])
           continentMatch = true
         }
-        
         let countryMatch = false
         if (image.tags.locations[1] === chosen.country || chosen.country === '') {
           countryMatch = true

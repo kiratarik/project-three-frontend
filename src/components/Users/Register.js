@@ -33,8 +33,6 @@ function Register() {
     }
   }
 
-  
-
   return (
     <section className="section">
       <div className="center-container">

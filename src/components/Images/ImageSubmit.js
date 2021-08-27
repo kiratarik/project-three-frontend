@@ -21,14 +21,12 @@ function ImageSubmit() {
       latitude: 0,
       longitude: 0,
     })
-  
   const [viewport, setViewport] = React.useState({
     latitude: 0.0,
     longitude: 0.0,
     zoom: 1,
   })
   const [regions, setRegions] = React.useState([])
-  
   const url = {
     front: 'https://api.bigdatacloud.net/data/reverse-geocode-client?localityLanguage=en&latitude=',
     mid: '&longitude=',
@@ -54,7 +52,6 @@ function ImageSubmit() {
     setMadeBy(user.data)
   }, [])
   
-
   const [imagePath, setImagePath] = React.useState('')
   const [imageFile, setImageFile] = React.useState({})
   function handleImage(e) {
@@ -98,14 +95,12 @@ function ImageSubmit() {
     } else if (e.lngLat[0] <= -180) {
       e.lngLat[0] = e.lngLat[0] + 360
     }
-
     setInputs({ ...inputs, longitude: e.lngLat[0], latitude: e.lngLat[1] })
     document.querySelector('#longitude').value = e.lngLat[0]
     document.querySelector('#latitude').value = e.lngLat[1]
     getLocation({ latitude: e.lngLat[1], longitude: e.lngLat[0] })
   }
   
-
   async function handleSubmit() {
     try {
       const imageUrl = await handleUpload()
@@ -133,7 +128,6 @@ function ImageSubmit() {
       data.append('file', imageFile)
       data.append('upload_preset', uploadPreset)
       const res = await axios.post(uploadUrl, data)
-
       setIsUploading(false)
       return (res.data.url)
     } catch (err) {

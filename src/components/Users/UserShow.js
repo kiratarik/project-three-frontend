@@ -18,9 +18,6 @@ function UserShow() {
   const currentUser = getPayload().sub
   const location = useLocation()
   
-
-  console.log(userId)
-
   React.useEffect(() => {
     const areYouOwner = isOwner(userId)
     const isAuth = isAuthenticated()
@@ -38,13 +35,8 @@ function UserShow() {
         const userData = await showUser(userId)
         if (!userData) return console.log('its fucked')
         setUserData(userData.data)
-        console.log(userData)
-
         const imageData = await getImages()
-        if (!imageData) console.log('there are no images')
-        setImageData(imageData.data)
-        console.log(imageData.data)
-        
+        setImageData(imageData.data)       
       } catch (err) {
         console.log(err)
       }
@@ -60,12 +52,9 @@ function UserShow() {
       })
       console.log(filteredImages)
       setFilteredData(filteredImages)
-      console.log(filteredData)
-    }
-    
+    }   
     if (imageData) filterData()
-
-  },[imageData])
+  }, [imageData])
 
 
 

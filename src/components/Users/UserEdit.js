@@ -8,7 +8,6 @@ const initialState = {
   password: '',
 }
 
-
 function UserEdit() {
   const { userId } = useParams()
   const [userData, setUserData] = React.useState(initialState)

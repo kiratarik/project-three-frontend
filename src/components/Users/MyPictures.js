@@ -29,7 +29,6 @@ function MyPictures() {
     setFilteredImages(result)
   }
 
-
   return (
     <>
       {!filteredImages ? ('Loading'

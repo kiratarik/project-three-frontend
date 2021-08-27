@@ -21,10 +21,8 @@ function MyFollows() {
             if (result.data.myFollowing.length === index + 1) {
               setFollows(followings)
             }
-            
           })
         }
-        
       } catch (err) {
         console.log(err)
       }
@@ -46,12 +44,10 @@ function MyFollows() {
               <p id={user._id} >{user.username}</p>
             </div>
           )
-          
         })
       }
     </>
   )
 }
-
 
 export default MyFollows

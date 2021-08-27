@@ -31,7 +31,6 @@ function ImageShow() {
         setMadeBy(resUser.data.username)
         const isMe = await isOwner(resUser.data._id)
         setIsYou(isMe)
-
         const currentUser = await showUser(getPayload().sub)
         setUser(currentUser.data)
         if (currentUser.data.myCollections.length > 0) {
@@ -78,7 +77,6 @@ function ImageShow() {
     }
   }
 
-
   React.useEffect(() => {
     const userId = getPayload().sub
     async function compareUser(){
@@ -112,7 +110,6 @@ function ImageShow() {
       }
       await editUser(editBody)
       setFollowing(true)
-      
     } catch (err) {
       console.log(err)
     }
@@ -120,7 +117,6 @@ function ImageShow() {
 
   async function handleUnFollow(){
     const userId = getPayload().sub
-
     try { 
       const user = await showUser(userId)
       const userData = user.data
@@ -143,10 +139,8 @@ function ImageShow() {
     history.push(`/images/${imageId}/edit`)
   }
 
-  
   return (
     <>
-      
       {(inputs) && 
         <div className='imageDataContainer'>
           <div className='imageWrapper'>

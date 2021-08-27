@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { getImage } from '../../functionLib/api.js'
-import ImageCard from '../Images/ImageCard.js'
+import ImageCard from '../images/ImageCard.js'
 
 function CollectionCard({ collection }) {
   const [inputs, setInputs] = React.useState([])
@@ -19,7 +19,6 @@ function CollectionCard({ collection }) {
             if (collection.collectionArray.length === index + 1) {
               setInputs(images)
             }
-            
           })
         }
       } catch (err) {

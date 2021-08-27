@@ -6,8 +6,7 @@ function ImageCard({ image }){
     history.push(`/images/${image._id}`)
   }
 
-  return (
-  
+  return ( 
     <div 
       key={image._id}
       className="card" 
@@ -18,9 +17,7 @@ function ImageCard({ image }){
       </div>
       <img src={image.url} loading="lazy"/> 
     </div>
-    
   )
-
 }
 
 export default ImageCard

@@ -8,6 +8,7 @@ function MyFollows() {
   const [follows, setFollows] = React.useState([])
   const [followsTwo, setFollowsTwo] = React.useState([])
   const [userData, setUserData] = React.useState(null)
+  const [followsData, setFollowsData] = React.useState(null)
   const history = useHistory()
 
   React.useEffect(() => { 
@@ -30,8 +31,8 @@ function MyFollows() {
     try {
       if ((result) && (result.myFollowing)) {
         const followings = []
-        result.myFollowing.map((userId, index) => {
-          getFollowData(userId, index, result.myFollowing, followings)
+        result.myFollowing.map((followId, index) => {
+          getFollowData(followId, index, result.myFollowing, followings)
         })
       }
     } catch (err) {
@@ -39,13 +40,12 @@ function MyFollows() {
     }
   }
 
-  async function getFollowData(userId, index, dataArray, followings) {
-    const resUser = await showUser(userId)
-    followings.push({ ...resUser.data })
-    console.log('followings', followings)
+  async function getFollowData(followId, index, dataArray, followings) {
+    const resUser = await showUser(followId)
+    const followOutput = { username: resUser.data.username, _id: resUser.data._id }
+    followings.push({ ...followOutput })
     if (dataArray.length === index + 1) {
       setFollows(followings)
-      console.log('All followings', followings)
     }
   }
 
@@ -56,7 +56,6 @@ function MyFollows() {
         if ((userData) && (userData.myFollowing) && userData.myFollowing.length !== follows.length) {
           getData()
         } else if ((followsTwo.length === 0) && (userData)) {
-          console.log('complete', follows, userData)
           setFollowsTwo(follows)
         }
       } catch (err) {
@@ -65,10 +64,6 @@ function MyFollows() {
     }
     getUser()
   }, [follows])
-
-
-  
-
 
   function handleFollow(e) {
     history.push(`/users/${e.target.id}`)

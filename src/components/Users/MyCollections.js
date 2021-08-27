@@ -8,7 +8,6 @@ function MyCollections() {
   const [collections, setCollections] = React.useState()
 
   React.useEffect(() => { 
-
     async function getCollections(){
       try {
         const result = await showUser(userId)
@@ -20,7 +19,6 @@ function MyCollections() {
     }
     getCollections()
   }, [userId])
-
 
   return (
     <>

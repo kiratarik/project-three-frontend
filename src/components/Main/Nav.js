@@ -16,17 +16,13 @@ function Nav() {
   React.useEffect(() => {
     const token = getToken()
     setTokenValid(token)
-
     setIsLoggedIn(isAuthenticated())
   }, [location])
 
-
   React.useEffect( () => {
-
     const payload = getPayload() 
     const userId = payload.sub
     setUserId(userId)
-  
     async function getUserData(){
       try {
         const user = await showUser(userId)
@@ -36,11 +32,9 @@ function Nav() {
         console.log(err)
       }
     }
-
     if (userId){
       getUserData()
     }
-
   },[tokenAdministered])
 
   function handleLogOut() {
@@ -61,7 +55,6 @@ function Nav() {
           <h3>PictureREST</h3>
         </Link>
       </div>
-
       <div className="nav-links">
         {!isLoggedIn ? (
           <>

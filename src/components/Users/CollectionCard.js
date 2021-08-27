@@ -19,7 +19,6 @@ function CollectionCard({ collection }) {
             if (collection.collectionArray.length === index + 1) {
               setInputs(images)
             }
-            
           })
         }
       } catch (err) {

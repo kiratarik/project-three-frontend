@@ -14,14 +14,11 @@ function ImageEdit() {
   const [inputs, setInputs] = React.useState(null)
   const [madeBy, setMadeBy] = React.useState('')
   const [isLoading, setIsLoading] = React.useState(true)
-
-
   const [viewport, setViewport] = React.useState({
     latitude: 0.0,
     longitude: 0.0,
     zoom: 8,
   })
-
 
   React.useEffect(() => {
     const getData = async () => {
@@ -31,7 +28,6 @@ function ImageEdit() {
         setInputs(resImage.data)
         const resUser = await showUser(resImage.data.addedBy)
         setMadeBy(resUser.data.username)
-        
         setLatLng({ latitude: resImage.data.latitude, longitude: resImage.data.longitude })
         setViewport({ ...viewport, latitude: parseFloat(resImage.data.latitude), longitude: parseFloat(resImage.data.longitude) })
       } catch (err) {
@@ -40,9 +36,7 @@ function ImageEdit() {
       setIsLoading(false)
     }
     getData()
-    
   }, [imageId])
-
 
   const url = {
     front: 'https://api.bigdatacloud.net/data/reverse-geocode-client?localityLanguage=en&latitude=',
@@ -60,7 +54,6 @@ function ImageEdit() {
       console.log(err)
     }
   }
-
 
   function handleChange(e) {
     setInputs({ ...inputs, [e.target.id]: e.target.value })
@@ -90,13 +83,11 @@ function ImageEdit() {
     } else if (e.lngLat[0] <= -180) {
       e.lngLat[0] = e.lngLat[0] + 360
     }
-
     setLatLng({ latitude: e.lngLat[1], longitude: e.lngLat[0] })
     setInputs({ ...inputs, longitude: e.lngLat[0], latitude: e.lngLat[1] })
     getLocation({ latitude: e.lngLat[1], longitude: e.lngLat[0] })
     
   }
-
 
   async function handleSubmit(e) {
     e.preventDefault()
@@ -106,9 +97,7 @@ function ImageEdit() {
     } catch (err) {
       console.log(err)
     }
-    
   }
-
 
   return (
     <>

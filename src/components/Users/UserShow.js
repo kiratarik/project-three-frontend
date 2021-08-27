@@ -18,7 +18,6 @@ function UserShow() {
   const currentUser = getPayload().sub
   const location = useLocation()
   
-
   React.useEffect(() => {
     const areYouOwner = isOwner(userId)
     const isAuth = isAuthenticated()
@@ -35,10 +34,8 @@ function UserShow() {
       try {
         const userData = await showUser(userId)
         setUserData(userData.data)
-
         const imageData = await getImages()
-        setImageData(imageData.data)
-        
+        setImageData(imageData.data)       
       } catch (err) {
         console.log(err)
       }
@@ -53,10 +50,8 @@ function UserShow() {
         return image.addedBy === userId
       })
       setFilteredData(filteredImages)
-    }
-    
+    }   
     if (imageData) filterData()
-
   }, [imageData])
 
 

@@ -5,7 +5,7 @@ import ReactMapGL, { Marker, Popup } from 'react-map-gl'
 
 import { getImages } from '../../functionLib/api'
 import { selectOptions, continentOptions } from '../../functionLib/variables'
-import ImageCard from '../Images/ImageCard'
+import ImageCard from '../images/ImageCard'
 
 function Home() {
 

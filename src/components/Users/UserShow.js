@@ -33,7 +33,6 @@ function UserShow() {
     async function getUserData() {
       try {
         const userData = await showUser(userId)
-        if (!userData) return console.log('its fucked')
         setUserData(userData.data)
         const imageData = await getImages()
         setImageData(imageData.data)       
@@ -50,7 +49,6 @@ function UserShow() {
       const filteredImages = imageData.filter(image => {
         return image.addedBy === userId
       })
-      console.log(filteredImages)
       setFilteredData(filteredImages)
     }   
     if (imageData) filterData()
@@ -70,8 +68,6 @@ function UserShow() {
         const user = await showUser(currentUser)
         const userData = user.data
         const userToEdit = { ...userData }
-        console.log(userToEdit.myFollowing)
-        // console.log(inputs.addedBy)
         if (userToEdit.myFollowing.includes(`${userId}`)){
           setFollowing(true)
         } else {
@@ -90,16 +86,14 @@ function UserShow() {
       const user = await showUser(currentUser)
       const userData = user.data
       const userToEdit = { ...userData } 
-      // console.log(inputs)
       userToEdit.myFollowing.push(userId)
       const editInput = userToEdit.myFollowing
       const editBody = {
         _id: currentUser,
         myFollows: editInput,  
       }
-      const response = await editUser(editBody)
+      await editUser(editBody)
       setFollowing(true)
-      console.log(response)
       
     } catch (err) {
       console.log(err)
@@ -107,7 +101,6 @@ function UserShow() {
   }
 
   async function handleUnFollow(){
-    console.log('unfollow')
     try { 
       const user = await showUser(currentUser)
       const userData = user.data
@@ -119,8 +112,7 @@ function UserShow() {
         _id: currentUser,
         myFollows: filteredArray,  
       }
-      const response = await editUser(editBody)
-      console.log(response)
+      await editUser(editBody)
       setFollowing(false)
     } catch (err) {
       console.log(err)

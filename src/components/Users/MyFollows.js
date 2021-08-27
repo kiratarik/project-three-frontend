@@ -8,7 +8,6 @@ function MyFollows() {
   const [follows, setFollows] = React.useState([])
   const [followsTwo, setFollowsTwo] = React.useState([])
   const [userData, setUserData] = React.useState(null)
-  const [followsData, setFollowsData] = React.useState(null)
   const history = useHistory()
 
   React.useEffect(() => { 
@@ -64,6 +63,8 @@ function MyFollows() {
     }
     getUser()
   }, [follows])
+
+  
 
   function handleFollow(e) {
     history.push(`/users/${e.target.id}`)

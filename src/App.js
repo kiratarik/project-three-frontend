@@ -17,7 +17,6 @@ import MyPictures from './components/users/MyPictures.js'
 import MyFollows from './components/users/MyFollows.js'
 
 function App() {
-
   return (
     <BrowserRouter>
       <Nav />

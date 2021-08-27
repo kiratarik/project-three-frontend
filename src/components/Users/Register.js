@@ -25,10 +25,6 @@ function Register() {
       await createUser(formData)
       history.push('/login')
     } catch (err) {
-      err.response.data.username = 'Oops! Username required'
-      err.response.data.email = 'Oops! Email required'
-      err.response.data.password = 'Oops! Password required'
-      err.response.data.passwordConfirmation = 'Oops! Passwords must match'
       setFormErrors(err.response.data)
     }
   }

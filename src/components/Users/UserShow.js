@@ -7,7 +7,6 @@ import { editUser } from '../../functionLib/api'
 import { getPayload } from '../../functionLib/auth'
 
 function UserShow() {
-
   const { userId } = useParams()
   const [ userData, setUserData ] = React.useState() 
   const [imageData, setImageData] = React.useState()
@@ -29,7 +28,6 @@ function UserShow() {
   },[userId])
 
   React.useEffect(() => {
-    
     async function getUserData() {
       try {
         const userData = await showUser(userId)
@@ -44,7 +42,6 @@ function UserShow() {
   }, [userId])
 
   React.useEffect(() => {
-    
     function filterData() {
       const filteredImages = imageData.filter(image => {
         return image.addedBy === userId
@@ -54,10 +51,7 @@ function UserShow() {
     if (imageData) filterData()
   }, [imageData])
 
-
-
   // follow button
-
   React.useEffect(() => {
     setCanFollow(userId !== currentUser)
   }, [location])
@@ -94,7 +88,6 @@ function UserShow() {
       }
       await editUser(editBody)
       setFollowing(true)
-      
     } catch (err) {
       console.log(err)
     }
@@ -118,10 +111,6 @@ function UserShow() {
       console.log(err)
     }
   }
-
-
-
-
 
   return (
     <>

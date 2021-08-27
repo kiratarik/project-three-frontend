@@ -42,9 +42,10 @@ function ImageSubmit() {
         return item
       }))
     } catch (err) {
-      console.log(err)
+      console.log(err.response.data)
     }
   }
+
   React.useState(async () => {
     getLocation(inputs)
     const payload = await getPayload()
@@ -100,8 +101,8 @@ function ImageSubmit() {
     document.querySelector('#latitude').value = e.lngLat[1]
     getLocation({ latitude: e.lngLat[1], longitude: e.lngLat[0] })
   }
-  
-  async function handleSubmit() {
+
+  async function handleSubmit () {
     try {
       const imageUrl = await handleUpload()
       const output = {
@@ -117,7 +118,7 @@ function ImageSubmit() {
       await createImage(output)
       history.push(`/users/${madeBy._id}/pictures`)
     } catch (err) {
-      console.log(err)
+      console.log(err.response.data)
     }
   }
   const [isUploading, setIsUploading] = React.useState(false)
@@ -131,7 +132,7 @@ function ImageSubmit() {
       setIsUploading(false)
       return (res.data.url)
     } catch (err) {
-      console.log(err)
+      console.log(err.response.data)
     }
   }
 
@@ -227,7 +228,8 @@ function ImageSubmit() {
         <label>{madeBy.username}</label>
       </div>}
             <div>
-              <button type="submit" className="button" onClick={handleSubmit}>Upload</button>
+              <button type="submit" className="button" 
+                onClick={handleSubmit}>Upload</button>
               {isUploading && <p>...Uploading</p>}
             </div>
           </form>

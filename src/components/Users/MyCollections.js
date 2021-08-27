@@ -27,7 +27,9 @@ function MyCollections() {
           return (<CollectionCard key={index} collection={collection} />)
         })
       }
-      
+      {((!collections) || (collections.length === 0)) &&
+      <p>No collections made</p>
+      }
     </>
   )
 }

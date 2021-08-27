@@ -36,7 +36,6 @@ function MyFollows() {
 
   return (
     <>
-      <p>Follows:</p>
       {(follows.length > 0) &&
         follows.map(user => {
           return (
@@ -45,6 +44,9 @@ function MyFollows() {
             </div>
           )
         })
+      }
+      {(follows.length === 0)  && 
+      <p>Not following anyone</p>
       }
     </>
   )

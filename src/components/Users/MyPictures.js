@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 
 function MyPictures() {
   const { userId } = useParams()
-  const [filteredImages, setFilteredImages] = React.useState()
+  const [filteredImages, setFilteredImages] = React.useState(null)
 
   React.useEffect(() =>{
     
@@ -20,8 +20,6 @@ function MyPictures() {
     getImageData()
   }, [])
   
-
-
   const filterImages = (images) => {
     const result = images.filter(image => {
       return image.addedBy === userId
@@ -47,6 +45,9 @@ function MyPictures() {
           </div>
         </>
       )}
+      {(filteredImages !== null) && (filteredImages.length === 0) &&
+      <p>No Uploads made</p>
+      }
     </>
   )
 }

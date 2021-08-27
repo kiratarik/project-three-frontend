@@ -31,7 +31,7 @@ function CollectionCard({ collection }) {
 
   return (
     <div>
-      <h1>{collection.collectionName}</h1>
+      {/* <h1>{collection.collectionName}</h1> */}
       {(isLoading) && 
         <p>...Loading</p>
       }

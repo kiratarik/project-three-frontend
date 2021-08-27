@@ -18,7 +18,6 @@ function ImageShow() {
     zoom: 5,
   })
 
-
   const isAuth = isAuthenticated()
   const [isYou, setIsYou] = React.useState(false)
 

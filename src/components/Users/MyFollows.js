@@ -8,14 +8,51 @@ function MyFollows() {
   const [follows, setFollows] = React.useState([])
   const [followsTwo, setFollowsTwo] = React.useState([])
   const [followsThree, setFollowsThree] = React.useState([])
+  const [isLoading, setIsLoading] = React.useState(true)
   const history = useHistory()
 
   React.useEffect(() => { 
-    getCollections()
+    getData()
   }, [userId])
+
+  const getData = async () => {
+    setIsLoading(true)
+    try {
+      const result = await showUser(userId)
+      if ((result.data) && (result.data.myFollowing)) {
+        const followings = []
+        await result.data.myFollowing.map(async (userId, index) => {
+          const resUser = await showUser(userId)
+          followings.push({ ...resUser.data })
+          if (result.data.myFollowing.length === index + 1) {
+            setFollows(followings)
+          }
+        })
+      }
+    } catch (err) {
+      console.log(err)
+    }
+    setIsLoading(false)
+  }
 
   React.useEffect(() => {
     console.log('follows', follows)
+    const getUser = async () => {
+      try {
+        setIsLoading(true)
+        const thisUser = await showUser(userId)
+        if ((thisUser.data) && (thisUser.data.myFollowing) && thisUser.data.myFollowing.length !== follows.length) {
+          getData()
+        } else if (followsTwo.length === 0) {
+          console.log('complete', follows, thisUser.data)
+          setFollowsTwo(follows)
+        }
+      } catch (err) {
+        console.log(err)
+      }
+      setIsLoading(false)
+    }
+    getUser()
   }, [follows])
   React.useEffect(() => {
     console.log('followsTwo', followsTwo)
@@ -64,18 +101,21 @@ function MyFollows() {
 
   return (
     <>
-      {(followsThree.length > 0) &&
-        followsThree.map(user => {
-          console.log('output 3', followsThree, user)
+      {(followsTwo.length > 0) && (!isLoading) &&
+        followsTwo.map(user => {
+          console.log('output 2', followsTwo, user)
           return (
             <div key={user._id} onClick={handleFollow} >
-              <strong id={user._id} >{user.username}</strong>
+              <p id={user._id} >{user.username}</p>
             </div>
           )
         })
       }
-      {(followsThree.length === 0)  && 
-      <strong>Not following anyone</strong>
+      {(followsTwo.length === 0) && (!isLoading) &&
+      <p>Not following anyone</p>
+      }
+      {(isLoading) && 
+      <p>...Loading</p>
       }
     </>
   )

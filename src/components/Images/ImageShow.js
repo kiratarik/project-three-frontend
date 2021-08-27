@@ -16,7 +16,8 @@ function ImageShow() {
 
   const [viewport, setViewport] = React.useState({
     zoom: 5,
-  }) 
+  })
+
 
   const isAuth = isAuthenticated()
   const [isYou, setIsYou] = React.useState(false)

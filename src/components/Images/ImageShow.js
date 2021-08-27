@@ -159,7 +159,7 @@ function ImageShow() {
             <p><strong>Regions</strong> {inputs.tags.locations.join(', ')}</p>
             <p><strong>Types</strong> {inputs.tags.types.join(', ')}</p>
             <p><strong>Tags</strong> {inputs.tags.customs.join(', ')}</p>
-            <p><strong>Made By</strong> <Link  to={`/users/${inputs.addedBy}`}> <a className='userPageLink' href=''>{madeBy}</a></Link> </p>
+            <p><strong>Made By</strong> <Link  to={`/users/${inputs.addedBy}/pictures`}> <a className='userPageLink' href=''>{madeBy}</a></Link> </p>
             <div className='followButton'>
               { isAuth && !isYou &&
                 <>

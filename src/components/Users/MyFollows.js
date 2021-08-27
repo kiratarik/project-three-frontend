@@ -7,93 +7,68 @@ function MyFollows() {
   const { userId } = useParams()
   const [follows, setFollows] = React.useState([])
   const [followsTwo, setFollowsTwo] = React.useState([])
-  const [followsThree, setFollowsThree] = React.useState([])
-  const [isLoading, setIsLoading] = React.useState(true)
+  const [userData, setUserData] = React.useState(null)
   const history = useHistory()
 
   React.useEffect(() => { 
-    getData()
+    async function getUserData() {
+      try {
+        const result = await showUser(userId)
+        setUserData(result.data)
+      } catch (err) {
+        console.log(err)
+      }
+    }
+    getUserData()
   }, [userId])
 
-  const getData = async () => {
-    setIsLoading(true)
+  React.useEffect(() => { 
+    getData(userData)
+  }, [userData])
+
+  function getData(result) {
     try {
-      const result = await showUser(userId)
-      if ((result.data) && (result.data.myFollowing)) {
+      if ((result) && (result.myFollowing)) {
         const followings = []
-        await result.data.myFollowing.map(async (userId, index) => {
-          const resUser = await showUser(userId)
-          followings.push({ ...resUser.data })
-          if (result.data.myFollowing.length === index + 1) {
-            setFollows(followings)
-          }
+        result.myFollowing.map((userId, index) => {
+          getFollowData(userId, index, result.myFollowing, followings)
         })
       }
     } catch (err) {
       console.log(err)
     }
-    setIsLoading(false)
+  }
+
+  async function getFollowData(userId, index, dataArray, followings) {
+    const resUser = await showUser(userId)
+    followings.push({ ...resUser.data })
+    console.log('followings', followings)
+    if (dataArray.length === index + 1) {
+      setFollows(followings)
+      console.log('All followings', followings)
+    }
   }
 
   React.useEffect(() => {
     console.log('follows', follows)
-    const getUser = async () => {
+    function getUser() {
       try {
-        setIsLoading(true)
-        const thisUser = await showUser(userId)
-        if ((thisUser.data) && (thisUser.data.myFollowing) && thisUser.data.myFollowing.length !== follows.length) {
+        if ((userData) && (userData.myFollowing) && userData.myFollowing.length !== follows.length) {
           getData()
-        } else if (followsTwo.length === 0) {
-          console.log('complete', follows, thisUser.data)
+        } else if ((followsTwo.length === 0) && (userData)) {
+          console.log('complete', follows, userData)
           setFollowsTwo(follows)
         }
       } catch (err) {
         console.log(err)
       }
-      setIsLoading(false)
     }
     getUser()
   }, [follows])
-  React.useEffect(() => {
-    console.log('followsTwo', followsTwo)
-    let isComplete = true
-    for (var i = 0; i < followsTwo.length; i++) {
-      if (typeof followsTwo[i] === 'undefined') {
-        isComplete = false
-        i = followsTwo.length
-      }
-    }
-    if (isComplete === true) {
-      setFollowsThree(followsTwo)
-    }
-  }, [followsTwo])
-  React.useEffect(() => {
-    console.log('followsThree', followsThree)
-  }, [followsThree])
 
-  async function getCollections(){
-    try {
-      const result = await showUser(userId)
-      if ((result.data) && (result.data.myFollowing)) {
-        const followingsTwo = []
-        followingsTwo.length = result.data.myFollowing.length
-        const followings = await result.data.myFollowing.map(async (userId, index) => {
-          const resUser = await showUser(userId)
-          const resultTwo = { _id: resUser.data._id, username: resUser.data.username }
-          console.log('resultTwo', resultTwo)
-          followingsTwo[index] = resultTwo
-          console.log('followingsTwo', followingsTwo)
-          
-          setFollowsTwo(followingsTwo)
-          return (resultTwo)
-        })
-        console.log('followings', followings)
-        setFollows(followings)
-      }
-    } catch (err) {
-      console.log(err)
-    }
-  }
+
+  
+
 
   function handleFollow(e) {
     history.push(`/users/${e.target.id}`)
@@ -101,9 +76,8 @@ function MyFollows() {
 
   return (
     <>
-      {(followsTwo.length > 0) && (!isLoading) &&
+      {(followsTwo.length > 0) &&
         followsTwo.map(user => {
-          console.log('output 2', followsTwo, user)
           return (
             <div key={user._id} onClick={handleFollow} >
               <p id={user._id} >{user.username}</p>
@@ -111,10 +85,10 @@ function MyFollows() {
           )
         })
       }
-      {(followsTwo.length === 0) && (!isLoading) &&
+      {(userData) && (!(userData.myFollowing) || (userData.myFollowing.length === 0)) &&
       <p>Not following anyone</p>
       }
-      {(isLoading) && 
+      {(followsTwo.length === 0) && !((userData) && (!(userData.myFollowing) || (userData.myFollowing.length === 0))) &&
       <p>...Loading</p>
       }
     </>

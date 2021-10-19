@@ -115,7 +115,8 @@ function Home() {
             mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_ACCESS_TOKEN}
             height="100%"
             width="100%"
-            mapStyle='mapbox://styles/hollylouisarose/cksrc0zi20n2o17q8f17hifcw'
+            mapStyle='mapbox://styles/mapbox/streets-v11'
+            // mapStyle='mapbox://styles/hollylouisarose/cksrc0zi20n2o17q8f17hifcw'
             onViewportChange={(nextViewport) => setViewport(nextViewport)}
             {...viewport}
             pitch={0}

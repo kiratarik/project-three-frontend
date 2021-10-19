@@ -2,6 +2,8 @@ import React from 'react'
 import Select from 'react-select'
 import CreatableSelect from 'react-select/creatable'
 import ReactMapGL, { Marker, Popup } from 'react-map-gl'
+import mapboxgl from 'mapbox-gl'
+mapboxgl.workerClass = require('worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker').default
 
 import { getImages } from '../../functionLib/api'
 import { selectOptions, continentOptions } from '../../functionLib/variables'

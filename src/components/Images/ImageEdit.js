@@ -1,5 +1,7 @@
 import React from 'react'
 import ReactMapGL, { Marker } from 'react-map-gl'
+import mapboxgl from 'mapbox-gl'
+mapboxgl.workerClass = require('worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker').default
 import axios from 'axios'
 import Select from 'react-select'
 import CreatableSelect from 'react-select/creatable'

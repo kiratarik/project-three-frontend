@@ -146,7 +146,7 @@ function Home() {
               >
                 <div className='popup'
                   style={{
-                    backgroundImage: `url("${popup.url}")`,
+                    backgroundImage: `url("${popup.url.split('&auto=format').join('&format=auto')}")`,
                   }}
                 >
                   <p className='popup-text' >{popup.picName}</p>

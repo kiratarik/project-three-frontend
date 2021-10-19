@@ -107,7 +107,7 @@ function ImageEdit() {
       {(inputs) && 
         <div>
           <div>
-            <img src={inputs.url} />
+            <img src={inputs.url.split('&auto=format').join('&format=auto')} />
           </div>
           <div>
             <p>Name: <input id='picName' onChange={handleChange} value={inputs.picName} /></p>

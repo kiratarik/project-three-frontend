@@ -146,7 +146,7 @@ function ImageShow() {
       {(inputs) && 
         <div className='imageDataContainer'>
           <div className='imageWrapper'>
-            <img src={inputs.url} />
+            <img src={inputs.url.split('&auto=format').join('&format=auto')} />
           </div>
           <div className='imageData'>
             <p><strong>{inputs.picName}</strong></p>

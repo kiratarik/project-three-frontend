@@ -15,7 +15,7 @@ function ImageCard({ image }){
       <div className="overlay">
         <h5>{image.picName}</h5>
       </div>
-      <img src={image.url} loading="lazy"/> 
+      <img src={image.url.split('&auto=format').join('&format=auto')} loading="lazy"/> 
     </div>
   )
 }

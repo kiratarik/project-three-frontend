@@ -44,8 +44,8 @@ Shortly afterwards we split up the tasks with me being responsible for the Image
 I started with the form with things being added over time as we figured out how we wanted the data entered. The name and description were basic text inputs.
 
 The file upload was relatively simple, but it took a while, and a lot of googling, to get the preview image to work before the uploading occured:
-![image4](./ReadMeImages/1.png)
-![image5](./ReadMeImages/1.png)
+![image4](./ReadMeImages/4.png)
+![image5](./ReadMeImages/5.png)
 
 The type tags and custom tags came later using a react software that allows for multiple inputs from multiple choices and even custom choices.
 

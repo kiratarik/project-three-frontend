@@ -1,4 +1,4 @@
-# General Assembly Project 3: Picturest
+# General Assembly Project 3: PictuREST
 ![mainimage](./ReadMeImages/0.png)
 
 ## Table of Contents:

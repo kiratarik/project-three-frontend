@@ -6,6 +6,7 @@
 1. [Brief](#brief)
 1. [Planning](#planning)
 1. [Work Split](#work-split)
+1. [Approach](#approach)
 1. [Wins](#wins)
 1. [Challenges](#challenges)
 1. [Key Learnings/Takeaways](#key-learningstakeaways)
@@ -36,6 +37,7 @@ First we discussed what our project should be together, eventually coming up wit
 ## Work Split:
 We split off tasks early on in our group; After some basics of components were established I focussed on the Image pages including submitting, editing, and displaying. I would also pitch in on some other parts including the filtering and map pins of the home page and attempting to make the followers section on the user page work. We mostly did our own things, contacting each other when we ran into roadblocks to help each other out. I didn’t do much of the styling although I did code the popups of the home page map. I took no part in coding the backend of this project.
 
+## Approach:
 I started off making a lot of component folders for different parts of the frontend we had planned so far. I then created a basic Nav-Route in the App.js folder which was added to over time
 
 Shortly afterwards we split up the tasks with me being responsible for the Images section. I started with ImageSubmit; creating a lot of the basics I would reuse in other Image sections:

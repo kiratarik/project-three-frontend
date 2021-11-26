@@ -4,7 +4,7 @@
 ## Table of Contents:
 1. [Overview](#overview)
 1. [Brief](#brief)
-1. [Approach](#approach)
+1. [Planning](#planning)
 1. [Work Split](#work-split)
 1. [Wins](#wins)
 1. [Challenges](#challenges)
@@ -28,7 +28,7 @@ My third project in the Software Engineering Immersive Course and my first time 
 
 **Deployed version:** https://sei-kiratarik-project-three.netlify.app
 
-## Approach:
+## Planning:
 First we discussed what our project should be together, eventually coming up with some wireframes:
 ![image1](./ReadMeImages/1.png)
 ![image2](./ReadMeImages/2.png)
